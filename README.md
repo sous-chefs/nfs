@@ -12,6 +12,7 @@ ATTRIBUTES
 ==========
 
 * nfs["packages"]
+
   - Makes a best effort to choose NFS client packages dependent on platform
   - NFS server package needs to be hardcoded for Debian/Ubuntu in the server
     recipe, or overridden in a role.
@@ -22,6 +23,12 @@ ATTRIBUTES
   - ["statd_out"] = Outgoing port for statd, default 32766
   - ["mountd"] = Listen port for mountd, default 32767
   - ["lockd"] = Listen port for lockd, default 32768
+
+* nfs["exports"]
+
+  - This may be replaced in the future by an LWRP to load export definitions from
+    a data bag.  For now, its a simple array of strings to populate in an export file.
+    Note: The "nfs::exports" recipe is separate from the "nfs::server" recipe.
 
 USAGE
 =====
@@ -44,10 +51,13 @@ Then in an nfs_server.rb role that is applied to NFS servers:
           "statd_out" => 32766,
           "mountd" => 32767,
           "lockd" => 32768
-        }
+        },
+        "exports" => [
+          "/exports 10.0.0.0/8(ro,sync,no_root_squash)"
+        ]
       }
     )
-    run_list => [ "nfs::server" ]
+    run_list => [ "nfs::server", "nfs::exports" ]
 
 LICENSE AND AUTHOR
 ==================

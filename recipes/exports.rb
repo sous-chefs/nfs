@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: nfs
-# Attributes:: default
+# Recipe:: exports
 #
 # Copyright 2011, Eric G. Wolfe
 #
@@ -17,17 +17,14 @@
 # limitations under the License.
 #
 
-case node["platform"]
-  when "redhat","centos","scientific"
-    default["nfs"]["packages"] = [ "nfs-utils", "portmap" ]
-  when "ubuntu","debian"
-    default["nfs"]["packages"] = [ "nfs-common", "portmap" ]
-  else
-    default["nfs"]["packages"] = Array.new
+execute "exportfs" do
+  command "exportfs -ar"
+  action :nothing
 end
 
-default["nfs"]["port"]["statd"] = 32765
-default["nfs"]["port"]["statd_out"] = 32766
-default["nfs"]["port"]["mountd"] = 32767
-default["nfs"]["port"]["lockd"] = 32768
-default["nfs"]["exports"] = Array.new
+unless node["nfs"]["exports"].empty?
+  template "/etc/exports" do
+     mode 0644
+     notifies :run, "execute[exportfs]"
+  end
+end
