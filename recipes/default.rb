@@ -18,39 +18,25 @@
 #
 
 # Install package, dependent on platform
-node["nfs"]["packages"].each do |nfspkg|
+node['nfs']['packages'].each do |nfspkg|
   package nfspkg
 end
 
-# Start portmap on 111
+# Start NFS client components
 service "portmap" do
+  service_name node['nfs']['service']['portmap']
   action [ :start, :enable ]
 end
 
-# Start NFS client components
-service "nfs-client" do
-  case node["platform"]
-    when "redhat","centos","scientific"
-      service_name "nfslock"
-    when "debian","ubuntu"
-      service_name "statd"
-  end
-  action [ :enable, :start ]
+service "nfslock" do
+  service_name node['nfs']['service']['lock']
+  action [ :start, :enable ]
 end
 
 # Configure NFS client components
-case node["platform"]
-  when "redhat","centos","scientific"
-    template "/etc/sysconfig/nfs" do
-      mode 0644
-      notifies :restart, "service[nfs-client]"
-    end
-  when "debian","ubuntu"
-    template "/etc/modprobe.d/lockd.conf" do
-      mode 0644
-    end
-    template "/etc/default/nfs-common" do
-      mode 0644
-      notifies :restart, "service[nfs-client]"
-    end
+node['nfs']['config']['client_templates'].each do |client_template|
+  template client_template do
+    mode 0644
+    notifies :restart, resources(:service => [ 'portmap', 'nfslock' ] )
+  end
 end
