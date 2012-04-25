@@ -18,6 +18,7 @@
 #
 
 include_recipe "nfs"
+include_recipe "nfs::exports"
 
 # Install server components for Debian
 case node["platform"]
