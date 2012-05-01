@@ -1,18 +1,17 @@
-DESCRIPTION
+Description
 ===========
 
 Installs and configures NFS client, or server components 
 
-REQUIREMENTS
+Requirements
 ============
 
 Should work on any Red Hat-family or Debian-family Linux distribution.
 
-ATTRIBUTES
+Attributes
 ==========
 
 * nfs['packages']
-
   - Makes a best effort to choose NFS client packages dependent on platform
   - NFS server package needs to be hardcoded for Debian/Ubuntu in the server
     recipe, or overridden in a role.
@@ -27,21 +26,19 @@ ATTRIBUTES
   - server\_template - server specific template, chosen by platform
 
 * nfs['port']
-
   - ['statd'] = Listen port for statd, default 32765
   - ['statd\_out'] = Outgoing port for statd, default 32766
   - ['mountd'] = Listen port for mountd, default 32767
   - ['lockd'] = Listen port for lockd, default 32768
 
 * nfs['exports']
-
   - An array of strings to populate in an export file. Can be manipulated in
     recipes with the nfs_export LWRP.
 
-USAGE
+Usage
 =====
 
-To install the NFS components for a client system, simply add nfs to the run_list.
+To install the NFS components for a client system, simply add nfs to the run\_list.
 
     name "base"
     description "Role applied to all systems"
@@ -67,21 +64,48 @@ Then in an nfs\_server.rb role that is applied to NFS servers:
     )
     run_list => [ "nfs::server" ]
 
-Applications or other cookbooks can setup exports with nfs_export:
+nfs\_export LWRP Usage
+----------------------
 
-    nfs_export "/foobar" do
-      network '*'
-      writeable true
-      sync false
-      extra_options ['no_root_squash']
+Applications or other cookbooks can use the nfs\_export LWRP to add exports:
+
+    nfs_export "/exports" do
+      network '10.0.0.0/8'
+      writeable false 
+      sync true
+      options ['no_root_squash']
     end
 
-LICENSE AND AUTHOR
+The default parameters for the nfs\_export LWRP are as follows
+
+* directory 
+  - directory you wish to export
+  - defaults to resource name
+
+* network
+  - a CIDR, IP address, or wildcard (\*)
+  - requires an option
+
+* writeable
+  - ro/rw export option
+  - defaults to false
+
+* sync
+  - synchronous/asynchronous export option
+  - defaults to true
+
+* options
+  - additional export options as an array, excluding the parameterized sync/async and ro/rw options
+  - defaults to root\_squash
+
+License and Author
 ==================
 
-Author:: Eric G. Wolfe (<wolfe21@marshall.edu>)
+Author: Eric G. Wolfe (<wolfe21@marshall.edu>)
+Contributors: Riot Games
 
-Copyright 2011
+Copyright 2011-2012, Eric G. Wolfe
+Copyright 2012, Riot Games
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
