@@ -22,9 +22,13 @@ execute "exportfs" do
   action :nothing
 end
 
-unless node['nfs']['exports'].empty?
-  template "/etc/exports" do
-    mode 0644
-    notifies :run, "execute[exportfs]"
-  end
+template "/etc/exports" do
+  mode 0644
+  notifies :run, "execute[exportfs]"
+  action :nothing
+end
+
+execute "/bin/true" do
+  not_if { node['nfs']['exports'].empty? }
+  notifies :create, "template[/etc/exports]"
 end

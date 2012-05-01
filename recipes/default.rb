@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: nfs
-# Recipe:: server 
+# Recipe:: default 
 #
 # Copyright 2011, Eric G. Wolfe
 #

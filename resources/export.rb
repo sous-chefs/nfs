@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: nfs
-# Resources:: exports
+# Resources:: export
 #
 # Copyright 2012, Riot Games
 #

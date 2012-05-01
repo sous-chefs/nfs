@@ -18,7 +18,6 @@
 #
 
 include_recipe "nfs"
-include_recipe "nfs::exports"
 
 # Install server components for Debian
 case node["platform"]
@@ -36,3 +35,5 @@ template node['nfs']['config']['server_template'] do
   mode 0644
   notifies :restart, resources(:service => node['nfs']['service']['server'])
 end
+
+include_recipe "nfs::exports"
