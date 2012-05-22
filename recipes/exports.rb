@@ -29,6 +29,6 @@ template "/etc/exports" do
 end
 
 execute "/bin/true" do
-  not_if { node['nfs']['exports'].empty? }
   notifies :create, "template[/etc/exports]"
+  not_if { node['nfs']['exports'].empty? }
 end

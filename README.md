@@ -1,15 +1,14 @@
-Description
-===========
+# NFS [![Build Status](https://secure.travis-ci.org/atomic-penguin/cookbook-nfs.png?branch=master)](http://travis-ci.org/atomic-penguin/cookbook-nfs)
+
+## Description
 
 Installs and configures NFS client, or server components 
 
-Requirements
-============
+## Requirements
 
 Should work on any Red Hat-family or Debian-family Linux distribution.
 
-Attributes
-==========
+## Attributes
 
 * nfs['packages']
   - Makes a best effort to choose NFS client packages dependent on platform
@@ -35,8 +34,7 @@ Attributes
   - An array of strings to populate in an export file. Can be manipulated in
     recipes with the nfs_export LWRP.
 
-Usage
-=====
+## Usage
 
 To install the NFS components for a client system, simply add nfs to the run\_list.
 
@@ -64,8 +62,7 @@ Then in an nfs\_server.rb role that is applied to NFS servers:
     )
     run_list => [ "nfs::server" ]
 
-nfs\_export LWRP Usage
-----------------------
+### nfs\_export LWRP Usage
 
 Applications or other cookbooks can use the nfs\_export LWRP to add exports:
 
@@ -98,8 +95,13 @@ The default parameters for the nfs\_export LWRP are as follows
   - additional export options as an array, excluding the parameterized sync/async and ro/rw options
   - defaults to root\_squash
 
-License and Author
-==================
+## nfs::undo recipe
+
+Does your freshly kickstarted/preseeded system come with NFS, when you didn't ask for NFS?  This recipe inspired by the annoyances cookbook, will run once to remove NFS from the system.  Use a knife command to remove NFS components from your system like so.
+
+    knife run_list add <node name> nfs::undo
+
+## License and Author
 
 Author: Eric G. Wolfe (<wolfe21@marshall.edu>)
 Contributors: Riot Games

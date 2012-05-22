@@ -20,7 +20,7 @@
 include_recipe "nfs"
 
 # Install server components for Debian
-case node["platform"]
+case node['platform']
 when "debian","ubuntu"
   package "nfs-kernel-server"
 end
