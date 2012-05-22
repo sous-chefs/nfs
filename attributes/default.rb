@@ -36,13 +36,17 @@ when 'redhat','centos','scientific','amazon'
 
 when 'ubuntu','debian'
   # Same service edge case on Ubuntu greater than 11 for portmap/rpcbind
-  if node['platform_version'].to_i >= 11
+  if node['platform_version'].to_i >= 12
+    default['nfs']['service']['portmap'] = 'rpcbind-boot'
+    default['nfs']['packages'] = [ 'nfs-common', 'rpcbind' ]
+  elsif node['platform_version'].to_i >= 11
     default['nfs']['service']['portmap'] = 'rpcbind'
+    default['nfs']['packages'] = [ 'nfs-common', 'rpcbind' ]
   else
     default['nfs']['service']['portmap'] = 'portmap'
+    default['nfs']['packages'] = [ 'nfs-common', 'portmap' ]
   end
   # General Ubuntu, Debian options, may not work on all versions
-  default['nfs']['packages'] = [ 'nfs-common', 'portmap' ]
   default['nfs']['service']['lock'] = 'statd'
   default['nfs']['service']['server'] = 'nfs-kernel-server'
   default['nfs']['config']['client_templates'] = [ '/etc/default/nfs-common', '/etc/modprobe.d/lockd.conf' ]
