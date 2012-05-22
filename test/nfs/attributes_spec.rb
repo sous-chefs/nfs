@@ -77,7 +77,7 @@ describe 'Nfs::Attributes::Default' do
     end
 
     it "sets a package list to nfs-utils and rpcbind" do
-      @node[attr_ns]['packages'] = %w{ nfs-utils rpcbind }
+      @node[attr_ns]['packages'].must_equal %w{ nfs-utils rpcbind }
     end
 
     it "sets the portmap service to rpcbind" do
