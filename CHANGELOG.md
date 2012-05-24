@@ -1,3 +1,7 @@
+## v0.2.3
+
+* Fix service action typo in nfs::undo
+
 ## v0.2.2
 
 * [annoyance] Add run once nfs::undo recipe to stop and remove all nfs components

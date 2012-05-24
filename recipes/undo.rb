@@ -22,15 +22,15 @@ service node['nfs']['service']['server'] do
   action [ :stop, :disable ]
 end
 
+service "nfslock" do
+  service_name node['nfs']['service']['lock']
+  action [ :stop, :disable ]
+end
+
 # Stop nfs client components
 service "portmap" do
   service_name node['nfs']['service']['portmap']
-  action [ :start, :enable ]
-end
-
-service "nfslock" do
-  service_name node['nfs']['service']['lock']
-  action [ :start, :enable ]
+  action [ :stop, :disable ]
 end
 
 # Remove package, dependent on platform
