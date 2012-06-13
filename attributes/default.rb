@@ -45,7 +45,7 @@ when "ubuntu","debian"
   default['nfs']['service']['lock'] = "statd"
   default['nfs']['service']['server'] = "nfs-kernel-server"
   default['nfs']['config']['client_templates'] = %w{ /etc/default/nfs-common /etc/modprobe.d/lockd.conf }
-  default['nfs']['config']['server_template'] = %w{ /etc/default/nfs-kernel-server }
+  default['nfs']['config']['server_template'] = "/etc/default/nfs-kernel-server"
 
   # Ubuntu 11+ edge case package set and portmap name
   if node['platform_version'].to_i >= 11
