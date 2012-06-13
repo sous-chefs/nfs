@@ -13,7 +13,5 @@
 # subversion
 */.svn/*
 
-# tests
-*/test/*
+# travis 
 \.travis.yml
-Rakefile

@@ -62,6 +62,14 @@ describe 'Nfs::Attributes::Default' do
       @node[attr_ns]['service']['portmap'].must_equal "portmap"
     end
 
+    it "sets the config client templates to" do
+      @node[attr_ns]['config']['client_templates'].must_equal %w{ /etc/sysconfig/nfs }
+    end
+
+    it "sets the config server template to" do
+      @node[attr_ns]['config']['server_template'].must_equal "/etc/sysconfig/nfs"
+    end
+
     it "sets the lock service to nfslock" do
       @node[attr_ns]['service']['lock'].must_equal "nfslock"
     end
@@ -92,6 +100,14 @@ describe 'Nfs::Attributes::Default' do
 
     it "sets a package list to nfs-common and portmap" do
       @node[attr_ns]['packages'].must_equal %w{ nfs-common portmap }
+    end
+
+    it "sets the config client templates to" do
+      @node[attr_ns]['config']['client_templates'].sort.must_equal %w{ /etc/default/nfs-common /etc/modprobe.d/lockd.conf }.sort
+    end
+
+    it "sets the config server template to" do
+      @node[attr_ns]['config']['server_template'].must_equal "/etc/default/nfs-kernel-server"
     end
 
     it "sets the lock service to statd" do

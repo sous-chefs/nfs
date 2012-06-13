@@ -23,11 +23,12 @@ action :create do
   options = new_resource.options.join(',')
   options = ",#{options}" unless options.empty?
   export_line = "#{new_resource.directory} #{new_resource.network}(#{ro_rw},#{sync_async}#{options})"
-  if not node['nfs']['exports'].include?(export_line)
+  unless node['nfs']['exports'].include?(export_line)
     node['nfs']['exports'] << export_line
     execute "notify_export_create" do
       command "/bin/true"
       notifies :create, resources("template[/etc/exports]")
+      not_if "grep -q '#{export_line}' /etc/exports"
       action :run
     end
     new_resource.updated_by_last_action(true)

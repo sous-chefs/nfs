@@ -1,3 +1,10 @@
+## v0.2.4
+Attribute typo for Debian
+
+* Correct typo in attributes
+* Add attribute testing for config templates
+* Add /etc/exports grep for better idempotency guard
+
 ## v0.2.3
 
 * Fix service action typo in nfs::undo
