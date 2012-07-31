@@ -57,4 +57,9 @@ when "ubuntu","debian"
   if node['platform_version'].to_i >= 12
     default['nfs']['service']['portmap'] = "rpcbind-boot"
   end
+
+  # Debian 6.0+
+  if node['platform'] == "debian" and node['platform_version'].to_i >= 6
+    default['nfs']['service']['lock'] = "nfs-common"
+  end
 end
