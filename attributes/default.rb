@@ -34,27 +34,27 @@ default['nfs']['config']['client_templates'] = %w{ /etc/sysconfig/nfs }
 default['nfs']['config']['server_template'] = "/etc/sysconfig/nfs"
 
 case node['platform']
-when "redhat","centos","fedora","scientific","amazon","oracle" 
+when "redhat","centos","fedora","scientific","amazon","oracle"
+  # RHEL6 edge case package set and portmap name 
   if node['platform_version'].to_i >= 6
-    # RHEL6 edge case package set and portmap name
     default['nfs']['packages'] = %w{ nfs-utils rpcbind }
     default['nfs']['service']['portmap'] = "rpcbind"
   end
 when "ubuntu","debian"
   default['nfs']['packages'] = %w{ nfs-common portmap }
+  default['nfs']['service']['portmap'] = "rpcbind"
   default['nfs']['service']['lock'] = "statd"
   default['nfs']['service']['server'] = "nfs-kernel-server"
   default['nfs']['config']['client_templates'] = %w{ /etc/default/nfs-common /etc/modprobe.d/lockd.conf }
   default['nfs']['config']['server_template'] = "/etc/default/nfs-kernel-server"
 
-  # Ubuntu 11+ edge case package set and portmap name
-  if node['platform_version'].to_i >= 11
+  # Ubuntu 11.04 edge case package set and portmap name
+  if node['platform_version'] == 11.04
     default['nfs']['service']['portmap'] = "rpcbind"
     default['nfs']['packages'] = %w{ nfs-common rpcbind }
-  end
-
-  # Ubuntu 12+ edge case portmap name
-  if node['platform_version'].to_i >= 12
+  # Ubuntu 11.10 edge case package set and portmap name
+  elsif node['platform_version'] >= 11.10 
     default['nfs']['service']['portmap'] = "rpcbind-boot"
+    default['nfs']['packages'] = %w{ nfs-common rpcbind }
   end
 end

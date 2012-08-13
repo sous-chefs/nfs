@@ -35,7 +35,7 @@ describe 'Nfs::Attributes::Default' do
 
   describe "for unknown platform" do
     let(:ohai_data) do
-      { :platform => "unknown", :platform_version => "3.14" }
+      { :platform => "unknown", :platform_version => 3.14 }
     end
 
     it "sets the statd port to 32765" do
@@ -81,7 +81,7 @@ describe 'Nfs::Attributes::Default' do
 
   describe "for centos 6 platform" do
     let(:ohai_data) do
-      { :platform => "centos", :platform_version => "6.2" }
+      { :platform => "centos", :platform_version => 6.2 }
     end
 
     it "sets a package list to nfs-utils and rpcbind" do
@@ -95,7 +95,7 @@ describe 'Nfs::Attributes::Default' do
 
   describe "for ubuntu 10 platform" do
     let(:ohai_data) do
-      { :platform => "ubuntu", :platform_version => "10.04" }
+      { :platform => "ubuntu", :platform_version => 10.04 }
     end
 
     it "sets a package list to nfs-common and portmap" do
@@ -119,9 +119,9 @@ describe 'Nfs::Attributes::Default' do
     end
   end
 
-  describe "for ubuntu 11 platform" do
+  describe "for ubuntu 11.04 platform" do
     let(:ohai_data) do
-      { :platform => "ubuntu", :platform_version => "11.10" }
+      { :platform => "ubuntu", :platform_version => 11.04 }
     end
 
     it "sets a package list to nfs-common and rpcbind" do
@@ -133,9 +133,27 @@ describe 'Nfs::Attributes::Default' do
     end
   end
 
+  describe "for ubuntu 11.10 platform" do
+    let(:ohai_data) do
+      { :platform => "ubuntu", :platform_version => 11.10 }
+    end
+
+    it "sets a package list to nfs-common and rpcbind" do
+      @node[attr_ns]['packages'].must_equal %w{ nfs-common rpcbind }
+    end
+
+    it "sets the portmap service to rpcbind" do
+      @node[attr_ns]['service']['portmap'].must_equal "rpcbind-boot"
+    end
+  end
+  
   describe "for ubuntu 12 platform" do
     let(:ohai_data) do
-      { :platform => "ubuntu", :platform_version => "12.04" }
+      { :platform => "ubuntu", :platform_version => 12.04 }
+    end
+
+    it "sets a package list to nfs-common and rpcbind" do
+      @node[attr_ns]['packages'].must_equal %w{ nfs-common rpcbind }
     end
 
     it "sets the portmap service to rpcbind-boot" do

@@ -1,4 +1,12 @@
+## v0.2.5
+
+Ubutntu service names
+
+* Fix Ubuntu 11.10 edge-case reported by Andrea Campi
+* Update test cases
+
 ## v0.2.4
+
 Attribute typo for Debian
 
 * Correct typo in attributes
