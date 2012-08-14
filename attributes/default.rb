@@ -49,11 +49,11 @@ when "ubuntu","debian"
   default['nfs']['config']['server_template'] = "/etc/default/nfs-kernel-server"
 
   # Ubuntu 11.04 edge case package set and portmap name
-  if node['platform_version'] == 11.04
+  if node['platform_version'].to_f == 11.04
     default['nfs']['service']['portmap'] = "rpcbind"
     default['nfs']['packages'] = %w{ nfs-common rpcbind }
   # Ubuntu 11.10 edge case package set and portmap name
-  elsif node['platform_version'] >= 11.10 
+  elsif node['platform_version'].to_f >= 11.10 
     default['nfs']['service']['portmap'] = "rpcbind-boot"
     default['nfs']['packages'] = %w{ nfs-common rpcbind }
   end

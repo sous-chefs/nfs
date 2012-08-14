@@ -1,3 +1,7 @@
+## v0.2.6
+
+Force float in platform_version conditional
+
 ## v0.2.5
 
 Ubutntu service names
