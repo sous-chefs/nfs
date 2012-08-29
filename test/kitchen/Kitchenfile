@@ -1,0 +1,4 @@
+cookbook "nfs" do
+  configuration "client"
+  configuration "server"
+end
