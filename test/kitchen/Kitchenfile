@@ -1,4 +1,5 @@
 cookbook "nfs" do
-  configuration "client"
+  configuration "default"
   configuration "server"
+  runtimes []
 end
