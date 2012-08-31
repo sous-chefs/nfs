@@ -1,5 +1,3 @@
 cookbook "nfs" do
-  configuration "default"
-  configuration "server"
   runtimes []
 end

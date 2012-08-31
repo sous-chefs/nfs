@@ -6,3 +6,11 @@ nfs_export "/tmp" do
 end
 
 include_recipe "nfs::server"
+
+directory "/mnt/test"
+
+mount "/mnt/test" do
+  device "localhost:/tmp"
+  fstype "nfs"
+  options "rw"
+end

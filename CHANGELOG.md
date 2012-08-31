@@ -1,3 +1,7 @@
+## nfs-test-kitchen
+
+Add test-kitchen skeleton
+
 ## v0.2.6
 
 Force float in platform_version conditional
@@ -15,7 +19,6 @@ Attribute typo for Debian
 
 * Correct typo in attributes
 * Add attribute testing for config templates
-* Add /etc/exports grep for better idempotency guard
 
 ## v0.2.3
 

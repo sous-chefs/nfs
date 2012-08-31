@@ -48,8 +48,11 @@ when "ubuntu","debian"
   default['nfs']['config']['client_templates'] = %w{ /etc/default/nfs-common /etc/modprobe.d/lockd.conf }
   default['nfs']['config']['server_template'] = "/etc/default/nfs-kernel-server"
 
+  # Ubuntu 10.04 edge case portmap name
+  if node['platform_version'].to_f == 10.04
+    default['nfs']['service']['portmap'] = "portmap"
   # Ubuntu 11.04 edge case package set and portmap name
-  if node['platform_version'].to_f == 11.04
+  elsif node['platform_version'].to_f == 11.04
     default['nfs']['service']['portmap'] = "rpcbind"
     default['nfs']['packages'] = %w{ nfs-common rpcbind }
   # Ubuntu 11.10 edge case package set and portmap name
