@@ -42,7 +42,7 @@ when "redhat","centos","fedora","scientific","amazon","oracle"
   end
 when "ubuntu","debian"
   default['nfs']['packages'] = %w{ nfs-common portmap }
-  default['nfs']['service']['portmap'] = "rpcbind"
+  default['nfs']['service']['portmap'] = "portmap"
   default['nfs']['service']['lock'] = "statd"
   default['nfs']['service']['server'] = "nfs-kernel-server"
   default['nfs']['config']['client_templates'] = %w{ /etc/default/nfs-common /etc/modprobe.d/lockd.conf }
