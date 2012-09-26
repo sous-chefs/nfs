@@ -1,3 +1,9 @@
+## v0.2.7
+
+Documentation corrections
+* correct node.nfs.port references
+* correct run_list symtax
+
 ## v0.2.6
 
 Force float in platform_version conditional
