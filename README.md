@@ -40,7 +40,7 @@ To install the NFS components for a client system, simply add nfs to the run\_li
 
     name "base"
     description "Role applied to all systems"
-    run_list => [ "nfs" ]
+    run_list [ "nfs" ]
 
 Then in an nfs\_server.rb role that is applied to NFS servers:
 
@@ -49,7 +49,7 @@ Then in an nfs\_server.rb role that is applied to NFS servers:
     override_attributes(
       "nfs" => {
         "packages" => [ "portmap", "nfs-common", "nfs-kernel-server" ],
-        "ports" => {
+        "port" => {
           "statd" => 32765,
           "statd_out" => 32766,
           "mountd" => 32767,
@@ -60,7 +60,7 @@ Then in an nfs\_server.rb role that is applied to NFS servers:
         ]
       }
     )
-    run_list => [ "nfs::server" ]
+    run_list [ "nfs::server" ]
 
 ### nfs\_export LWRP Usage
 
