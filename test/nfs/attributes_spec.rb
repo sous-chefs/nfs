@@ -81,7 +81,7 @@ describe 'Nfs::Attributes::Default' do
 
   describe "for centos 6 platform" do
     let(:ohai_data) do
-      { :platform => "centos", :platform_version => 6.2 }
+      { :platform => "centos", :platform_family => "rhel", :platform_version => 6.2 }
     end
 
     it "sets a package list to nfs-utils and rpcbind" do
@@ -95,7 +95,7 @@ describe 'Nfs::Attributes::Default' do
 
   describe "for ubuntu 10 platform" do
     let(:ohai_data) do
-      { :platform => "ubuntu", :platform_version => 10.04 }
+      { :platform => "ubuntu", :platform_family => "debian", :platform_version => 10.04 }
     end
 
     it "sets a package list to nfs-common and portmap" do
@@ -121,7 +121,7 @@ describe 'Nfs::Attributes::Default' do
 
   describe "for ubuntu 11.04 platform" do
     let(:ohai_data) do
-      { :platform => "ubuntu", :platform_version => 11.04 }
+      { :platform => "ubuntu", :platform_family => "debian", :platform_version => 11.04 }
     end
 
     it "sets a package list to nfs-common and rpcbind" do
@@ -135,7 +135,7 @@ describe 'Nfs::Attributes::Default' do
 
   describe "for ubuntu 11.10 platform" do
     let(:ohai_data) do
-      { :platform => "ubuntu", :platform_version => 11.10 }
+      { :platform => "ubuntu", :platform_family => "debian", :platform_version => 11.10 }
     end
 
     it "sets a package list to nfs-common and rpcbind" do
@@ -149,7 +149,7 @@ describe 'Nfs::Attributes::Default' do
   
   describe "for ubuntu 12 platform" do
     let(:ohai_data) do
-      { :platform => "ubuntu", :platform_version => 12.04 }
+      { :platform => "ubuntu", :platform_family => "debian", :platform_version => 12.04 }
     end
 
     it "sets a package list to nfs-common and rpcbind" do
