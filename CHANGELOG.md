@@ -1,3 +1,9 @@
+## v0.2.8
+
+Debian family attribute correction
+
+Use portmap service when using the portmap package
+
 ## v0.2.7
 
 Documentation corrections

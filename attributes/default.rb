@@ -33,14 +33,14 @@ default['nfs']['service']['server'] = "nfs"
 default['nfs']['config']['client_templates'] = %w{ /etc/sysconfig/nfs }
 default['nfs']['config']['server_template'] = "/etc/sysconfig/nfs"
 
-case node['platform']
-when "redhat","centos","fedora","scientific","amazon","oracle"
+case node['platform_family']
+when "rhel"
   # RHEL6 edge case package set and portmap name 
   if node['platform_version'].to_i >= 6
     default['nfs']['packages'] = %w{ nfs-utils rpcbind }
     default['nfs']['service']['portmap'] = "rpcbind"
   end
-when "ubuntu","debian"
+when "debian"
   default['nfs']['packages'] = %w{ nfs-common portmap }
   default['nfs']['service']['portmap'] = "portmap"
   default['nfs']['service']['lock'] = "statd"
