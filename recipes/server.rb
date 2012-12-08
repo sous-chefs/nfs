@@ -28,6 +28,7 @@ end
 # Start nfs-server components
 service node['nfs']['service']['server'] do
   action [ :start, :enable ]
+  supports :status => true
 end
 
 # Configure nfs-server components
