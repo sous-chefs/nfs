@@ -41,8 +41,8 @@ action :create do
     end
     
     append_if_no_line "export #{new_resource.name}" do
-      file "/etc/exports"
-      string export_line
+      path "/etc/exports"
+      line export_line
       notifies :run, "execute[exportfs]", :immediately
     end
   ensure
