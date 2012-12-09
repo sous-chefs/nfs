@@ -13,3 +13,6 @@ recipe "nfs::undo", "Undo both default and server recipes"
 %w{ ubuntu debian redhat centos fedora scientific amazon oracle }.each do |os|
   supports os
 end
+
+depends "line"
+

@@ -37,4 +37,3 @@ template node['nfs']['config']['server_template'] do
   notifies :restart, resources(:service => node['nfs']['service']['server'])
 end
 
-include_recipe "nfs::exports"
