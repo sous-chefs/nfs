@@ -28,6 +28,7 @@ end
 # Start nfs-server components
 service node['nfs']['service']['server'] do
   action [ :start, :enable ]
+  supports :status => true
 end
 
 # Configure nfs-server components
@@ -36,4 +37,3 @@ template node['nfs']['config']['server_template'] do
   notifies :restart, resources(:service => node['nfs']['service']['server'])
 end
 
-include_recipe "nfs::exports"
