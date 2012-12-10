@@ -27,7 +27,7 @@ action :create do
     node['nfs']['exports'] << export_line
     execute "notify_export_create" do
       command "/bin/true"
-      notifies :create, resources("template[/etc/exports]")
+      notifies :create, resources("template[/etc/exports]"), :immediately
       not_if "grep -q '#{export_line}' /etc/exports"
       action :run
     end
