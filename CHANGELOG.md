@@ -1,3 +1,16 @@
+## v0.3.0
+
+@someara exports LWRP refactor
+
+* **Breaking changes**
+  - Deprecated ~nfs['exports']~ attribute
+  - remove exports recipe hack
+* refactored provider to execute in new run_context
+* update notification timings on exports resources
+* add service status to recipes
+* dependency and integration with [line](http://ckbk.it/line) editing
+  cookbook
+
 ## v0.2.8
 
 Debian family attribute correction

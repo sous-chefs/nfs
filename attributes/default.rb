@@ -22,7 +22,6 @@ default['nfs']['port']['statd'] = 32765
 default['nfs']['port']['statd_out'] = 32766
 default['nfs']['port']['mountd'] = 32767
 default['nfs']['port']['lockd'] = 32768
-default['nfs']['exports'] = Array.new
 
 # Default options are based on RHEL5, as the attribute names were
 # adopted from this platform.

@@ -30,9 +30,9 @@ Should work on any Red Hat-family or Debian-family Linux distribution.
   - ['mountd'] = Listen port for mountd, default 32767
   - ['lockd'] = Listen port for lockd, default 32768
 
-* nfs['exports']
-  - An array of strings to populate in an export file. Can be manipulated in
-    recipes with the nfs_export LWRP.
+* ~nfs['exports']~
+  - Deprecated option.  No longer supported with the exports
+    functionality being refactored into an LWRP.
 
 ## Usage
 
@@ -104,10 +104,11 @@ Does your freshly kickstarted/preseeded system come with NFS, when you didn't as
 ## License and Author
 
 Author: Eric G. Wolfe (<wolfe21@marshall.edu>)
-Contributors: Riot Games
+Contributors: Riot Games, Sean OMeara
 
 Copyright 2011-2012, Eric G. Wolfe
 Copyright 2012, Riot Games
+Copyright 2012, Sean OMeara
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
