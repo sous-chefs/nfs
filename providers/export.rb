@@ -18,21 +18,44 @@
 #
 
 action :create do
-  ro_rw = new_resource.writeable ? "rw" : "ro"
-  sync_async = new_resource.sync ? "sync" : "async"
-  options = new_resource.options.join(',')
-  options = ",#{options}" unless options.empty?
-  export_line = "#{new_resource.directory} #{new_resource.network}(#{ro_rw},#{sync_async}#{options})"
-  unless node['nfs']['exports'].include?(export_line)
-    node['nfs']['exports'] << export_line
-    execute "notify_export_create" do
-      command "/bin/true"
-      notifies :create, resources("template[/etc/exports]"), :immediately
-      not_if "grep -q '#{export_line}' /etc/exports"
-      action :run
+  
+  cached_new_resource = new_resource
+  cached_new_resource = current_resource
+
+  sub_run_context = @run_context.dup
+  sub_run_context.resource_collection = Chef::ResourceCollection.new
+
+  begin
+    original_run_context, @run_context = @run_context, sub_run_context
+    
+    ro_rw = new_resource.writeable ? "rw" : "ro"
+    sync_async = new_resource.sync ? "sync" : "async"
+    options = new_resource.options.join(',')
+    options = ",#{options}" unless options.empty?
+    
+    export_line = "#{new_resource.directory} #{new_resource.network}(#{ro_rw},#{sync_async}#{options})"
+    
+    execute "exportfs" do
+      command "exportfs -ar"
+      action :nothing
     end
-    new_resource.updated_by_last_action(true)
-  else
-    Chef::Log.warn("Skipping an export for #{new_resource.directory}, it is already in the export list.")
+    
+    append_if_no_line "export #{new_resource.name}" do
+      path "/etc/exports"
+      line export_line
+      notifies :run, "execute[exportfs]", :immediately
+    end
+  ensure
+    @run_context = original_run_context
   end
+
+  # converge
+  begin
+    Chef::Runner.new(sub_run_context).converge
+  ensure
+    if sub_run_context.resource_collection.any?(&:updated?)
+      new_resource.updated_by_last_action(true)
+    end
+  end
+
 end
