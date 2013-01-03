@@ -39,11 +39,18 @@ action :create do
       command "exportfs -ar"
       action :nothing
     end
-    
-    append_if_no_line "export #{new_resource.name}" do
-      path "/etc/exports"
-      line export_line
-      notifies :run, "execute[exportfs]", :immediately
+
+    if ::File.zero? '/etc/exports'
+      file '/etc/exports' do
+        content export_line
+        notifies :run, "execute[exportfs]", :immediately
+      end
+    else
+      append_if_no_line "export #{new_resource.name}" do
+        path "/etc/exports"
+        line export_line
+        notifies :run, "execute[exportfs]", :immediately
+      end
     end
   ensure
     @run_context = original_run_context
