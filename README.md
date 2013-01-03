@@ -8,6 +8,8 @@ Installs and configures NFS client, or server components
 
 Should work on any Red Hat-family or Debian-family Linux distribution.
 
+*Note*:This cookbook depends on Sean O'Meara's [line cookbook](https://github.com/someara/line-cookbook)
+
 ## Attributes
 
 * nfs['packages']
