@@ -1,3 +1,12 @@
+## v0.3.1
+
+Correct LWRP behavior for empty exports file via @bryanwb
+
+Corrected lint warnings:
+
+    FC043: Prefer new notification syntax: ./recipes/default.rb:40
+    FC043: Prefer new notification syntax: ./recipes/server.rb:35
+
 ## v0.3.0
 
 @someara exports LWRP refactor
