@@ -56,10 +56,7 @@ Then in an nfs\_server.rb role that is applied to NFS servers:
           "statd_out" => 32766,
           "mountd" => 32767,
           "lockd" => 32768
-        },
-        "exports" => [
-          "/exports 10.0.0.0/8(ro,sync,no_root_squash)"
-        ]
+        }
       }
     )
     run_list [ "nfs::server" ]
