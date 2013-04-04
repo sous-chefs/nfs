@@ -93,8 +93,18 @@ The default parameters for the nfs\_export LWRP are as follows
   - synchronous/asynchronous export option
   - defaults to true
 
+* anonuser
+  - user mapping for anonymous users
+  - the user's UID will be retrieved from /etc/passwd for the anonuid=x option
+  - defaults to nil (no mapping)
+
+* anongroup
+  - group mapping for anonymous users
+  - the group's GID will be retrieved from /etc/group for the anongid=x option
+  - defaults to nil (no mapping)
+
 * options
-  - additional export options as an array, excluding the parameterized sync/async and ro/rw options
+  - additional export options as an array, excluding the parameterized sync/async, ro/rw options, and anoymous mappings
   - defaults to root\_squash
 
 ## nfs::undo recipe

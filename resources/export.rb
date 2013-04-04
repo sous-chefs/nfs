@@ -29,3 +29,5 @@ attribute :network, :required
 attribute :writeable, :default => false, :kind_of => [TrueClass, FalseClass]
 attribute :sync, :default => true, :kind_of => [TrueClass, FalseClass]
 attribute :options, :default => ['root_squash'], :kind_of => Array
+attribute :anonuser
+attribute :anongroup
