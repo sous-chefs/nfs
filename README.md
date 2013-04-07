@@ -110,11 +110,12 @@ Does your freshly kickstarted/preseeded system come with NFS, when you didn't as
 ## License and Author
 
 Author: Eric G. Wolfe (<wolfe21@marshall.edu>)
-Contributors: Riot Games, Sean OMeara
+Contributors: Riot Games, Sean OMeara, Unbekandt Léo
 
 Copyright 2011-2012, Eric G. Wolfe
 Copyright 2012, Riot Games
 Copyright 2012, Sean OMeara
+Copyright 2013, Unbekandt Léo
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
