@@ -32,9 +32,13 @@ Should work on any Red Hat-family or Debian-family Linux distribution.
   - ['mountd'] = Listen port for mountd, default 32767
   - ['lockd'] = Listen port for lockd, default 32768
 
-* ~nfs['exports']~
-  - Deprecated option.  No longer supported with the exports
-    functionality being refactored into an LWRP.
+* nfs[exports]
+  * Array of :
+    - ['directory'] = Directory to be exported
+    - ['network'] = Where to export the folder
+    - ['writeable'] = true => Read/Write, false => Read Only
+    - ['sync'] = true => Sync, false => Async
+    - ['options'] = List of the options of the export
 
 ## Usage
 
