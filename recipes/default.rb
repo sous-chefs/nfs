@@ -22,6 +22,15 @@ node['nfs']['packages'].each do |nfspkg|
   package nfspkg
 end
 
+# Configure NFS client components
+node['nfs']['config']['client_templates'].each do |client_template|
+  template client_template do
+    mode 0644
+    notifies :restart, "service[portmap]"
+    notifies :restart, "service[nfslock]"
+  end
+end
+
 # Start NFS client components
 service "portmap" do
   service_name node['nfs']['service']['portmap']
@@ -33,13 +42,4 @@ service "nfslock" do
   service_name node['nfs']['service']['lock']
   action [ :start, :enable ]
   supports :status => true
-end
-
-# Configure NFS client components
-node['nfs']['config']['client_templates'].each do |client_template|
-  template client_template do
-    mode 0644
-    notifies :restart, "service[portmap]"
-    notifies :restart, "service[nfslock]"
-  end
 end
