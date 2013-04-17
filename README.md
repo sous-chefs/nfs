@@ -6,7 +6,7 @@ Installs and configures NFS client, or server components
 
 ## Requirements
 
-Should work on any Red Hat-family or Debian-family Linux distribution.
+Should work on any Red Hat-family and Debian-family or Suse Sles Linux distribution.
 
 *Note*:This cookbook depends on Sean O'Meara's [line cookbook](https://github.com/someara/line-cookbook)
 
