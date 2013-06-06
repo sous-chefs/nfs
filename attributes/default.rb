@@ -39,7 +39,14 @@ when "rhel"
   if node['platform_version'].to_i >= 6
     default['nfs']['packages'] = %w{ nfs-utils rpcbind }
     default['nfs']['service']['portmap'] = "rpcbind"
-  end
+    end
+when "suse"
+  default['nfs']['packages'] = %w{ nfs-client nfs-kernel-server rpcbind }
+  default['nfs']['service']['portmap'] = "rpcbind"
+  default['nfs']['service']['lock'] = "nfsserver"
+  default['nfs']['service']['server'] = "nfsserver"
+  default['nfs']['config']['client_templates'] = %w{ /etc/sysconfig/nfs }
+
 when "debian"
   default['nfs']['packages'] = %w{ nfs-common portmap }
   default['nfs']['service']['portmap'] = "portmap"
