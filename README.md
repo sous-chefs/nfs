@@ -32,9 +32,13 @@ Should work on any Red Hat-family or Debian-family Linux distribution.
   - ['mountd'] = Listen port for mountd, default 32767
   - ['lockd'] = Listen port for lockd, default 32768
 
-* ~nfs['exports']~
-  - Deprecated option.  No longer supported with the exports
-    functionality being refactored into an LWRP.
+* nfs[exports]
+  * Array of :
+    - ['directory'] = Directory to be exported
+    - ['network'] = Where to export the folder
+    - ['writeable'] = true => Read/Write, false => Read Only
+    - ['sync'] = true => Sync, false => Async
+    - ['options'] = List of the options of the export
 
 ## Usage
 
@@ -113,11 +117,12 @@ Does your freshly kickstarted/preseeded system come with NFS, when you didn't as
 ## License and Author
 
 Author: Eric G. Wolfe (<wolfe21@marshall.edu>)
-Contributors: Riot Games, Sean OMeara
+Contributors: Riot Games, Sean OMeara, Unbekandt Léo
 
 Copyright 2011-2012, Eric G. Wolfe
 Copyright 2012, Riot Games
 Copyright 2012, Sean OMeara
+Copyright 2013, Unbekandt Léo
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
