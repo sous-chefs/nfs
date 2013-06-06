@@ -1,3 +1,8 @@
+## v0.3.2
+
+Added attributes to nfs_export LWRP for anonymous user and group mapping
+
+
 ## v0.3.1
 
 Correct LWRP behavior for empty exports file via @bryanwb
