@@ -1,7 +1,11 @@
-## v0.3.2
+## v0.4.0
 
-Added attributes to nfs_export LWRP for anonymous user and group mapping
-
+Add SLES 11 support.
+Handle non-existent exports.
+Re-order service/template.
+Added attributes to LWRP for anonymous user and group mapping.
+Removed deprecated exports documentation.
+Add test-kitchen skeleton
 
 ## v0.3.1
 
