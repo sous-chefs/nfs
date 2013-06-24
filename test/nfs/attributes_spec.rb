@@ -21,7 +21,6 @@
 # limitations under the License.
 #
 require File.join(File.dirname(__FILE__), %w{.. support spec_helper})
-require 'chef/node'
 require 'chef/platform'
 
 describe 'Nfs::Attributes::Default' do
