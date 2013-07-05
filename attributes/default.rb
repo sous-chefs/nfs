@@ -65,7 +65,7 @@ when "debian"
   end
 
   # Debian 7.0+ (wheezy)
-  if node['platform'] == "debian" and node['lsb']['codename'] == "wheezy"
+  if node['platform'] == "debian" and node['platform_version'].to_i >= 7
     default['nfs']['service']['portmap'] = "rpcbind"
   end
 
