@@ -64,6 +64,11 @@ when "debian"
     default['nfs']['packages'] = %w{ nfs-common rpcbind }
   end
 
+  # Debian 7.0+ (wheezy)
+  if node['platform'] == "debian" and node['lsb']['codename'] == "wheezy"
+    default['nfs']['service']['portmap'] = "rpcbind"
+  end
+
   # Debian 6.0+
   if node['platform'] == "debian" and node['platform_version'].to_i >= 6
     default['nfs']['service']['lock'] = "nfs-common"
