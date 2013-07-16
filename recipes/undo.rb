@@ -41,15 +41,18 @@ node['nfs']['packages'].each do |nfspkg|
 end
 
 # Remove server components for Debian
-case node['platform']
-when "debian","ubuntu"
+case node['platform_family']
+when "debian"
   package "nfs-kernel-server" do
     action :remove
   end
 end
 
-ruby_block "remove nfs::undo from run list" do
-  block do
-    node.run_list.remove("recipe[nfs::undo]")
+if not Chef::Config[:solo] then
+  ruby_block "remove nfs::undo from run_list when there is a conflict" do
+    block do
+      node.run_list.remove("recipe[nfs::undo]")
+    end
+    only_if { node.run_list.include?("recipe[nfs::default]") or node.run_list.include?("recipe[nfs::server]") }
   end
 end

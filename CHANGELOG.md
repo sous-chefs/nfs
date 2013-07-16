@@ -1,3 +1,7 @@
+## v0.4.2
+
+Remove nfs::undo only upon conflict in run_list
+
 ## v0.4.1
 
 Community site version does not match cb on github.
