@@ -31,22 +31,12 @@ node['nfs']['config']['client_templates'].each do |client_template|
   end
 end
 
-if node['platform_version'] == "7.1"
-    # Start NFS client components
-    service "rpcbind" do
-    service_name node['nfs']['service']['rpcbind']
-    action [ :start, :enable ]
-    supports :status => true
-    end
-else
-    # Start NFS client components
-    service "portmap" do
-    service_name node['nfs']['service']['portmap']
-    action [ :start, :enable ]
-    supports :status => true
-    end
+# Start NFS client components
+service "portmap" do
+  service_name node['nfs']['service']['portmap']
+  action [ :start, :enable ]
+  supports :status => true
 end
-
 
 service "nfslock" do
   service_name node['nfs']['service']['lock']
