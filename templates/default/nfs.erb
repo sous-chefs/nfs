@@ -5,4 +5,6 @@ STATD_OUTGOING_PORT=<%= node["nfs"]["port"]["statd_out"] %>
 MOUNTD_PORT=<%= node["nfs"]["port"]["mountd"] %>
 LOCKD_UDPPORT=<%= node["nfs"]["port"]["lockd"] %>
 LOCKD_TCPPORT=<%= node["nfs"]["port"]["lockd"] %>
+MOUNTD_NFS_V2=<%= node["nfs"]["v2"] %>
+MOUNTD_NFS_V3=<%= node["nfs"]["v3"] %>
 RQUOTAD="no"
