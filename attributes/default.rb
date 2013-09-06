@@ -73,4 +73,11 @@ when "debian"
   if node['platform'] == "debian" and node['platform_version'].to_i >= 6
     default['nfs']['service']['lock'] = "nfs-common"
   end
+
+  # Debian 7.0+
+  if node['platform'] == "debian" and node['platform_version'].to_i >= 7
+    default['nfs']['service']['lock'] = "nfs-common"
+    default['nfs']['service']['portmap'] = "rpcbind"
+    default['nfs']['packages'] = %w{ nfs-common rpcbind }
+  end
 end
