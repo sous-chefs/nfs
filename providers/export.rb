@@ -39,7 +39,7 @@ action :create do
     options = new_resource.options.join(',')
     options = ",#{options}" unless options.empty?
 
-    export_line = "#{new_resource.directory} #{new_resource.network}(#{ro_rw},#{sync_async}#{options})"
+    export_line = "#{new_resource.directory} #{new_resource.network}(#{ro_rw},#{sync_async}#{options})\n"
 
     execute "exportfs" do
       command "exportfs -ar"
