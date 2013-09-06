@@ -33,20 +33,22 @@ default['nfs']['config']['client_templates'] = %w{ /etc/sysconfig/nfs }
 default['nfs']['config']['server_template'] = "/etc/sysconfig/nfs"
 
 case node['platform_family']
-when "rhel"
+
+when 'rhel'
   # RHEL6 edge case package set and portmap name 
   if node['platform_version'].to_i >= 6
     default['nfs']['packages'] = %w{ nfs-utils rpcbind }
     default['nfs']['service']['portmap'] = "rpcbind"
-    end
-when "suse"
+  end
+
+when 'suse'
   default['nfs']['packages'] = %w{ nfs-client nfs-kernel-server rpcbind }
   default['nfs']['service']['portmap'] = "rpcbind"
   default['nfs']['service']['lock'] = "nfsserver"
   default['nfs']['service']['server'] = "nfsserver"
   default['nfs']['config']['client_templates'] = %w{ /etc/sysconfig/nfs }
 
-when "debian"
+when 'debian'
   default['nfs']['packages'] = %w{ nfs-common portmap }
   default['nfs']['service']['portmap'] = "portmap"
   default['nfs']['service']['lock'] = "statd"
@@ -54,30 +56,32 @@ when "debian"
   default['nfs']['config']['client_templates'] = %w{ /etc/default/nfs-common /etc/modprobe.d/lockd.conf }
   default['nfs']['config']['server_template'] = "/etc/default/nfs-kernel-server"
 
-  # Ubuntu 11.04 edge case package set and portmap name
-  if node['platform_version'].to_f == 11.04
-    default['nfs']['service']['portmap'] = "rpcbind"
-    default['nfs']['packages'] = %w{ nfs-common rpcbind }
-  # Ubuntu 11.10 edge case package set and portmap name
-  elsif node['platform_version'].to_f >= 11.10 
-    default['nfs']['service']['portmap'] = "rpcbind-boot"
-    default['nfs']['packages'] = %w{ nfs-common rpcbind }
-  end
+  case node['platform']
 
-  # Debian 7.0+ (wheezy)
-  if node['platform'] == "debian" and node['platform_version'].to_i >= 7
-    default['nfs']['service']['portmap'] = "rpcbind"
-  end
+  when 'ubuntu'
 
-  # Debian 6.0+
-  if node['platform'] == "debian" and node['platform_version'].to_i >= 6
-    default['nfs']['service']['lock'] = "nfs-common"
-  end
+    # Ubuntu 11.04 edge case package set and portmap name
+    if node['platform_version'].to_f == 11.04
+      default['nfs']['service']['portmap'] = "rpcbind"
+      default['nfs']['packages'] = %w{ nfs-common rpcbind }
+    # Ubuntu 11.10 edge case package set and portmap name
+    elsif node['platform_version'].to_f >= 11.10 
+      default['nfs']['service']['portmap'] = "rpcbind-boot"
+      default['nfs']['packages'] = %w{ nfs-common rpcbind }
+    end
 
-  # Debian 7.0+
-  if node['platform'] == "debian" and node['platform_version'].to_i >= 7
-    default['nfs']['service']['lock'] = "nfs-common"
-    default['nfs']['service']['portmap'] = "rpcbind"
-    default['nfs']['packages'] = %w{ nfs-common rpcbind }
+  when 'debian'
+
+    # Debian 6.0+
+    if node['platform_version'].to_i >= 6
+      default['nfs']['service']['lock'] = "nfs-common"
+    end
+
+    # Debian 7.0+ (wheezy)
+    if node['platform_version'].to_i >= 7
+      default['nfs']['service']['lock'] = "nfs-common"
+      default['nfs']['service']['portmap'] = "rpcbind"
+      default['nfs']['packages'] = %w{ nfs-common rpcbind }
+    end
   end
 end
