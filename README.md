@@ -32,9 +32,9 @@ Should work on any Red Hat-family and Debian-family or Suse Sles Linux distribut
   - ['mountd'] = Listen port for mountd, default 32767
   - ['lockd'] = Listen port for lockd, default 32768
 
-* ~nfs['exports']~
-  - Deprecated option.  No longer supported with the exports
-    functionality being refactored into an LWRP.
+* nfs['v2'] & nfs['v3']
+  - Set to `yes` or `no` to turn on/off NFS protocol level v2, or v3.
+  - Defaults to nil, deferring to the default behavior provided by running kernel. 
 
 ## Usage
 

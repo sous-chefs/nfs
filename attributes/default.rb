@@ -18,8 +18,8 @@
 #
 
 #Allowing Version 2 and Version 3 of NFS to be enabled or disabled.  Both are enabled by default.
-default['nfs']['v2'] = "yes"
-default['nfs']['v3'] = "yes"
+default['nfs']['v2'] = nil 
+default['nfs']['v3'] = nil
 
 # Default options are taken from the Debian guide on static NFS ports
 default['nfs']['port']['statd'] = 32765
