@@ -1,3 +1,12 @@
+## v0.5.0
+
+* @CloCkWeRX - LWRP multi-line fix
+* @walbenzi - toggle-able nfs protocol level 2, or 3
+  - defer to default proto level, and default behavior according to installed kernel
+  - Add attributes to README
+
+* @ranxxerox & @reoring - Debian wheezy support added
+
 ## v0.4.2
 
 Remove nfs::undo only upon conflict in run_list
