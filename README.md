@@ -81,6 +81,7 @@ The default parameters for the nfs\_export LWRP are as follows
 * network
   - a CIDR, IP address, or wildcard (\*)
   - requires an option
+  - can be a string for a single address or an array of networks
 
 * writeable
   - ro/rw export option
