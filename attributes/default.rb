@@ -17,9 +17,10 @@
 # limitations under the License.
 #
 
-#Allowing Version 2 and Version 3 of NFS to be enabled or disabled.  Both are enabled by default.
+#Allowing Version 2, 3 and 4 of NFS to be enabled or disabled.  2 and 3are enabled by default.
 default['nfs']['v2'] = nil 
 default['nfs']['v3'] = nil
+default['nfs']['v4'] = nil
 
 # Default options are taken from the Debian guide on static NFS ports
 default['nfs']['port']['statd'] = 32765
@@ -44,6 +45,20 @@ when 'rhel'
     default['nfs']['packages'] = %w{ nfs-utils rpcbind }
     default['nfs']['service']['portmap'] = "rpcbind"
   end
+
+when 'freebsd'
+  # Packages are installed by default
+  default['nfs']['packages'] = []
+  default['nfs']['server_template'] = '/etc/rc.conf.d/nfs-server'
+  default['nfs']['client_templates'] = %w{
+    /etc/rc.conf.d/mountd /etc/rc.conf.d/nfsd
+  }
+  default['nfs']['service']['portmap'] = "rpcbind"
+  default['nfs']['service']['lock'] = "lockd"
+  default['nfs']['service']['server'] = "nfsd"
+
+  default['nfs']['config']['mountd'] = '-r'
+  default['nfs']['config']['nfs'] = '-u -t -n 24'
 
 when 'suse'
   default['nfs']['packages'] = %w{ nfs-client nfs-kernel-server rpcbind }
