@@ -26,7 +26,7 @@ end
 if node['os'] == 'freebsd'
   directory ::File.dirname(node['nfs']['config']['server_template']) do
     mode 0755
-    action :Create
+    action :create
   end
 end
 
