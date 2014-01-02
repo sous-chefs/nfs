@@ -9,7 +9,7 @@ recipe "nfs", "Installs and configures nfs client components"
 recipe "nfs::server", "Installs and configures nfs server components"
 recipe "nfs::undo", "Undo both default and server recipes"
 
-%w{ ubuntu debian redhat centos fedora scientific amazon oracle sles }.each do |os|
+%w{ ubuntu debian redhat centos fedora scientific amazon oracle sles freebsd }.each do |os|
   supports os
 end
 

@@ -23,11 +23,10 @@ node['nfs']['packages'].each do |nfspkg|
 end
 
 # On FreeBSD, create the potentially missing configuration directory
-if node['os'] == 'freebsd'
-  directory ::File.dirname(node['nfs']['config']['server_template']) do
-    mode 0755
-    action :create
-  end
+directory ::File.dirname(node['nfs']['config']['server_template']) do
+  mode 0755
+  action :create
+  only_if { node['platform_family'] == 'freebsd' }
 end
 
 # Configure NFS client components

@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-#Allowing Version 2, 3 and 4 of NFS to be enabled or disabled.  2 and 3are enabled by default.
+#Allowing Version 2, 3 and 4 of NFS to be enabled or disabled.  Both 2 and 3 are enabled by default.
 default['nfs']['v2'] = nil 
 default['nfs']['v3'] = nil
 default['nfs']['v4'] = nil
