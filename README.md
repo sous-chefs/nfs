@@ -36,6 +36,10 @@ Should work on any Red Hat-family and Debian-family or Suse Sles Linux distribut
   - Set to `yes` or `no` to turn on/off NFS protocol level v2, or v3.
   - Defaults to nil, deferring to the default behavior provided by running kernel. 
 
+* nfs['count']
+  - Number of rpc.nfsd threads to run.
+  - Defaults to nil, which means that eight threads are started.  Raise this count on busy servers.
+
 ## Usage
 
 To install the NFS components for a client system, simply add nfs to the run\_list.

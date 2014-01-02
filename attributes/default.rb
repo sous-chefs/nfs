@@ -28,6 +28,9 @@ default['nfs']['port']['statd_out'] = 32766
 default['nfs']['port']['mountd'] = 32767
 default['nfs']['port']['lockd'] = 32768
 
+# Number of rpc.nfsd threads to start (default 8)
+default['nfs']['count'] = nil
+
 # Default options are based on RHEL5, as the attribute names were
 # adopted from this platform.
 default['nfs']['packages'] = %w{ nfs-utils portmap }
