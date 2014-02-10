@@ -40,7 +40,7 @@ case node['platform_family']
 
 when 'rhel'
   # RHEL6 edge case package set and portmap name 
-  if node['platform_version'].to_i >= 6
+  if node['platform_version'].to_i >= 6 or platform?('amazon')
     default['nfs']['packages'] = %w{ nfs-utils rpcbind }
     default['nfs']['service']['portmap'] = "rpcbind"
   end
