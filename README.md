@@ -22,6 +22,11 @@ Should work on any Red Hat-family and Debian-family or Suse Sles Linux distribut
   - lock - the statd or nfslock service depending on platform
   - server - the server component, nfs or nfs-kernel-server depending on platform
 
+* nfs['service\_provider']
+  - portmap - provider for portmap service, chosen by platform
+  - lock - provider for lock service, chosen by platform
+  - server - provider for server service, chosen by platform
+
 * nfs['config']
   - client\_templates - templates to iterate through on client systems, chosen by platform
   - server\_template - server specific template, chosen by platform

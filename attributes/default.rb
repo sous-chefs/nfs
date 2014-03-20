@@ -37,8 +37,12 @@ default['nfs']['packages'] = %w{ nfs-utils portmap }
 default['nfs']['service']['portmap'] = "portmap"
 default['nfs']['service']['lock'] = "nfslock"
 default['nfs']['service']['server'] = "nfs"
+default['nfs']['service_provider']['lock'] = Chef::Platform::find_provider_for_node node, :service
+default['nfs']['service_provider']['portmap'] = Chef::Platform::find_provider_for_node node, :service
+default['nfs']['service_provider']['server'] = Chef::Platform::find_provider_for_node node, :service
 default['nfs']['config']['client_templates'] = %w{ /etc/sysconfig/nfs }
 default['nfs']['config']['server_template'] = "/etc/sysconfig/nfs"
+
 
 case node['platform_family']
 
@@ -90,6 +94,12 @@ when 'debian'
     elsif node['platform_version'].to_f >= 11.10 
       default['nfs']['service']['portmap'] = "rpcbind-boot"
       default['nfs']['packages'] = %w{ nfs-common rpcbind }
+    end
+
+    # Ubuntu 13.10+ service provider is Upstart for portmap and lock
+    if node['platform_version'].to_f >= 13.10
+      default['nfs']['service_provider']['portmap'] = Chef::Provider::Service::Upstart
+      default['nfs']['service_provider']['lock'] = Chef::Provider::Service::Upstart
     end
 
   when 'debian'
