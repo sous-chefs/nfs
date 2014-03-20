@@ -4,6 +4,10 @@ driver_config:
   require_chef_omnibus: latest
 
 platforms:
+- name: debian-7.2.0
+  driver_config:
+    box: opscode-debian-7.2.0
+    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_debian-7.2.0_provisionerless.box
 - name: ubuntu-12.04 
   run_list:
   - recipe[apt]
