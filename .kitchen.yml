@@ -4,26 +4,17 @@ driver_config:
   require_chef_omnibus: latest
 
 platforms:
-- name: debian-7.2.0
-  driver_config:
-    box: opscode-debian-7.2.0
-    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_debian-7.2.0_provisionerless.box
+- name: debian-7.4
+  run_list:
+  - recipe[apt]
 - name: ubuntu-12.04 
   run_list:
   - recipe[apt]
-  driver_config:
-    box: opscode-ubuntu-12.04
 - name: ubuntu-10.04
   run_list:
-  - recipe[apt]
-  driver_config:
-    box: opscode-ubuntu-10.04
-- name: centos-6.4
-  driver_config:
-    box: opscode-centos-6.4
-- name: centos-5.9
-  driver_config:
-    box: opscode-centos-5.9
+    recipe[apt]
+- name: centos-6.5
+- name: centos-5.10
 
 suites:
 - name: default
