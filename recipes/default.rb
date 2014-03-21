@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: nfs
-# Recipe:: default 
+# Recipe:: default
 #
 # Copyright 2011, Eric G. Wolfe
 #
@@ -24,7 +24,7 @@ end
 
 # On FreeBSD, create the potentially missing configuration directory
 directory ::File.dirname(node['nfs']['config']['server_template']) do
-  mode 0755
+  mode 00755
   action :create
   only_if { node['platform_family'] == 'freebsd' }
 end
@@ -32,23 +32,23 @@ end
 # Configure NFS client components
 node['nfs']['config']['client_templates'].each do |client_template|
   template client_template do
-    mode 0644
-    notifies :restart, "service[portmap]"
-    notifies :restart, "service[nfslock]"
+    mode 00644
+    notifies :restart, 'service[portmap]'
+    notifies :restart, 'service[nfslock]'
   end
 end
 
 # Start NFS client components
-service "portmap" do
+service 'portmap' do
   service_name node['nfs']['service']['portmap']
   provider node['nfs']['service_provider']['portmap']
-  action [ :start, :enable ]
-  supports :status => true
+  action [:start, :enable]
+  supports status: true
 end
 
-service "nfslock" do
+service 'nfslock' do
   service_name node['nfs']['service']['lock']
   provider node['nfs']['service_provider']['lock']
-  action [ :start, :enable ]
-  supports :status => true
+  action [:start, :enable]
+  supports status: true
 end

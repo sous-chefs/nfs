@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: nfs
-# Recipe:: undo 
+# Recipe:: undo
 #
 # Copyright 2012, Eric G. Wolfe
 #
@@ -19,18 +19,18 @@
 
 # Stop nfs server components
 service node['nfs']['service']['server'] do
-  action [ :stop, :disable ]
+  action [:stop, :disable]
 end
 
-service "nfslock" do
+service 'nfslock' do
   service_name node['nfs']['service']['lock']
-  action [ :stop, :disable ]
+  action [:stop, :disable]
 end
 
 # Stop nfs client components
-service "portmap" do
+service 'portmap' do
   service_name node['nfs']['service']['portmap']
-  action [ :stop, :disable ]
+  action [:stop, :disable]
 end
 
 # Remove package, dependent on platform
@@ -42,17 +42,17 @@ end
 
 # Remove server components for Debian
 case node['platform_family']
-when "debian"
-  package "nfs-kernel-server" do
+when 'debian'
+  package 'nfs-kernel-server' do
     action :remove
   end
 end
 
-if not Chef::Config[:solo] then
-  ruby_block "remove nfs::undo from run_list when there is a conflict" do
+unless Chef::Config[:solo]
+  ruby_block 'remove nfs::undo from run_list when there is a conflict' do
     block do
-      node.run_list.remove("recipe[nfs::undo]")
+      node.run_list.remove('recipe[nfs::undo]')
     end
-    only_if { node.run_list.include?("recipe[nfs::default]") or node.run_list.include?("recipe[nfs::server]") }
+    only_if { node.run_list.include?('recipe[nfs::default]') || node.run_list.include?('recipe[nfs::server]') }
   end
 end

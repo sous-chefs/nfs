@@ -1,7 +1,5 @@
 ---
 driver_plugin: vagrant 
-driver_config:
-  require_chef_omnibus: latest
 
 platforms:
 - name: debian-7.4
@@ -18,5 +16,9 @@ platforms:
 
 suites:
 - name: default
-  run_list: ["recipe[nfs::server]"]
-  attributes: {}
+  run_list:
+  - recipe[nfs::default]
+- name: server
+  run_list:
+  - recipe[nfs::server]
+  - recipe[nfs_test::server]

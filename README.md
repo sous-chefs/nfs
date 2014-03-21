@@ -1,49 +1,54 @@
-# NFS [![Build Status](https://secure.travis-ci.org/atomic-penguin/cookbook-nfs.png?branch=master)](http://travis-ci.org/atomic-penguin/cookbook-nfs)
+NFS
+---
 
-## Description
+[![Build Status](https://secure.travis-ci.org/atomic-penguin/cookbook-nfs.png?branch=master)](http://travis-ci.org/atomic-penguin/cookbook-nfs)
+
+Description
+-----------
 
 Installs and configures NFS client, or server components 
 
-## Requirements
+Requirements
+------------
 
-Should work on any Red Hat-family and Debian-family or Suse Sles Linux distribution.
+Should work on any RHEL, Debian, Ubuntu, SUSE, and FreeBSD distributions.
 
-*Note*:This cookbook depends on Sean O'Meara's [line cookbook](https://github.com/someara/line-cookbook)
+This cookbook depends on Sean O'Meara's [line cookbook](https://github.com/someara/line-cookbook)
 
-## Attributes
+### Attributes
 
-* nfs['packages']
-  - Makes a best effort to choose NFS client packages dependent on platform
-  - NFS server package needs to be hardcoded for Debian/Ubuntu in the server
-    recipe, or overridden in a role.
+* `nfs['packages']`
+  - Case switch in attributes to choose NFS client packages dependent on platform.
 
-* nfs['service']
-  - portmap - the portmap or rpcbind service depending on platform
-  - lock - the statd or nfslock service depending on platform
-  - server - the server component, nfs or nfs-kernel-server depending on platform
+* `nfs['service']`
+  - `['portmap']` - the portmap or rpcbind service depending on platform
+  - `['lock']` - the statd or nfslock service depending on platform
+  - `['server']` - the server component, nfs or nfs-kernel-server depending on platform
 
-* nfs['service\_provider']
-  - portmap - provider for portmap service, chosen by platform
-  - lock - provider for lock service, chosen by platform
-  - server - provider for server service, chosen by platform
+* `nfs['service_provider']`
+  - `['portmap']` - provider for portmap service, chosen by platform
+  - `['lock']` - provider for lock service, chosen by platform
+  - `['server']` - provider for server service, chosen by platform
 
-* nfs['config']
-  - client\_templates - templates to iterate through on client systems, chosen by platform
-  - server\_template - server specific template, chosen by platform
+* `nfs['config']`
+  - `client_templates` - templates to iterate through on client systems, chosen by platform
+  - `server_template` - Per-platform case switch in common nfs.erb template.  This string should be
+     set to where the main NFS server configuration file should be placed.
 
-* nfs['port']
-  - ['statd'] = Listen port for statd, default 32765
-  - ['statd\_out'] = Outgoing port for statd, default 32766
-  - ['mountd'] = Listen port for mountd, default 32767
-  - ['lockd'] = Listen port for lockd, default 32768
+* `nfs['threads']` - Number of nfsd threads to run.  Default 8 on Linux, 24 on FreeBSD.  Set to 0, to disable.
 
-* nfs['v2'] & nfs['v3']
+* `nfs['port']`
+  - `['statd']` = Listen port for statd, default 32765
+  - `['statd_out']` = Outgoing port for statd, default 32766
+  - `['mountd']` = Listen port for mountd, default 32767
+  - `['lockd']` = Listen port for lockd, default 32768
+
+* `nfs['v2']`, `nfs['v3']`, `nfs['v4']`
   - Set to `yes` or `no` to turn on/off NFS protocol level v2, or v3.
   - Defaults to nil, deferring to the default behavior provided by running kernel. 
 
-* nfs['count']
-  - Number of rpc.nfsd threads to run.
-  - Defaults to nil, which means that eight threads are started.  Raise this count on busy servers.
+* `nfs['mountd_flags']` - BSD launch options for mountd.
+  `nfs['server_flags']` - BSD launch options for nfsd.
 
 ## Usage
 
