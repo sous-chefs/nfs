@@ -127,7 +127,7 @@ Does your freshly kickstarted/preseeded system come with NFS, when you didn't as
 
 ## License and Author
 
-Author: Eric G. Wolfe (<wolfe21@marshall.edu>)
+Author: Eric G. Wolfe (eric.wolfe@gmail.com) [![endorse](https://api.coderwall.com/atomic-penguin/endorsecount.png)](https://coderwall.com/atomic-penguin)
 Contributors: Riot Games, Sean OMeara
 
 Copyright 2011-2014, Eric G. Wolfe
