@@ -8,7 +8,7 @@ v1.0.0
 * @mvollrath added Ubuntu 13.10 support
 * @JonathanSerafini added FreeBSD support
 * @gswallow added an `nfs['threads']` attribute
-* @bring added array support for network LWRP parameter
+* @brint added array support for network LWRP parameter
 * Tests
   - @stuart12 added debian to kitchen.ci platforms
   - Chefspec unit test coverage
