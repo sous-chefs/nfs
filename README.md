@@ -58,7 +58,7 @@ To install the NFS components for a client system, simply add nfs to the run\_li
     description "Role applied to all systems"
     run_list [ "nfs" ]
 
-Then in an nfs\_server.rb role that is applied to NFS servers:
+Then in an `nfs_server.rb` role that is applied to NFS servers:
 
     name "nfs_server"
     description "Role applied to the system that should be an NFS server."
@@ -75,7 +75,7 @@ Then in an nfs\_server.rb role that is applied to NFS servers:
     )
     run_list [ "nfs::server" ]
 
-### nfs\_export LWRP Usage
+### `nfs_export` LWRP Usage
 
 Applications or other cookbooks can use the nfs\_export LWRP to add exports:
 
@@ -86,7 +86,7 @@ Applications or other cookbooks can use the nfs\_export LWRP to add exports:
       options ['no_root_squash']
     end
 
-The default parameters for the nfs\_export LWRP are as follows
+The default parameters for the `nfs_export` LWRP are as follows
 
 * directory 
   - directory you wish to export
@@ -117,7 +117,7 @@ The default parameters for the nfs\_export LWRP are as follows
 
 * options
   - additional export options as an array, excluding the parameterized sync/async, ro/rw options, and anoymous mappings
-  - defaults to root\_squash
+  - defaults to `root_squash`
 
 ## nfs::undo recipe
 
@@ -130,7 +130,7 @@ Does your freshly kickstarted/preseeded system come with NFS, when you didn't as
 Author: Eric G. Wolfe (<wolfe21@marshall.edu>)
 Contributors: Riot Games, Sean OMeara
 
-Copyright 2011-2012, Eric G. Wolfe
+Copyright 2011-2014, Eric G. Wolfe
 Copyright 2012, Riot Games
 Copyright 2012, Sean OMeara
 
