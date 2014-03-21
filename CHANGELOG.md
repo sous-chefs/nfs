@@ -1,6 +1,7 @@
 v1.0.0
 ------
 
+* Removed unused variables from provider
 * NFS server template refactored into singular template to take advantage
   of added features like `nfs['v4']` and `nfs['threads']`
 * @eric-tucker added Amazon support
