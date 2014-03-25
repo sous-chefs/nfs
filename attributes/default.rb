@@ -23,11 +23,15 @@ default['nfs']['v2'] = nil
 default['nfs']['v3'] = nil
 default['nfs']['v4'] = nil
 
+# rquotad needed?
+default['nfs']['rquotad'] = 'no'
+
 # Default options are taken from the Debian guide on static NFS ports
 default['nfs']['port']['statd'] = 32_765
 default['nfs']['port']['statd_out'] = 32_766
 default['nfs']['port']['mountd'] = 32_767
 default['nfs']['port']['lockd'] = 32_768
+default['nfs']['port']['rquotad'] = 32_769
 
 # Number of rpc.nfsd threads to start (default 8)
 default['nfs']['threads'] = 8
