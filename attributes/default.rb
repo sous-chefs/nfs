@@ -44,9 +44,9 @@ default['nfs']['service_provider']['server'] = Chef::Platform.find_provider_for_
 default['nfs']['config']['client_templates'] = %w(/etc/sysconfig/nfs)
 default['nfs']['config']['server_template'] = '/etc/sysconfig/nfs'
 
-default['nfs']['domain'] = "localhost.localdomain"
-default['nfs']['nobody_user'] = "nobody"
-default['nfs']['nobody_group'] = "nobody"
+default['nfs']['domain'] = 'localhost.localdomain'
+default['nfs']['nobody_user'] = 'nobody'
+default['nfs']['nobody_group'] = 'nobody'
 
 case node['platform_family']
 
