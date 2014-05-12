@@ -43,12 +43,12 @@ service 'portmap' do
   service_name node['nfs']['service']['portmap']
   provider node['nfs']['service_provider']['portmap']
   action [:start, :enable]
-  supports status: true
+  supports :status => true
 end
 
 service 'nfslock' do
   service_name node['nfs']['service']['lock']
   provider node['nfs']['service_provider']['lock']
   action [:start, :enable]
-  supports status: true
+  supports :status => true
 end
