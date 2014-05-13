@@ -32,6 +32,13 @@ service node['nfs']['service']['server'] do
   supports :status => true
 end
 
+# Start idmapd components
+service node['nfs']['service']['idmap'] do
+  provider node['nfs']['service_provider']['idmap']
+  action [:start, :enable]
+  supports :status => true
+end
+
 # Configure nfs-server components
 template node['nfs']['config']['server_template'] do
   source 'nfs.erb'
