@@ -33,6 +33,7 @@ end
 node['nfs']['config']['client_templates'].each do |client_template|
   template client_template do
     mode 00644
+    notifies :restart, 'service[rpcidmapd]'
     notifies :restart, 'service[portmap]'
     notifies :restart, 'service[nfslock]'
   end
