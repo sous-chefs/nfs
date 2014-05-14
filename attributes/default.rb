@@ -38,6 +38,7 @@ default['nfs']['packages'] = %w(nfs-utils portmap)
 default['nfs']['service']['portmap'] = 'portmap'
 default['nfs']['service']['lock'] = 'nfslock'
 default['nfs']['service']['server'] = 'nfs'
+default['nfs']['service']['idmap'] = 'rpcidmapd'
 default['nfs']['service_provider']['lock'] = Chef::Platform.find_provider_for_node node, :service
 default['nfs']['service_provider']['portmap'] = Chef::Platform.find_provider_for_node node, :service
 default['nfs']['service_provider']['server'] = Chef::Platform.find_provider_for_node node, :service
