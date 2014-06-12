@@ -13,7 +13,7 @@ end
 # rubocop rake task
 desc 'Ruby style guide linter'
 task :rubocop do
-  sh 'rubocop'
+  sh 'rubocop --fail-level W'
 end
 
 # test-kitchen task
@@ -25,4 +25,4 @@ rescue LoadError
 end
 
 # default tasks are quick, commit tests
-task :default => ['foodcritic', 'rubocop', 'chefspec']
+task default: %w(foodcritic rubocop chefspec)
