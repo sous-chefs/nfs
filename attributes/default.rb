@@ -42,11 +42,16 @@ default['nfs']['packages'] = %w(nfs-utils portmap)
 default['nfs']['service']['portmap'] = 'portmap'
 default['nfs']['service']['lock'] = 'nfslock'
 default['nfs']['service']['server'] = 'nfs'
+default['nfs']['service']['idmap'] = 'rpcidmapd'
 default['nfs']['service_provider']['lock'] = Chef::Platform.find_provider_for_node node, :service
 default['nfs']['service_provider']['portmap'] = Chef::Platform.find_provider_for_node node, :service
 default['nfs']['service_provider']['server'] = Chef::Platform.find_provider_for_node node, :service
-default['nfs']['config']['client_templates'] = %w(/etc/sysconfig/nfs)
+default['nfs']['config']['client_templates'] = %w(/etc/sysconfig/nfs /etc/idmapd.conf)
 default['nfs']['config']['server_template'] = '/etc/sysconfig/nfs'
+
+default['nfs']['domain'] = 'localhost.localdomain'
+default['nfs']['nobody_user'] = 'nobody'
+default['nfs']['nobody_group'] = 'nobody'
 
 case node['platform_family']
 
