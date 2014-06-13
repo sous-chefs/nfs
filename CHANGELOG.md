@@ -1,3 +1,17 @@
+v2.0.0-rc
+---------
+
+* @jessp01 added rquotad support, Issue #34
+* @jessp01 added NFS4 support, Issue #35
+* @dudyk Hash Rockets, Issue #36
+* @soul-rebel, Issue #37
+* @kjtanaka, notification timing, Issue #38
+* rework issue #35 to be cross-platform and backwards compatible
+
+TODO:
+* fix tests, verify behavior
+* Update documentation
+
 v1.0.0
 ------
 

@@ -42,14 +42,18 @@ default['nfs']['packages'] = %w(nfs-utils portmap)
 default['nfs']['service']['portmap'] = 'portmap'
 default['nfs']['service']['lock'] = 'nfslock'
 default['nfs']['service']['server'] = 'nfs'
-default['nfs']['service']['idmap'] = 'rpcidmapd'
 default['nfs']['service_provider']['lock'] = Chef::Platform.find_provider_for_node node, :service
 default['nfs']['service_provider']['portmap'] = Chef::Platform.find_provider_for_node node, :service
 default['nfs']['service_provider']['server'] = Chef::Platform.find_provider_for_node node, :service
-default['nfs']['config']['client_templates'] = %w(/etc/sysconfig/nfs /etc/idmapd.conf)
+default['nfs']['config']['client_templates'] = %w(/etc/sysconfig/nfs)
 default['nfs']['config']['server_template'] = '/etc/sysconfig/nfs'
 
-default['nfs']['domain'] = 'localhost.localdomain'
+# idmap recipe attributes
+default['nfs']['config']['idmap_template'] = '/etc/idmapd.conf'
+default['nfs']['service']['idmap'] = 'rpcidmapd'
+default['nfs']['service_provider']['idmap'] = Chef::Platform.find_provider_for_node node, :service
+default['nfs']['domain'] = node['domain']
+default['nfs']['pipefs_directory'] = '/var/lib/nfs/rpc_pipefs'
 default['nfs']['nobody_user'] = 'nobody'
 default['nfs']['nobody_group'] = 'nobody'
 
@@ -86,25 +90,27 @@ when 'suse'
   default['nfs']['config']['client_templates'] = %w(/etc/sysconfig/nfs)
 
 when 'debian'
-  default['nfs']['packages'] = %w(nfs-common portmap)
+  default['nfs']['packages'] = %w(nfs-common rpcbind nfs-kernel-server)
   default['nfs']['service']['portmap'] = 'portmap'
   default['nfs']['service']['lock'] = 'statd'
   default['nfs']['service']['server'] = 'nfs-kernel-server'
+  default['nfs']['service']['idmap'] = 'nfs-common'
   default['nfs']['config']['client_templates'] = %w(/etc/default/nfs-common /etc/modprobe.d/lockd.conf)
   default['nfs']['config']['server_template'] = '/etc/default/nfs-kernel-server'
 
   case node['platform']
 
   when 'ubuntu'
+    default['nfs']['service']['lock'] = 'statd'
+    default['nfs']['service']['idmap'] = 'idmapd'
+    default['nfs']['service_provider']['idmap'] = Chef::Provider::Service::Upstart
 
     # Ubuntu 11.04 edge case package set and portmap name
     if node['platform_version'].to_f == 11.04
       default['nfs']['service']['portmap'] = 'rpcbind'
-      default['nfs']['packages'] = %w(nfs-common rpcbind)
     # Ubuntu 11.10 edge case package set and portmap name
     elsif node['platform_version'].to_f >= 11.10
       default['nfs']['service']['portmap'] = 'rpcbind-boot'
-      default['nfs']['packages'] = %w(nfs-common rpcbind)
     end
 
     # Ubuntu 13.10+ service provider is Upstart for portmap and lock
@@ -124,9 +130,7 @@ when 'debian'
     if node['platform_version'].to_i >= 7
       default['nfs']['service']['lock'] = 'nfs-common'
       default['nfs']['service']['portmap'] = 'rpcbind'
-      default['nfs']['packages'] = %w(nfs-common rpcbind)
     end
 
   end
-
 end

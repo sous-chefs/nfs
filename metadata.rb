@@ -4,7 +4,7 @@ license 'Apache 2.0'
 description 'Installs and configures nfs, and NFS exports'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 name 'nfs'
-version '1.0.0'
+version '1.0.99'
 recipe 'nfs', 'Installs and configures nfs client components'
 recipe 'nfs::server', 'Installs and configures nfs server components'
 recipe 'nfs::undo', 'Undo both default and server recipes'

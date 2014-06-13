@@ -1,3 +1,4 @@
+inherit_from: rubocop-todo.yml
 Encoding:
   Enabled: False
 LineLength:

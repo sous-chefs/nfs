@@ -1,0 +1,4 @@
+# Issue #36
+# * folks want NFSv4 support, but can't be buggered to update Ruby
+HashSyntax:
+  Enabled: false

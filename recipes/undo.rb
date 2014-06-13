@@ -41,11 +41,9 @@ node['nfs']['packages'].each do |nfspkg|
 end
 
 # Remove server components for Debian
-case node['platform_family']
-when 'debian'
-  package 'nfs-kernel-server' do
-    action :remove
-  end
+package 'nfs-kernel-server' do
+  action :remove
+  only_if { node['platform_family'] == 'debian' }
 end
 
 unless Chef::Config[:solo]
@@ -53,6 +51,9 @@ unless Chef::Config[:solo]
     block do
       node.run_list.remove('recipe[nfs::undo]')
     end
-    only_if { node.run_list.include?('recipe[nfs::default]') || node.run_list.include?('recipe[nfs::server]') }
+    only_if do
+      node.run_list.include?('recipe[nfs::default]') || node.run_list.include?('recipe[nfs::client4]') ||
+      node.run_list.include?('recipe[nfs::server]') || node.run_list.include?('recipe[nfs::server4]')
+    end
   end
 end

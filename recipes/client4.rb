@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: nfs
-# Recipe:: default
+# Recipe:: client4
 #
 # Copyright 2011, Eric G. Wolfe
 #
@@ -17,5 +17,7 @@
 # limitations under the License.
 #
 
-# NFS client components protocol-level less than, or equal to 3 moved to _common recipe
-include_recipe 'nfs::_common'
+# Include NFS <= v3 components and idmap
+%w(nfs::_common nfs::_idmap).each do |component|
+  include_recipe component
+end
