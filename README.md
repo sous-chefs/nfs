@@ -24,16 +24,19 @@ This cookbook depends on Sean O'Meara's [line cookbook](https://github.com/somea
   - `['portmap']` - the portmap or rpcbind service depending on platform
   - `['lock']` - the statd or nfslock service depending on platform
   - `['server']` - the server component, nfs or nfs-kernel-server depending on platform
+  - `['idmap']` - the NFSv4 idmap component
 
 * `nfs['service_provider']`
   - `['portmap']` - provider for portmap service, chosen by platform
   - `['lock']` - provider for lock service, chosen by platform
   - `['server']` - provider for server service, chosen by platform
+  - `['idmap']` - provider for NFSv4 idmap service
 
 * `nfs['config']`
   - `client_templates` - templates to iterate through on client systems, chosen by platform
   - `server_template` - Per-platform case switch in common nfs.erb template.  This string should be
      set to where the main NFS server configuration file should be placed.
+  - `idmap_template` - Path to idmapd.conf used in `nfs::client4` and `nfs::server4` recipes.
 
 * `nfs['threads']` - Number of nfsd threads to run.  Default 8 on Linux, 24 on FreeBSD.  Set to 0, to disable.
 
@@ -49,6 +52,13 @@ This cookbook depends on Sean O'Meara's [line cookbook](https://github.com/somea
 
 * `nfs['mountd_flags']` - BSD launch options for mountd.
   `nfs['server_flags']` - BSD launch options for nfsd.
+
+* `nfs['idmap']`
+   - Attributes specific to idmap template and service.
+   - `['domain']` - Domain for idmap service, defaults to `node['domain']`
+   - `['pipefs_directory']` - platform-specific location of `Pipefs-Directory`
+   - `['user']` - effective user for idmap service, default `nobody`.
+   - `['group']` - effective group for idmap service, default `nogroup`.
 
 ## Usage
 
@@ -119,9 +129,33 @@ The default parameters for the `nfs_export` LWRP are as follows
   - additional export options as an array, excluding the parameterized sync/async, ro/rw options, and anoymous mappings
   - defaults to `root_squash`
 
+## nfs::default recipe
+
+The default recipe installs and configures the common components for an NFS client, at an effective protocol level of
+NFSv3.  The Chef resource logic for this is in the `nfs::_common` recipe, with platform-specific conditional defaults
+set in the default attributes file.
+
+## nfs::client4 recipe
+
+Includes the logic from `nfs::_common`, and also configures and installs the idmap service to provide an effective protocol
+level of NFSv4.  Effectively the same as running both `nfs::_common` and `nfs::_idmap`.
+
+## nfs::server recipe
+
+The server recipe includes the common client components from `nfs::_common`.  This also configures and installs the
+platform-specific server services for an effective protocol level of NFSv3.
+
+## nfs::server4 recipe
+
+This recipe includes the common client components from `nfs::_common`.  It also configures and installs the
+platform-specific server servcies for an effective protocol level of NFSv4.  Effectively the same as running
+`nfs::_common` and `nfs::_idmap` and `nfs::server`.
+
 ## nfs::undo recipe
 
-Does your freshly kickstarted/preseeded system come with NFS, when you didn't ask for NFS?  This recipe inspired by the annoyances cookbook, will run once to remove NFS from the system.  Use a knife command to remove NFS components from your system like so.
+Does your freshly kickstarted/preseeded system come with NFS, when you didn't ask for NFS?  This recipe inspired by the
+annoyances cookbook, will run once to remove NFS from the system.  Use a knife command to remove NFS components from your
+system like so.
 
     knife run_list add <node name> nfs::undo
 

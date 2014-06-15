@@ -36,10 +36,9 @@ default['nfs']['port']['rquotad'] = 32_769
 # Number of rpc.nfsd threads to start (default 8)
 default['nfs']['threads'] = 8
 
-# Default options are based on RHEL5, as the attribute names were
-# adopted from this platform.
-default['nfs']['packages'] = %w(nfs-utils portmap)
-default['nfs']['service']['portmap'] = 'portmap'
+# Default options are based on RHEL6
+default['nfs']['packages'] = %w(nfs-utils rpcbind)
+default['nfs']['service']['portmap'] = 'rpcbind'
 default['nfs']['service']['lock'] = 'nfslock'
 default['nfs']['service']['server'] = 'nfs'
 default['nfs']['service_provider']['lock'] = Chef::Platform.find_provider_for_node node, :service
@@ -52,18 +51,18 @@ default['nfs']['config']['server_template'] = '/etc/sysconfig/nfs'
 default['nfs']['config']['idmap_template'] = '/etc/idmapd.conf'
 default['nfs']['service']['idmap'] = 'rpcidmapd'
 default['nfs']['service_provider']['idmap'] = Chef::Platform.find_provider_for_node node, :service
-default['nfs']['domain'] = node['domain']
-default['nfs']['pipefs_directory'] = '/var/lib/nfs/rpc_pipefs'
-default['nfs']['nobody_user'] = 'nobody'
-default['nfs']['nobody_group'] = 'nobody'
+default['nfs']['idmap']['domain'] = node['domain']
+default['nfs']['idmap']['pipefs_directory'] = '/var/lib/nfs/rpc_pipefs'
+default['nfs']['idmap']['user'] = 'nobody'
+default['nfs']['idmap']['group'] = 'nobody'
 
 case node['platform_family']
 
 when 'rhel'
-  # RHEL6 edge case package set and portmap name
-  if node['platform_version'].to_i >= 6 || platform?('amazon')
-    default['nfs']['packages'] = %w(nfs-utils rpcbind)
-    default['nfs']['service']['portmap'] = 'rpcbind'
+  # RHEL5 edge case package set and portmap name
+  if node['platform_version'].to_i <= 5
+    default['nfs']['packages'] = %w(nfs-utils portmap)
+    default['nfs']['service']['portmap'] = 'portmap'
   end
 
 when 'freebsd'
@@ -71,7 +70,6 @@ when 'freebsd'
   default['nfs']['packages'] = []
   default['nfs']['config']['server_template'] = '/etc/rc.conf.d/nfsd'
   default['nfs']['config']['client_templates'] = %w(/etc/rc.conf.d/mountd)
-  default['nfs']['service']['portmap'] = 'rpcbind'
   default['nfs']['service']['lock'] = 'lockd'
   default['nfs']['service']['server'] = 'nfsd'
   default['nfs']['threads'] = 24
@@ -84,51 +82,40 @@ when 'freebsd'
 
 when 'suse'
   default['nfs']['packages'] = %w(nfs-client nfs-kernel-server rpcbind)
-  default['nfs']['service']['portmap'] = 'rpcbind'
   default['nfs']['service']['lock'] = 'nfsserver'
   default['nfs']['service']['server'] = 'nfsserver'
   default['nfs']['config']['client_templates'] = %w(/etc/sysconfig/nfs)
 
 when 'debian'
-  default['nfs']['packages'] = %w(nfs-common rpcbind nfs-kernel-server)
-  default['nfs']['service']['portmap'] = 'portmap'
-  default['nfs']['service']['lock'] = 'statd'
-  default['nfs']['service']['server'] = 'nfs-kernel-server'
+  # Use Debian 7 as default case
+  default['nfs']['packages'] = %w(nfs-common rpcbind)
+  default['nfs']['service']['portmap'] = 'rpcbind'
+  default['nfs']['service']['lock'] = 'nfs-common'
   default['nfs']['service']['idmap'] = 'nfs-common'
+  default['nfs']['service']['server'] = 'nfs-kernel-server'
   default['nfs']['config']['client_templates'] = %w(/etc/default/nfs-common /etc/modprobe.d/lockd.conf)
   default['nfs']['config']['server_template'] = '/etc/default/nfs-kernel-server'
+
+  # Debian 6.0
+  if node['platform_version'].to_i <= 6
+    default['nfs']['packages'] = %w(nfs-common portmap)
+    default['nfs']['service']['portmap'] = 'portmap'
+  end
 
   case node['platform']
 
   when 'ubuntu'
+    # Start with latest release, and work backwards
+    default['nfs']['service']['portmap'] = 'rpcbind-boot'
     default['nfs']['service']['lock'] = 'statd'
     default['nfs']['service']['idmap'] = 'idmapd'
+    default['nfs']['idmap']['pipefs_directory'] = '/run/rpc_pipefs'
     default['nfs']['service_provider']['idmap'] = Chef::Provider::Service::Upstart
+    default['nfs']['service_provider']['portmap'] = Chef::Provider::Service::Upstart
+    default['nfs']['service_provider']['lock'] = Chef::Provider::Service::Upstart
 
-    # Ubuntu 11.04 edge case package set and portmap name
-    if node['platform_version'].to_f == 11.04
-      default['nfs']['service']['portmap'] = 'rpcbind'
-    # Ubuntu 11.10 edge case package set and portmap name
-    elsif node['platform_version'].to_f >= 11.10
-      default['nfs']['service']['portmap'] = 'rpcbind-boot'
-    end
-
-    # Ubuntu 13.10+ service provider is Upstart for portmap and lock
-    if node['platform_version'].to_f >= 13.10
-      default['nfs']['service_provider']['portmap'] = Chef::Provider::Service::Upstart
-      default['nfs']['service_provider']['lock'] = Chef::Provider::Service::Upstart
-    end
-
-  when 'debian'
-
-    # Debian 6.0+
-    if node['platform_version'].to_i >= 6
-      default['nfs']['service']['lock'] = 'nfs-common'
-    end
-
-    # Debian 7.0+ (wheezy)
-    if node['platform_version'].to_i >= 7
-      default['nfs']['service']['lock'] = 'nfs-common'
+    # Ubuntu < 11.04 edge case package set and portmap name
+    if node['platform_version'].to_f <= 11.04
       default['nfs']['service']['portmap'] = 'rpcbind'
     end
 

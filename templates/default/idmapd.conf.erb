@@ -1,11 +1,11 @@
 [General]
 
 Verbosity = 0
-Pipefs-Directory = <%= node['nfs']['pipefs_directory'] %>
+Pipefs-Directory = <%= node['nfs']['idmap']['pipefs_directory'] %>
 
 # The following should be set to the local NFSv4 domain name
 # The default is the host's DNS domain name.
-Domain = <%= node['nfs']['domain'] %> 
+Domain = <%= node['nfs']['idmap']['domain'] %>
 
 # The following is a comma-separated list of Kerberos realm
 # names that should be considered to be equivalent to the
@@ -20,8 +20,8 @@ Domain = <%= node['nfs']['domain'] %>
 
 [Mapping]
 
-Nobody-User = <%= node['nfs']['nobody_user'] %>
-Nobody-Group = <%= node['nfs']['nobody_group'] %>
+Nobody-User = <%= node['nfs']['idmap']['user'] %>
+Nobody-Group = <%= node['nfs']['idmap']['group'] %>
 
 [Translation]
 

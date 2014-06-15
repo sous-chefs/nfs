@@ -6,8 +6,8 @@ describe 'nfs::server' do
       ChefSpec::Runner.new(platform: 'centos', version: 5.9).converge(described_recipe)
     end
 
-    it 'includes recipe nfs::default' do
-      expect(chef_run).to include_recipe('nfs::default')
+    it 'includes recipe nfs::_common' do
+      expect(chef_run).to include_recipe('nfs::_common')
     end
 
     %w(nfs).each do |svc|
@@ -26,8 +26,8 @@ describe 'nfs::server' do
       ChefSpec::Runner.new(platform: 'centos', version: 6.5).converge(described_recipe)
     end
 
-    it 'includes recipe nfs::default' do
-      expect(chef_run).to include_recipe('nfs::default')
+    it 'includes recipe nfs::_common' do
+      expect(chef_run).to include_recipe('nfs::_common')
     end
 
     %w(nfs).each do |svc|
@@ -46,8 +46,8 @@ describe 'nfs::server' do
       ChefSpec::Runner.new(platform: 'freebsd', version: 9.1).converge(described_recipe)
     end
 
-    it 'includes recipe nfs::default' do
-      expect(chef_run).to include_recipe('nfs::default')
+    it 'includes recipe nfs::_common' do
+      expect(chef_run).to include_recipe('nfs::_common')
     end
 
     %w(nfsd).each do |svc|
@@ -69,31 +69,33 @@ describe 'nfs::server' do
     end
   end
 
-  # Submit Ubuntu Fauxhai to https://github.com/customink/fauxhai for better Ubuntu coverage
-  context 'on Ubuntu 12.04' do
-    let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'ubuntu', version: 12.04).converge(described_recipe)
-    end
-
-    it 'includes recipe nfs::default' do
-      expect(chef_run).to include_recipe('nfs::default')
-    end
-
-    it 'creates file /etc/default/nfs-kernel-server with: RPCMOUNTDOPTS="-p 32767"' do
-      expect(chef_run).to render_file('/etc/default/nfs-kernel-server').with_content(/RPCMOUNTDOPTS="-p +32767"/)
-    end
-
-    %w(nfs-kernel-server).each do |nfs|
-      it "installs package #{nfs}" do
-        expect(chef_run).to install_package(nfs)
+  %w(14.04 12.04 10.04).each do |release|
+    # Submit Ubuntu Fauxhai to https://github.com/customink/fauxhai for better Ubuntu coverage
+    context "on Ubuntu #{release}" do
+      let(:chef_run) do
+        ChefSpec::Runner.new(platform: 'ubuntu', version: release).converge(described_recipe)
       end
 
-      it "starts the #{nfs} service" do
-        expect(chef_run).to start_service(nfs)
+      it 'includes recipe nfs::_common' do
+        expect(chef_run).to include_recipe('nfs::_common')
       end
 
-      it "enables the #{nfs} service" do
-        expect(chef_run).to enable_service(nfs)
+      it 'creates file /etc/default/nfs-kernel-server with: RPCMOUNTDOPTS="-p 32767"' do
+        expect(chef_run).to render_file('/etc/default/nfs-kernel-server').with_content(/RPCMOUNTDOPTS="-p +32767"/)
+      end
+
+      %w(nfs-kernel-server).each do |nfs|
+        it "installs package #{nfs}" do
+          expect(chef_run).to install_package(nfs)
+        end
+
+        it "starts the #{nfs} service" do
+          expect(chef_run).to start_service(nfs)
+        end
+
+        it "enables the #{nfs} service" do
+          expect(chef_run).to enable_service(nfs)
+        end
       end
     end
   end
@@ -103,8 +105,8 @@ describe 'nfs::server' do
       ChefSpec::Runner.new(platform: 'debian', version: '6.0.5').converge(described_recipe)
     end
 
-    it 'includes recipe nfs::default' do
-      expect(chef_run).to include_recipe('nfs::default')
+    it 'includes recipe nfs::_common' do
+      expect(chef_run).to include_recipe('nfs::_common')
     end
 
     it 'creates file /etc/default/nfs-kernel-server with: RPCMOUNTDOPTS="-p 32767"' do
@@ -135,8 +137,8 @@ describe 'nfs::server' do
       ChefSpec::Runner.new(platform: 'debian', version: 7.2).converge(described_recipe)
     end
 
-    it 'includes recipe nfs::default' do
-      expect(chef_run).to include_recipe('nfs::default')
+    it 'includes recipe nfs::_common' do
+      expect(chef_run).to include_recipe('nfs::_common')
     end
 
     it 'creates file /etc/default/nfs-kernel-server with: RPCMOUNTDOPTS="-p 32767"' do

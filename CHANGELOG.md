@@ -1,5 +1,5 @@
-v2.0.0-rc
----------
+v2.0.0
+------
 
 * @jessp01 added rquotad support, Issue #34
 * @jessp01 added NFS4 support, Issue #35
@@ -7,10 +7,14 @@ v2.0.0-rc
 * @soul-rebel, Issue #37
 * @kjtanaka, notification timing, Issue #38
 * rework issue #35 to be cross-platform and backwards compatible
-
-TODO:
 * fix tests, verify behavior
 * Update documentation
+
+**Potentially Breaking Changes**
+
+Support for some versions of Ubuntu support unverified.  Please help cookbook
+maintainers by submitting [fauxhai](https://github.com/customink/fauxhai) stub data
+for your preferred platforms.
 
 v1.0.0
 ------

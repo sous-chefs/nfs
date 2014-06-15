@@ -22,16 +22,16 @@ include_recipe 'nfs::_common'
 # Install server components for Debian
 package 'nfs-kernel-server' if node['platform_family'] == 'debian'
 
-# Start nfs-server components
-service node['nfs']['service']['server'] do
-  provider node['nfs']['service_provider']['server']
-  action [:start, :enable]
-  supports status: true
-end
-
 # Configure nfs-server components
 template node['nfs']['config']['server_template'] do
   source 'nfs.erb'
   mode 00644
   notifies :restart, "service[#{node['nfs']['service']['server']}]"
+end
+
+# Start nfs-server components
+service node['nfs']['service']['server'] do
+  provider node['nfs']['service_provider']['server']
+  action [:start, :enable]
+  supports status: true
 end
