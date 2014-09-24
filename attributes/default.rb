@@ -64,6 +64,9 @@ when 'rhel'
     default['nfs']['packages'] = %w(nfs-utils portmap)
     default['nfs']['service']['portmap'] = 'portmap'
   end
+  if node['platform_version'].to_i == 7
+    default['nfs']['service']['lock'] = 'nfs-lock'
+  end
 
 when 'freebsd'
   # Packages are installed by default
