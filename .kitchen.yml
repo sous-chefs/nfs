@@ -1,31 +1,24 @@
 ---
 driver_plugin: vagrant 
-driver_config:
-  require_chef_omnibus: latest
 
 platforms:
+- name: debian-7.4
+  run_list:
+  - recipe[apt]
+- name: ubuntu-14.04
+  run_list:
+  - recipe[apt]
 - name: ubuntu-12.04 
   run_list:
   - recipe[apt]
-  driver_config:
-    box: opscode-ubuntu-12.04
-    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
-- name: ubuntu-10.04
-  run_list:
-  - recipe[apt]
-  driver_config:
-    box: opscode-ubuntu-10.04
-    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-10.04_provisionerless.box
-- name: centos-6.4
-  driver_config:
-    box: opscode-centos-6.4
-    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box
-- name: centos-5.9
-  driver_config:
-    box: opscode-centos-5.9
-    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-5.9_provisionerless.box
+- name: centos-6.5
+- name: centos-5.10
 
 suites:
 - name: default
-  run_list: ["recipe[nfs::server]"]
-  attributes: {}
+  run_list:
+  - recipe[nfs::default]
+- name: server
+  run_list:
+  - recipe[nfs::server]
+  - recipe[nfs_test::server]

@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: nfs
-# Recipe:: default
+# Recipe:: server4
 #
-# Copyright 2011, Eric G. Wolfe
+# Copyright 2011-2014, Eric G. Wolfe
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,5 +17,6 @@
 # limitations under the License.
 #
 
-# NFS client components protocol-level less than, or equal to 3 moved to _common recipe
-include_recipe 'nfs::_common'
+%w(nfs::_common nfs::_idmap nfs::server).each do |component|
+  include_recipe component
+end

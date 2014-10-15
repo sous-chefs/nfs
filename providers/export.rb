@@ -19,17 +19,14 @@
 
 action :create do
 
-  cached_new_resource = new_resource
-  cached_new_resource = current_resource
-
   sub_run_context = @run_context.dup
   sub_run_context.resource_collection = Chef::ResourceCollection.new
 
   begin
     original_run_context, @run_context = @run_context, sub_run_context
 
-    ro_rw = new_resource.writeable ? "rw" : "ro"
-    sync_async = new_resource.sync ? "sync" : "async"
+    ro_rw = new_resource.writeable ? 'rw' : 'ro'
+    sync_async = new_resource.sync ? 'sync' : 'async'
     if new_resource.anonuser
       new_resource.options << "anonuid=#{find_uid(new_resource.anonuser)}"
     end
@@ -39,23 +36,28 @@ action :create do
     options = new_resource.options.join(',')
     options = ",#{options}" unless options.empty?
 
-    export_line = "#{new_resource.directory} #{new_resource.network}(#{ro_rw},#{sync_async}#{options})\n"
+    if new_resource.network.is_a?(Array)
+      host_permissions = new_resource.network.map { |net| net + "(#{ro_rw},#{sync_async}#{options})" }
+      export_line = "#{new_resource.directory} #{host_permissions.join(' ')}\n"
+    else
+      export_line = "#{new_resource.directory} #{new_resource.network}(#{ro_rw},#{sync_async}#{options})\n"
+    end
 
-    execute "exportfs" do
-      command "exportfs -ar"
+    execute 'exportfs' do
+      command 'exportfs -ar'
       action :nothing
     end
 
-    if ::File.zero? '/etc/exports' or not ::File.exists? '/etc/exports'
+    if ::File.zero?('/etc/exports') || !::File.exist?('/etc/exports')
       file '/etc/exports' do
         content export_line
-        notifies :run, "execute[exportfs]", :immediately
+        notifies :run, 'execute[exportfs]', :immediately
       end
     else
       append_if_no_line "export #{new_resource.name}" do
-        path "/etc/exports"
+        path '/etc/exports'
         line export_line
-        notifies :run, "execute[exportfs]", :immediately
+        notifies :run, 'execute[exportfs]', :immediately
       end
     end
   ensure

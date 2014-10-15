@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: nfs
-# Recipe:: server 
+# Recipe:: server
 #
-# Copyright 2011, Eric G. Wolfe
+# Copyright 2011-2014, Eric G. Wolfe
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,23 +17,21 @@
 # limitations under the License.
 #
 
-include_recipe "nfs"
+include_recipe 'nfs::_common'
 
 # Install server components for Debian
-case node['platform']
-when "debian","ubuntu"
-  package "nfs-kernel-server"
+package 'nfs-kernel-server' if node['platform_family'] == 'debian'
+
+# Configure nfs-server components
+template node['nfs']['config']['server_template'] do
+  source 'nfs.erb'
+  mode 00644
+  notifies :restart, "service[#{node['nfs']['service']['server']}]"
 end
 
 # Start nfs-server components
 service node['nfs']['service']['server'] do
-  action [ :start, :enable ]
-  supports :status => true
+  provider node['nfs']['service_provider']['server']
+  action [:start, :enable]
+  supports status: true
 end
-
-# Configure nfs-server components
-template node['nfs']['config']['server_template'] do
-  mode 0644
-  notifies :restart, "service[#{node['nfs']['service']['server']}]"
-end
-
