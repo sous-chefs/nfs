@@ -19,8 +19,6 @@
 
 include_recipe 'nfs::_common'
 
-package 'nfs-kernel-server' if node['platform_family'] == 'debian'
-
 # Configure idmap template for NFSv4 client/server support
 template node['nfs']['config']['idmap_template'] do
   mode 00644
