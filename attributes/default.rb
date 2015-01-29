@@ -95,6 +95,7 @@ when 'debian'
   default['nfs']['service']['server'] = 'nfs-kernel-server'
   default['nfs']['config']['client_templates'] = %w(/etc/default/nfs-common /etc/modprobe.d/lockd.conf)
   default['nfs']['config']['server_template'] = '/etc/default/nfs-kernel-server'
+  default['nfs']['idmap']['group'] = 'nogroup'
 
   # Debian 6.0
   if node['platform_version'].to_i <= 6
