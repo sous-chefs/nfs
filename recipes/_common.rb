@@ -45,5 +45,6 @@ end
     provider node['nfs']['service_provider'][component]
     action [:start, :enable]
     supports :status => true
+    not_if "service #{component} status | grep -q running"
   end
 end
