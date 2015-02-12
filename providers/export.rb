@@ -18,7 +18,6 @@
 #
 
 action :create do
-
   sub_run_context = @run_context.dup
   sub_run_context.resource_collection = Chef::ResourceCollection.new
 
@@ -68,7 +67,6 @@ action :create do
       new_resource.updated_by_last_action(true)
     end
   end
-
 end
 
 private

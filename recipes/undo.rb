@@ -53,7 +53,7 @@ unless Chef::Config[:solo]
     end
     only_if do
       node.run_list.include?('recipe[nfs::default]') || node.run_list.include?('recipe[nfs::client4]') ||
-      node.run_list.include?('recipe[nfs::server]') || node.run_list.include?('recipe[nfs::server4]')
+        node.run_list.include?('recipe[nfs::server]') || node.run_list.include?('recipe[nfs::server4]')
     end
   end
 end

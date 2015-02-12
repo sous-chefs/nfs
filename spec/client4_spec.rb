@@ -10,5 +10,4 @@ describe 'nfs::client4' do
       expect(chef_run).to include_recipe(component)
     end
   end
-
 end

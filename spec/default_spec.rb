@@ -8,5 +8,4 @@ describe 'nfs::default' do
   it 'should include nfs::_common' do
     expect(chef_run).to include_recipe('nfs::_common')
   end
-
 end

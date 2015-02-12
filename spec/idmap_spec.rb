@@ -86,5 +86,4 @@ describe 'nfs::_idmap' do
       end
     end
   end
-
 end
