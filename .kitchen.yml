@@ -22,3 +22,4 @@ suites:
   run_list:
   - recipe[nfs::server]
   - recipe[nfs_test::server]
+  - recipe[nfs_test::issue46]
