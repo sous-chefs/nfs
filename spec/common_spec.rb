@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'nfs::_common' do
   context 'on Centos 5.9' do
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'centos', version: 5.9).converge(described_recipe)
+      ChefSpec::SoloRunner.new(platform: 'centos', version: 5.9).converge(described_recipe)
     end
 
     %w(nfs-utils portmap).each do |pkg|
@@ -37,7 +37,7 @@ describe 'nfs::_common' do
 
   context 'on Centos 6.5' do
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'centos', version: 6.5).converge(described_recipe)
+      ChefSpec::SoloRunner.new(platform: 'centos', version: 6.5).converge(described_recipe)
     end
 
     %w(nfs-utils rpcbind).each do |pkg|
@@ -71,7 +71,7 @@ describe 'nfs::_common' do
 
   context 'on FreeBSD' do
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'freebsd', version: 9.1).converge(described_recipe)
+      ChefSpec::SoloRunner.new(platform: 'freebsd', version: 9.1).converge(described_recipe)
     end
 
     %w(nfs-utils rpcbind).each do |pkg|
@@ -102,7 +102,7 @@ describe 'nfs::_common' do
   # Submit Ubuntu Fauxhai to https://github.com/customink/fauxhai for better Ubuntu coverage
   context 'on Ubuntu 14.04' do
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'ubuntu', version: 14.04).converge(described_recipe)
+      ChefSpec::SoloRunner.new(platform: 'ubuntu', version: 14.04).converge(described_recipe)
     end
 
     %w(nfs-common rpcbind).each do |pkg|
@@ -133,7 +133,7 @@ describe 'nfs::_common' do
   # Submit Ubuntu Fauxhai to https://github.com/customink/fauxhai for better Ubuntu coverage
   context 'on Ubuntu 12.04' do
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'ubuntu', version: 12.04).converge(described_recipe)
+      ChefSpec::SoloRunner.new(platform: 'ubuntu', version: 12.04).converge(described_recipe)
     end
 
     %w(nfs-common rpcbind).each do |pkg|
@@ -164,7 +164,7 @@ describe 'nfs::_common' do
   # Submit Ubuntu Fauxhai to https://github.com/customink/fauxhai for better Ubuntu coverage
   context 'on Ubuntu 10.04' do
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'ubuntu', version: 10.04).converge(described_recipe)
+      ChefSpec::SoloRunner.new(platform: 'ubuntu', version: 10.04).converge(described_recipe)
     end
 
     %w(nfs-common rpcbind).each do |pkg|
@@ -194,7 +194,7 @@ describe 'nfs::_common' do
 
   context 'on Debian 6.0.5' do
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'debian', version: '6.0.5').converge(described_recipe)
+      ChefSpec::SoloRunner.new(platform: 'debian', version: '6.0.5').converge(described_recipe)
     end
 
     %w(nfs-common portmap).each do |pkg|
@@ -224,7 +224,7 @@ describe 'nfs::_common' do
 
   context 'on Debian 7.2' do
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'debian', version: 7.2).converge(described_recipe)
+      ChefSpec::SoloRunner.new(platform: 'debian', version: 7.2).converge(described_recipe)
     end
 
     %w(nfs-common rpcbind).each do |pkg|

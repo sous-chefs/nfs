@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'nfs::client4' do
   let(:chef_run) do
-    ChefSpec::Runner.new.converge(described_recipe)
+    ChefSpec::SoloRunner.new.converge(described_recipe)
   end
 
   %w(nfs::_common nfs::_idmap).each do |component|
