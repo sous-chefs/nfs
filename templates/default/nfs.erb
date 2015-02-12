@@ -31,6 +31,7 @@ MOUNTD_PORT="<%= node['nfs']['port']['mountd'] -%>"
 STATD_PORT="<%= node['nfs']['port']['statd'] -%>"
 LOCKD_TCPPORT="<%= node['nfs']['port']['lockd'] -%>"
 LOCKD_UDPPORT="<%= node['nfs']['port']['lockd'] -%>"
+NFS_START_SERVICES="yes"
   <% unless node['nfs']['v4'].nil? -%>
 NFS4_SUPPORT="<%= node['nfs']['v4'] -%>"
   <% end -%>
