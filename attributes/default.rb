@@ -65,6 +65,8 @@ when 'rhel'
     default['nfs']['service']['portmap'] = 'portmap'
   elsif node['platform_version'].to_i >= 7
     default['nfs']['service']['lock'] = 'nfs-lock'
+    default['nfs']['service']['server'] = 'nfs-server'
+    default['nfs']['service']['idmap'] = 'nfs-idmap'
   end
 
 when 'freebsd'
