@@ -1,3 +1,14 @@
+v2.1.0
+------
+
+* @vgirnet added SLES init script failsafe. closes #47
+* @StFS added EL7 service names. closes #39 #41 #49
+* @stevenolen remove installation of nfs-kernel-server for debian platform. closes #43
+* ChefSpec fixups
+  - Runner deprecated.
+  - Generic chefspec 0.6.1 platform has no service providers (i.e. sysvinit) in Chef.
+  - FreeBSD mapping broken chef/chef#2383.
+
 v2.0.0
 ------
 
