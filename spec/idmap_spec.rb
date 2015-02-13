@@ -41,8 +41,8 @@ describe 'nfs::_idmap' do
         expect(chef_run).to render_file('/etc/idmapd.conf').with_content(%r{Pipefs-Directory += +/run/rpc_pipefs})
       end
 
-      it 'installs nfs-kernel-server' do
-        expect(chef_run).to install_package('nfs-kernel-server')
+      it 'Does not install nfs-kernel-server' do
+        expect(chef_run).to_not install_package('nfs-kernel-server')
       end
 
       %w(idmapd).each do |nfs|
@@ -71,8 +71,8 @@ describe 'nfs::_idmap' do
         expect(chef_run).to render_file('/etc/idmapd.conf').with_content(%r{/var/lib/nfs/rpc_pipefs})
       end
 
-      it 'installs nfs-kernel-server' do
-        expect(chef_run).to install_package('nfs-kernel-server')
+      it 'Does not install nfs-kernel-server' do
+        expect(chef_run).to_not install_package('nfs-kernel-server')
       end
 
       %w(nfs-common).each do |nfs|
