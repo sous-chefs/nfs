@@ -1,7 +1,7 @@
 v2.1.0
 ------
 
-* @lmich LWRP stairsteps anonids multiplicatively. #46
+* @lmickh LWRP stairsteps anonids multiplicatively. #46
 * @vgirnet added SLES init script failsafe. closes #47
 * @StFS added EL7 service names. closes #39 #41 #49
 * @stevenolen remove installation of nfs-kernel-server for debian platform. closes #43
