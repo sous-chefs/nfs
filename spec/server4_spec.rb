@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'nfs::server4' do
   let(:chef_run) do
-    ChefSpec::SoloRunner.new.converge(described_recipe)
+    ChefSpec::ServerRunner.new.converge(described_recipe)
   end
 
   %w(nfs::_common nfs::_idmap nfs::server).each do |component|

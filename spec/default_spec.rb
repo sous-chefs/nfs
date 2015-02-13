@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'nfs::default' do
   let(:chef_run) do
-    ChefSpec::SoloRunner.new.converge(described_recipe)
+    ChefSpec::ServerRunner.new.converge(described_recipe)
   end
 
   it 'should include nfs::_common' do

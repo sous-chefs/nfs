@@ -4,7 +4,7 @@ describe 'nfs::_idmap' do
   %w(6.5 5.9).each do |release|
     context "on Centos #{release}" do
       let(:chef_run) do
-        ChefSpec::SoloRunner.new(platform: 'centos', version: release).converge(described_recipe)
+        ChefSpec::ServerRunner.new(platform: 'centos', version: release).converge(described_recipe)
       end
 
       it 'includes recipe nfs::_common' do
@@ -30,7 +30,7 @@ describe 'nfs::_idmap' do
   %w(14.04 12.04 10.04).each do |release|
     context "on Ubuntu #{release}" do
       let(:chef_run) do
-        ChefSpec::SoloRunner.new(platform: 'ubuntu', version: release).converge(described_recipe)
+        ChefSpec::ServerRunner.new(platform: 'ubuntu', version: release).converge(described_recipe)
       end
 
       it 'includes recipe nfs::_common' do
@@ -60,7 +60,7 @@ describe 'nfs::_idmap' do
   %w(7.2 6.0.5).each do |release|
     context 'on Debian 6.0.5' do
       let(:chef_run) do
-        ChefSpec::SoloRunner.new(platform: 'debian', version: release).converge(described_recipe)
+        ChefSpec::ServerRunner.new(platform: 'debian', version: release).converge(described_recipe)
       end
 
       it 'includes recipe nfs::_common' do
