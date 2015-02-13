@@ -41,6 +41,8 @@ describe 'nfs::server' do
     end
   end
 
+=begin
+  chef/chef#2383 platform mapping undergoing changes
   context 'on FreeBSD' do
     let(:chef_run) do
       ChefSpec::ServerRunner.new(platform: 'freebsd', version: 9.1).converge(described_recipe)
@@ -68,6 +70,7 @@ describe 'nfs::server' do
       expect(chef_run).to render_file('/etc/rc.conf.d/nfsd').with_content(/server_flags="?-u +-t +-n +24"?/)
     end
   end
+=end
 
   %w(14.04 12.04 10.04).each do |release|
     # Submit Ubuntu Fauxhai to https://github.com/customink/fauxhai for better Ubuntu coverage
