@@ -6,6 +6,7 @@
 # Rendered RHEL template variant
 STATD_PORT="<%= node['nfs']['port']['statd'] -%>"
 STATD_OUTGOING_PORT="<%= node['nfs']['port']['statd_out'] -%>"
+STATDARG="-p <%= node['nfs']['port']['statd'] -%> -o <%= node['nfs']['port']['statd_out'] -%>"
 MOUNTD_PORT="<%= node['nfs']['port']['mountd'] -%>"
 RPCMOUNTDOPTS="-p <%= node['nfs']['port']['mountd'] -%>"
 LOCKD_UDPPORT="<%= node['nfs']['port']['lockd'] -%>"
