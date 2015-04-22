@@ -1,7 +1,8 @@
 require 'spec_helper'
-require 'shared_serverspec/redhat/server_services.rb'
 
-describe "Server Tests" do
+describe "Server4 Tests" do
+  include_examples 'issues::server'
+  include_examples 'server_ports'
   include_examples 'redhat::server_services'
 
   describe "NFS Server4 Services" do
