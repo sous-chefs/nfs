@@ -1,7 +1,7 @@
 shared_examples "redhat::server_services" do
   describe "NFS Server Services" do
-    describe "RHEL", if: os['family'] == 'redhat' do
-      describe "6.x", if: host_inventory['platform_version'].to_i == 6 do
+    context "RHEL", if: os['family'] == 'redhat' do
+      context "6.x", if: host_inventory['platform_version'].to_i == 6 do
         describe service('rpcbind') do
           it { should be_enabled }
           it { should be_running }
