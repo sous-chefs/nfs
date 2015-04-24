@@ -36,7 +36,7 @@ default['nfs']['port']['rquotad'] = 32_769
 # Number of rpc.nfsd threads to start (default 8)
 default['nfs']['threads'] = 8
 
-unless node['platform_family'] == 'windows'
+unless node['platform_family'] == 'windows' or node['platform_family'] == 'solaris2'
   # Default options are based on RHEL6
   default['nfs']['packages'] = %w(nfs-utils rpcbind)
   default['nfs']['service']['portmap'] = 'rpcbind'
