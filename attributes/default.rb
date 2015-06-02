@@ -69,7 +69,12 @@ when 'rhel'
     default['nfs']['service']['lock'] = 'nfs-lock'
     default['nfs']['service']['server'] = 'nfs-server'
     default['nfs']['service']['idmap'] = 'nfs-idmap'
-    default['nfs']['client-services'] = %w(nfs-client.target)
+
+    if node['platform_version'] == '7.0.1406'
+      default['nfs']['client-services'] = %w(nfs-lock.service)
+    else
+      default['nfs']['client-services'] = %w(nfs-client.target)
+    end
   end
 
 when 'freebsd'
