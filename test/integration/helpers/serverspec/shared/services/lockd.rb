@@ -34,6 +34,6 @@ shared_examples 'services::lockd' do
       it { should be_running } if check_running
     end unless name == ''
 
-    include_examples 'ports::lockd'
+    include_examples 'ports::lockd' if host_inventory[:platform_family] == 'redhat'
   end
 end
