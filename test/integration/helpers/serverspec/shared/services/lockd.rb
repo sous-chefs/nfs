@@ -15,7 +15,7 @@ shared_examples 'services::lockd' do
 
     # RHEL/CentOS
     if os[:family] == 'redhat'
-      name = 'nfslock' if host_inventory[:platform_version].to_i == 6
+      name = 'nfslock' if host_inventory[:platform_version].to_i >= 5
       name = 'nfs-lock' if host_inventory[:platform_version].to_f >= 7.0
       # This seems to be a kernel process in 7.1
       if host_inventory[:platform_version].to_f >= 7.1
@@ -27,7 +27,7 @@ shared_examples 'services::lockd' do
       end
     end
 
-    # name = 'nfs-common' if host_inventory[:platform] == 'debian'
+    check_enabled = false if host_inventory[:platform] == 'ubuntu'
 
     describe service(name) do
       it { should be_enabled } if check_enabled

@@ -19,7 +19,7 @@ shared_examples 'services::mountd' do
       name = 'nfs-mountd' if host_inventory[:platform_version].to_f >= 7.0
     end
 
-    # name = 'nfs-common' if host_inventory[:platform] == 'debian'
+    name = 'nfs-kernel-server' if host_inventory[:platform] == 'ubuntu'
 
     describe service(name) do
       it { should be_enabled } if check_enabled
