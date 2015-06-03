@@ -1,5 +1,5 @@
 ---
-driver_plugin: vagrant 
+driver_plugin: vagrant
 
 platforms:
 - name: debian-7.4
@@ -8,7 +8,7 @@ platforms:
 - name: ubuntu-14.04
   run_list:
   - recipe[apt]
-- name: ubuntu-12.04 
+- name: ubuntu-12.04
   run_list:
   - recipe[apt]
 - name: centos-7.0
@@ -25,8 +25,8 @@ suites:
   - recipe[nfs::server]
   - recipe[nfs_test::server]
   - recipe[nfs_test::issue46]
-- name: server4
-  run_list:
-  - recipe[nfs::server4]
-  - recipe[nfs_test::server]
-  - recipe[nfs_test::issue46]
+# - name: server4
+#   run_list:
+#   - recipe[nfs::server4]
+#   - recipe[nfs_test::server]
+#   - recipe[nfs_test::issue46]
