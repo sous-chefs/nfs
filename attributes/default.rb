@@ -41,16 +41,16 @@ default['nfs']['packages'] = %w(nfs-utils rpcbind)
 default['nfs']['service']['portmap'] = 'rpcbind'
 default['nfs']['service']['lock'] = 'nfslock'
 default['nfs']['service']['server'] = 'nfs'
-default['nfs']['service_provider']['lock'] = Chef::Platform.find_provider_for_node node, :service
-default['nfs']['service_provider']['portmap'] = Chef::Platform.find_provider_for_node node, :service
-default['nfs']['service_provider']['server'] = Chef::Platform.find_provider_for_node node, :service
+default['nfs']['service_provider']['lock'] = Chef::Resource.resource_for_node :service, node
+default['nfs']['service_provider']['portmap'] = Chef::Resource.resource_for_node :service, node
+default['nfs']['service_provider']['server'] = Chef::Resource.resource_for_node :service, node
 default['nfs']['config']['client_templates'] = %w(/etc/sysconfig/nfs)
 default['nfs']['config']['server_template'] = '/etc/sysconfig/nfs'
 
 # idmap recipe attributes
 default['nfs']['config']['idmap_template'] = '/etc/idmapd.conf'
 default['nfs']['service']['idmap'] = 'rpcidmapd'
-default['nfs']['service_provider']['idmap'] = Chef::Platform.find_provider_for_node node, :service
+default['nfs']['service_provider']['idmap'] = Chef::Resource.resource_for_node :service, node
 default['nfs']['idmap']['domain'] = node['domain']
 default['nfs']['idmap']['pipefs_directory'] = '/var/lib/nfs/rpc_pipefs'
 default['nfs']['idmap']['user'] = 'nobody'
