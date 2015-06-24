@@ -49,10 +49,19 @@ action :create do
         notifies :run, 'execute[exportfs]', :immediately
       end
     else
-      append_if_no_line "export #{new_resource.name}" do
-        path '/etc/exports'
-        line export_line
-        notifies :run, 'execute[exportfs]', :immediately
+      if new_resource.unique
+        replace_or_add "export #{new_resource.name}" do
+          path '/etc/exports'
+          pattern "^#{new_resource.directory}"
+          line export_line
+          notifies :run, 'execute[exportfs]', :immediately
+        end
+      else
+        append_if_no_line "export #{new_resource.name}" do
+          path '/etc/exports'
+          line export_line
+          notifies :run, 'execute[exportfs]', :immediately
+        end
       end
     end
   ensure
