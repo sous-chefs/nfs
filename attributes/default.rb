@@ -64,7 +64,7 @@ when 'rhel'
     default['nfs']['packages'] = %w(nfs-utils portmap)
     default['nfs']['service']['portmap'] = 'portmap'
   elsif node['platform_version'].to_i >= 7
-    default['nfs']['service']['lock'] = 'nfs-lock'
+    default['nfs']['service']['lock'] = 'rpc-statd'
     default['nfs']['service']['server'] = 'nfs-server'
     default['nfs']['service']['idmap'] = 'nfs-idmap'
   end
