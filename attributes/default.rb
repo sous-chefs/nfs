@@ -36,25 +36,27 @@ default['nfs']['port']['rquotad'] = 32_769
 # Number of rpc.nfsd threads to start (default 8)
 default['nfs']['threads'] = 8
 
-# Default options are based on RHEL6
-default['nfs']['packages'] = %w(nfs-utils rpcbind)
-default['nfs']['service']['portmap'] = 'rpcbind'
-default['nfs']['service']['lock'] = 'nfslock'
-default['nfs']['service']['server'] = 'nfs'
-default['nfs']['service_provider']['lock'] = Chef::Resource.resource_for_node :service, node
-default['nfs']['service_provider']['portmap'] = Chef::Resource.resource_for_node :service, node
-default['nfs']['service_provider']['server'] = Chef::Resource.resource_for_node :service, node
-default['nfs']['config']['client_templates'] = %w(/etc/sysconfig/nfs)
-default['nfs']['config']['server_template'] = '/etc/sysconfig/nfs'
+unless node['platform_family'] == 'windows' || node['platform_family'] == 'solaris2'
+  # Default options are based on RHEL6
+  default['nfs']['packages'] = %w(nfs-utils rpcbind)
+  default['nfs']['service']['portmap'] = 'rpcbind'
+  default['nfs']['service']['lock'] = 'nfslock'
+  default['nfs']['service']['server'] = 'nfs'
+  default['nfs']['service_provider']['lock'] = Chef::Resource.resource_for_node :service, node
+  default['nfs']['service_provider']['portmap'] = Chef::Resource.resource_for_node :service, node
+  default['nfs']['service_provider']['server'] = Chef::Resource.resource_for_node :service, node
+  default['nfs']['config']['client_templates'] = %w(/etc/sysconfig/nfs)
+  default['nfs']['config']['server_template'] = '/etc/sysconfig/nfs'
 
-# idmap recipe attributes
-default['nfs']['config']['idmap_template'] = '/etc/idmapd.conf'
-default['nfs']['service']['idmap'] = 'rpcidmapd'
-default['nfs']['service_provider']['idmap'] = Chef::Resource.resource_for_node :service, node
-default['nfs']['idmap']['domain'] = node['domain']
-default['nfs']['idmap']['pipefs_directory'] = '/var/lib/nfs/rpc_pipefs'
-default['nfs']['idmap']['user'] = 'nobody'
-default['nfs']['idmap']['group'] = 'nobody'
+  # idmap recipe attributes
+  default['nfs']['config']['idmap_template'] = '/etc/idmapd.conf'
+  default['nfs']['service']['idmap'] = 'rpcidmapd'
+  default['nfs']['service_provider']['idmap'] = Chef::Resource.resource_for_node :service, node
+  default['nfs']['idmap']['domain'] = node['domain']
+  default['nfs']['idmap']['pipefs_directory'] = '/var/lib/nfs/rpc_pipefs'
+  default['nfs']['idmap']['user'] = 'nobody'
+  default['nfs']['idmap']['group'] = 'nobody'
+end
 
 case node['platform_family']
 
