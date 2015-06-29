@@ -26,6 +26,12 @@ This cookbook depends on Sean O'Meara's [line cookbook](https://github.com/somea
   - `['server']` - the server component, nfs or nfs-kernel-server depending on platform
   - `['idmap']` - the NFSv4 idmap component
 
+* `nfs['service_provider']`
+  - `['portmap']` - provider for portmap service, chosen by platform
+  - `['lock']` - provider for lock service, chosen by platform
+  - `['server']` - provider for server service, chosen by platform
+  - `['idmap']` - provider for NFSv4 idmap service
+
 * `nfs['config']`
   - `client_templates` - templates to iterate through on client systems, chosen by platform
   - `server_template` - Per-platform case switch in common nfs.erb template.  This string should be

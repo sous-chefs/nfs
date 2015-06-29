@@ -1,9 +1,3 @@
-v2.2.0
-------
-
-* De-kludge service_provider hacks
-* Add unique parameter to resource 
-
 v2.1.0
 ------
 

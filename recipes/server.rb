@@ -31,6 +31,7 @@ end
 
 # Start nfs-server components
 service node['nfs']['service']['server'] do
+  provider node['nfs']['service_provider']['server']
   action [:start, :enable]
   supports status: true
 end

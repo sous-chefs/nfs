@@ -28,6 +28,7 @@ end
 # Start idmapd components
 service 'idmap' do
   service_name node['nfs']['service']['idmap']
+  provider node['nfs']['service_provider']['idmap']
   action [:start, :enable]
   supports :status => true
 end
