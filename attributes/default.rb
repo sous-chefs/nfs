@@ -66,7 +66,7 @@ when 'rhel'
     default['nfs']['packages'] = %w(nfs-utils portmap)
     default['nfs']['service']['portmap'] = 'portmap'
   elsif node['platform_version'].to_i >= 7
-    default['nfs']['service']['lock'] = 'rpc-statd'
+    default['nfs']['service']['lock'] = 'nfs-lock'
     default['nfs']['service']['server'] = 'nfs-server'
     default['nfs']['service']['idmap'] = 'nfs-idmap'
   end
@@ -112,7 +112,6 @@ when 'debian'
   case node['platform']
 
   when 'ubuntu'
-    # Start with latest release, and work backwards
     default['nfs']['service']['portmap'] = 'rpcbind-boot'
     default['nfs']['service']['lock'] = 'statd'
     default['nfs']['service']['idmap'] = 'idmapd'
@@ -120,11 +119,12 @@ when 'debian'
     default['nfs']['service_provider']['idmap'] = Chef::Provider::Service::Upstart
     default['nfs']['service_provider']['portmap'] = Chef::Provider::Service::Upstart
     default['nfs']['service_provider']['lock'] = Chef::Provider::Service::Upstart
+    default['nfs']['service_provider']['server'] = Chef::Provider::Service::Upstart
 
-    # Ubuntu < 11.04 edge case package set and portmap name
-    if node['platform_version'].to_f <= 11.04
+    # Ubuntu 11.04 and 14.04 service script edge cases
+    if node['platform_version'].to_f <= 11.04 ||
+       node['platform_version'].to_f >= 14.04
       default['nfs']['service']['portmap'] = 'rpcbind'
     end
-
   end
 end

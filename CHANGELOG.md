@@ -1,3 +1,14 @@
+v2.2.1
+------
+
+* Partial revert of service_provider Ubuntu hacks. 
+
+v2.2.0
+------
+
+* De-kludge service_provider hacks
+* Add pattern parameter to looped service resources
+
 v2.1.0
 ------
 
