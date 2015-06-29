@@ -27,7 +27,8 @@ shared_examples 'services::lockd' do
       end
     end
 
-    check_enabled = false if host_inventory[:platform] == 'ubuntu'
+    check_enabled = false if os[:family] == 'debian'
+    check_enabled = false if os[:family] == 'ubuntu'
 
     describe service(name) do
       it { should be_enabled } if check_enabled
