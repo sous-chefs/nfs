@@ -45,8 +45,8 @@ end
 client_service_list.each do |component|
   service component do
     service_name node['nfs']['service'][component]
-    provider node['nfs']['service_provider'][component]
     action [:start, :enable]
     supports :status => true
+    pattern node['nfs']['service'][component]
   end
 end
