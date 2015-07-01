@@ -52,6 +52,8 @@ default['nfs']['idmap']['pipefs_directory'] = '/var/lib/nfs/rpc_pipefs'
 default['nfs']['idmap']['user'] = 'nobody'
 default['nfs']['idmap']['group'] = 'nobody'
 
+default['nfs']['client-services'] = %w(portmap lock)
+
 case node['platform_family']
 
 when 'rhel'
@@ -63,6 +65,12 @@ when 'rhel'
     default['nfs']['service']['lock'] = 'nfs-lock'
     default['nfs']['service']['server'] = 'nfs-server'
     default['nfs']['service']['idmap'] = 'nfs-idmap'
+
+    if node['platform_version'] == '7.0.1406'
+      default['nfs']['client-services'] = %w(nfs-lock.service)
+    else
+      default['nfs']['client-services'] = %w(nfs-client.target)
+    end
   end
 
 when 'freebsd'
