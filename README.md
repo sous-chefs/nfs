@@ -14,11 +14,23 @@ Requirements
 Should work on any RHEL, Debian, Ubuntu, SUSE, and FreeBSD distributions.
 
 This cookbook depends on Sean O'Meara's [line cookbook](https://github.com/someara/line-cookbook)
+This cookbook depends on Sander van Zoest's [sysctl cookbook](https://github.com/svanzoest-cookbooks/sysctl)
+Both of these cookbooks are available from the Chef supermarket.
 
 ### Attributes
 
 * `nfs['packages']`
   - Case switch in attributes to choose NFS client packages dependent on platform.
+
+* `nfs['client_services']`
+  - Names of the client resources to start and enable.
+
+* `nfs['client_nfsv_services']`
+  - Names of the client resources to start when running nfs v4.
+
+* `nfs['client_not_restartable_services']`
+  - Names of the client resources to not restart if the client configuration options
+    change.
 
 * `nfs['service']`
   - `['portmap']` - the portmap or rpcbind service depending on platform
@@ -60,6 +72,24 @@ This cookbook depends on Sean O'Meara's [line cookbook](https://github.com/somea
    - `['pipefs_directory']` - platform-specific location of `Pipefs-Directory`
    - `['user']` - effective user for idmap service, default `nobody`.
    - `['group']` - effective group for idmap service, default `nogroup`.
+
+* `nfs['opt']`
+   - Attributes specific to the Solaris NFS client
+   - ['nfsd_max_connections'] - Current connections
+   - ['nfsd_listen_backlog'] - Connection queue length
+   - ['nfsd_protocol'] - Pick UDP or TCP protocals
+   - ['nfsd_device'] - NFS for a given device only
+   - ['nfsd_servers'] - Maximum concurrent NFS requests
+   - ['lockd_listen_backlog'] - Connection queue lenght for lockd
+   - ['lockd_servers'] - Maximum concurrent lockd requests
+   - ['lockd_retransmit_timeout'] - In seconds
+   - ['grace_period'] - Seconds to reclaim locks after a reboot
+   - ['nfs_server_versmin'] - Minimum server nfs version
+   - ['nfs_server_versmax'] - Maximum server nfs version
+   - ['nfs_client_versmin'] - Minimum client nfs version
+   - ['nfs_client_versmax'] - Maximum client nfs version
+   - ['nfs_server_delegation'] - Allow delegation to clients
+   - ['nfsmapid_domain'] - Common domain for clients and servers
 
 ## Usage
 

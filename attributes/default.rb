@@ -40,6 +40,9 @@ default['nfs']['threads'] = 8
 
 # Default options are based on RHEL6
 default['nfs']['packages'] = %w(nfs-utils rpcbind)
+default['nfs']['client_services'] = %w(portmap lock)
+default['nfs']['client_nfs4_services'] =  []
+default['nfs']['client_not_restartable_services'] = []
 default['nfs']['service']['portmap'] = 'rpcbind'
 default['nfs']['service']['lock'] = 'nfslock'
 default['nfs']['service']['server'] = 'nfs'
@@ -53,8 +56,6 @@ default['nfs']['idmap']['domain'] = node['domain']
 default['nfs']['idmap']['pipefs_directory'] = '/var/lib/nfs/rpc_pipefs'
 default['nfs']['idmap']['user'] = 'nobody'
 default['nfs']['idmap']['group'] = 'nobody'
-
-default['nfs']['client-services'] = %w(portmap lock)
 
 case node['platform_family']
 
@@ -78,9 +79,9 @@ when 'rhel'
     end
 
     if node['platform_version'] == '7.0.1406'
-      default['nfs']['client-services'] = %w(nfs-lock.service)
+      default['nfs']['client_services'] = %w(nfs-lock.service)
     else
-      default['nfs']['client-services'] = %w(nfs-client.target)
+      default['nfs']['client_services'] = %w(nfs-client.target)
     end
   end
 
@@ -139,4 +140,24 @@ when 'debian'
       default['nfs']['service']['portmap'] = 'rpcbind'
     end
   end
+
+when 'solaris2'
+  if node['platform_version'].to_f == 5.10
+    default['nfs']['packages'] = []
+    default['nfs']['client_services'] = %w(portmap client lock quota statd)
+    default['nfs']['client_restartable_services'] = %w(client lock quota statd)
+    default['nfs']['client_nfs4_services'] = %w(cbd)
+    default['nfs']['service']['cbd'] = '/network/nfs/cbd'
+    default['nfs']['service']['client'] = '/network/nfs/client'
+    default['nfs']['service']['idmap'] = '/network/nfs/mapid'
+    default['nfs']['service']['lock'] = '/network/nfs/nlockmgr'
+    default['nfs']['service']['portmap'] = '/network/rpc/bind'
+    default['nfs']['service']['quota'] = '/network/nfs/rquota'
+    default['nfs']['service']['server'] = '/network/nfs/server'
+    default['nfs']['service']['statd'] = '/network/nfs/status'
+    default['nfs']['config']['client_templates'] = %w(/etc/default/nfs)
+    default['nfs']['config']['server_template'] = '/etc/sysconfig/nfs'
+    default['nfs']['opt'] = {}
+  end
+
 end

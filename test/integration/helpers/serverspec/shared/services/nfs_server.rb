@@ -1,4 +1,4 @@
-shared_examples 'services::nfs-server' do
+shared_examples 'services::nfs_server' do
   context 'nfs-server' do
     name = 'nfs-server'
     name = '' if host_inventory[:platform_version].to_i == 5

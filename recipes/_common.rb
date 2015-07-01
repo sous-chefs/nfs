@@ -29,14 +29,15 @@ directory ::File.dirname(node['nfs']['config']['server_template']) do
   only_if { node['platform_family'] == 'freebsd' }
 end
 
-client_service_list = node['nfs']['client-services']
+client_service_list = node['nfs']['client_services']
+client_restartable_list = node['nfs']['client_services'] - node['nfs']['client_not_restartable_services']
 
 # Configure NFS client components
 node['nfs']['config']['client_templates'].each do |client_template|
   template client_template do
     mode 00644
-    client_service_list.each do |component|
-      notifies :restart, "service[#{component}]", :immediately
+    client_restartable_list.each do |service|
+      notifies :restart, "service[#{service}]", :immediately
     end
   end
 end

@@ -10,8 +10,8 @@ end
 shared_examples 'services::portmap' do
   context 'portmap/rpcbind' do
     name = 'rpcbind'
-    check_enabled = true 
-    check_running = true 
+    check_enabled = true
+    check_running = true
 
     # RHEL/CentOS
     if os[:family] == 'redhat'

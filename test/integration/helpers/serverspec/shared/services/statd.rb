@@ -1,6 +1,6 @@
 shared_examples 'ports::statd' do
   context 'statd' do
-    describe port(32765) do
+    describe port(32_765) do
       it { should be_listening.with('tcp') }
     end
   end

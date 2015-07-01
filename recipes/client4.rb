@@ -17,7 +17,10 @@
 # limitations under the License.
 #
 
-# Include NFS <= v3 components and idmap
+# Add the nfs 4 services to the service start list
+node.default['nfs']['client_services'] = node['nfs']['client_services'].concat(node['nfs']['client_nfs4_services'])
+
+# Include NFS <= v3 components, idmap and optional nfs 4 services
 %w(nfs::_common nfs::_idmap).each do |component|
   include_recipe component
 end
