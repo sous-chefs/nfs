@@ -1,3 +1,13 @@
+v2.2.2
+------
+
+* Make service_provider edge cases an Ubuntu-specific hack.
+  - More feedback may be needed on Debian platforms/versions
+* CentOS platforms seem to detect service_provider fine, without
+  explicitly setting one.
+* Remove windows/solaris guard regression, because this should not be needed
+  without overriding the service provider
+
 v2.2.1
 ------
 

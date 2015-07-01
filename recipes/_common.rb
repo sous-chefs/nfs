@@ -42,9 +42,9 @@ end
 %w(portmap lock).each do |component|
   service component do
     service_name node['nfs']['service'][component]
-    pattern node['nfs']['service'][component]
-    provider node['nfs']['service_provider'][component]
+    provider node['nfs']['service_provider'][component] if node['platform'] == 'ubuntu'
+    # not_if "service #{component} status | grep -q running"
     action [:start, :enable]
-    supports :status => true
+    # supports :status => true
   end
 end

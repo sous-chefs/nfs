@@ -12,8 +12,8 @@ platforms:
   run_list:
   - recipe[apt]
 - name: centos-7.0
-- name: centos-6.5
-- name: centos-5.10
+- name: centos-6.6
+- name: centos-5.11
 
 suites:
 - name: default
