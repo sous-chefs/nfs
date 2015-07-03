@@ -52,7 +52,7 @@ action :create do
       if new_resource.unique
         replace_or_add "export #{new_resource.name}" do
           path '/etc/exports'
-          pattern "^#{new_resource.directory}"
+          pattern "^#{new_resource.directory} "
           line export_line
           notifies :run, 'execute[exportfs]', :immediately
         end
