@@ -18,7 +18,6 @@
 #
 
 include_recipe 'nfs::_common'
-include_recipe 'chef-sugar::default'
 
 # Install server components for Debian
 package 'nfs-kernel-server' if node['platform_family'] == 'debian'
@@ -32,7 +31,7 @@ end
 
 # RHEL7 has some extra requriements per
 # https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Storage_Administration_Guide/nfs-serverconfig.html#s2-nfs-nfs-firewall-config
-if rhel? && node['platform_version'].to_f >= 7.0
+if node['platform_family'] == 'rhel' && node['platform_version'].to_f >= 7.0
   include_recipe 'sysctl::default'
 
   sysctl_param 'fs.nfs.nlm_tcpport' do

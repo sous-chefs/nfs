@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+include_attribute 'sysctl'
+
 # Allowing Version 2, 3 and 4 of NFS to be enabled or disabled.
 # Default behavior, defer to protocol level(s) supported by kernel.
 default['nfs']['v2'] = nil

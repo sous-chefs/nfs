@@ -1,5 +1,6 @@
 ---
-driver_plugin: vagrant
+driver:
+  name: vagrant
 
 platforms:
 - name: debian-7.4
