@@ -1,6 +1,8 @@
 require 'chefspec'
 require 'chefspec/berkshelf'
 
-config.log_level = :error
+RSpec.configure do |config|
+  config.log_level = :error
+end
 
 at_exit { ChefSpec::Coverage.report! }
