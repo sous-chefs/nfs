@@ -1,3 +1,9 @@
+v2.2.3
+------
+
+* @joerocklin added CentOS 7 support, and tests, in #57
+* @sdrycroft added whitespace padding to replacement pattern in #62
+
 v2.2.2
 ------
 
