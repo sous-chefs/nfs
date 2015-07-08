@@ -2,7 +2,7 @@ shared_examples "issues::gh46" do
   context "Issue #46" do
     context "Uniform anonuid/anongid on unrelated shares" do
       describe command("egrep -c '/tmp/share[0-9] 127.0.0.1\\(ro,sync,root_squash,anonuid=[0-9]+,anongid=[0-9]+\\)' /etc/exports") do
-        its(:stdout) { should match /3\n/ }
+        its(:stdout) { should match(/3\n/) }
       end
     end
 
