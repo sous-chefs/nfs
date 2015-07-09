@@ -68,6 +68,15 @@ when 'rhel'
     default['nfs']['service']['server'] = 'nfs-server'
     default['nfs']['service']['idmap'] = 'nfs-idmap'
 
+    # Issue #63, Amazon Linux edge cases
+    if node['platform'] == 'amazon' &&
+       node['platform_version'] >= '2014.09' &&
+       node['platform_version'] <= '2015.03'
+      default['nfs']['service']['lock'] = 'nfslock'
+      default['nfs']['service']['server'] = 'nfs'
+      default['nfs']['service']['idmap'] = 'rpcidmapd'
+    end
+
     if node['platform_version'] == '7.0.1406'
       default['nfs']['client-services'] = %w(nfs-lock.service)
     else
