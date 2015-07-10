@@ -1,3 +1,11 @@
+v2.2.4
+------
+
+* @shortgun corrected an Amazon Linux regression introduced by #57
+* Cleaned out redundant BATS tests, in favor of Serverspec tests.
+* Cleaned up Serverspec tests introduced by #57 to better reflect
+  expected behavior.
+
 v2.2.3
 ------
 

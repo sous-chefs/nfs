@@ -24,10 +24,4 @@ suites:
 - name: server
   run_list:
   - recipe[nfs::server]
-  - recipe[nfs_test::server]
   - recipe[nfs_test::issue46]
-# - name: server4
-#   run_list:
-#   - recipe[nfs::server4]
-#   - recipe[nfs_test::server]
-#   - recipe[nfs_test::issue46]

@@ -122,7 +122,7 @@ when 'debian'
 
   when 'ubuntu'
     default['nfs']['service']['portmap'] = 'rpcbind-boot'
-    default['nfs']['service']['lock'] = 'statd'
+    default['nfs']['service']['lock'] = 'statd' # There is no lock service on Ubuntu
     default['nfs']['service']['idmap'] = 'idmapd'
     default['nfs']['idmap']['pipefs_directory'] = '/run/rpc_pipefs'
     default['nfs']['service_provider']['idmap'] = Chef::Provider::Service::Upstart

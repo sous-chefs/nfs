@@ -1,5 +1,5 @@
-shared_examples "ports::statd" do
-  context "statd" do
+shared_examples 'ports::statd' do
+  context 'statd' do
     describe port(32765) do
       it { should be_listening.with('tcp') }
     end
@@ -8,7 +8,7 @@ end
 
 shared_examples 'services::statd' do
   context 'statd' do
-    name = 'statd'
+    name = 'nfslock'
     check_enabled = true
     check_running = true
 
@@ -35,6 +35,8 @@ shared_examples 'services::statd' do
     end
 
     name = 'nfs-common' if host_inventory[:platform] == 'debian'
+    name = 'statd' if host_inventory[:platform] == 'ubuntu'
+    name = 'nfsserver' if host_inventory[:platform] == 'suse'
 
     describe service(name) do
       it { should be_enabled } if check_enabled

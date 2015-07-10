@@ -1,6 +1,6 @@
-shared_examples "ports::lockd" do
-  context "lockd" do
-    describe port(32768) do
+shared_examples 'ports::lockd' do
+  context 'lockd' do
+    describe port(32_768) do
       it { should be_listening.with('tcp') }
       it { should be_listening.with('udp') }
     end
@@ -25,10 +25,14 @@ shared_examples 'services::lockd' do
           it { should be_running }
         end
       end
-    end
-
-    if os[:family] == 'amazon'
+    elsif os[:family] == 'amazon'
       name = 'nfslock'
+    elsif %w(debian ubuntu).include?(os[:family])
+      name = 'nfs-common' if os[:family] == 'debian'
+      check_running = false
+      check_enabled = false if os[:family] == 'ubuntu'
+    elsif os[:family] == 'suse'
+      name = 'nfsserver'
     end
 
     check_enabled = false if os[:family] == 'debian'
@@ -39,6 +43,6 @@ shared_examples 'services::lockd' do
       it { should be_running } if check_running
     end unless name == ''
 
-    include_examples 'ports::lockd' if host_inventory[:platform_family] == 'redhat'
+    include_examples 'ports::lockd' if check_running
   end
 end
