@@ -19,6 +19,10 @@ shared_examples 'services::mountd' do
       name = 'nfs-mountd' if host_inventory[:platform_version].to_f >= 7.0
     end
 
+    if os[:family] == 'amazon'
+      check_enabled = false
+    end
+
     if os[:family] == 'debian'
       check_enabled = false
       name = 'nfs-kernel-server'

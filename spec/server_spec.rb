@@ -41,6 +41,26 @@ describe 'nfs::server' do
     end
   end
 
+  context 'on Amazon 2014.09' do
+    let(:chef_run) do
+      ChefSpec::ServerRunner.new(platform: 'amazon', version: 2014.09).converge(described_recipe)
+    end
+
+    it 'includes recipe nfs::_common' do
+      expect(chef_run).to include_recipe('nfs::_common')
+    end
+
+    %w(nfs).each do |svc|
+      it "starts the #{svc} service" do
+        expect(chef_run).to start_service(svc)
+      end
+
+      it "enables the #{svc} service" do
+        expect(chef_run).to enable_service(svc)
+      end
+    end
+  end
+
 =begin
   chef/chef#2383 platform mapping undergoing changes
   context 'on FreeBSD' do

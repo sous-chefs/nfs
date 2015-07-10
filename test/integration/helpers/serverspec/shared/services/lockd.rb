@@ -27,6 +27,10 @@ shared_examples 'services::lockd' do
       end
     end
 
+    if os[:family] == 'amazon'
+      name = 'nfslock'
+    end
+
     check_enabled = false if os[:family] == 'debian'
     check_enabled = false if os[:family] == 'ubuntu'
 

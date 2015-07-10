@@ -30,6 +30,10 @@ shared_examples 'services::statd' do
       end
     end
 
+    if os[:family] == 'amazon'
+      name = 'nfslock'
+    end
+
     name = 'nfs-common' if host_inventory[:platform] == 'debian'
 
     describe service(name) do

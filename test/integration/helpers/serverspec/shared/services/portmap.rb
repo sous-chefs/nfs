@@ -27,6 +27,10 @@ shared_examples 'services::portmap' do
       end
     end
 
+    if os[:family] == 'amazon'
+      name = 'rpcbind'
+    end
+
     # Debian/Ubuntu
     name = 'rpcbind' if (host_inventory[:platform] == 'ubuntu' && host_inventory[:platform_version] == '14.04')
     name = 'rpcbind' if host_inventory[:platform] == 'debian'
