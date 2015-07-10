@@ -59,19 +59,24 @@ default['nfs']['client-services'] = %w(portmap lock)
 case node['platform_family']
 
 when 'rhel'
-  # RHEL5 edge case package set and portmap name
-  if node['platform_version'].to_i <= 5
-    default['nfs']['packages'] = %w(nfs-utils portmap)
-    default['nfs']['service']['portmap'] = 'portmap'
-  elsif node['platform_version'].to_i >= 7
-    default['nfs']['service']['lock'] = 'nfs-lock'
-    default['nfs']['service']['server'] = 'nfs-server'
-    default['nfs']['service']['idmap'] = 'nfs-idmap'
+  case node['platform']
+  when 'amazon'
+    # For future amazon versions
+  else
+    # RHEL5 edge case package set and portmap name
+    if node['platform_version'].to_i <= 5
+      default['nfs']['packages'] = %w(nfs-utils portmap)
+      default['nfs']['service']['portmap'] = 'portmap'
+    elsif node['platform_version'].to_i >= 7
+      default['nfs']['service']['lock'] = 'nfs-lock'
+      default['nfs']['service']['server'] = 'nfs-server'
+      default['nfs']['service']['idmap'] = 'nfs-idmap'
 
-    if node['platform_version'] == '7.0.1406'
-      default['nfs']['client-services'] = %w(nfs-lock.service)
-    else
-      default['nfs']['client-services'] = %w(nfs-client.target)
+      if node['platform_version'] == '7.0.1406'
+        default['nfs']['client-services'] = %w(nfs-lock.service)
+      else
+        default['nfs']['client-services'] = %w(nfs-client.target)
+      end
     end
   end
 
