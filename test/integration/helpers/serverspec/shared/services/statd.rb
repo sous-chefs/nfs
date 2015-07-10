@@ -28,11 +28,10 @@ shared_examples 'services::statd' do
         end
         check_enabled = false
       end
-    end
-
-    if os[:family] == 'amazon'
+    elsif os[:family] == 'amazon'
       name = 'nfslock'
     end
+
 
     name = 'nfs-common' if host_inventory[:platform] == 'debian'
     name = 'statd' if host_inventory[:platform] == 'ubuntu'
