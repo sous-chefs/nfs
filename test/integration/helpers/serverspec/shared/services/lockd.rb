@@ -35,9 +35,6 @@ shared_examples 'services::lockd' do
       name = 'nfsserver'
     end
 
-    check_enabled = false if os[:family] == 'debian'
-    check_enabled = false if os[:family] == 'ubuntu'
-
     describe service(name) do
       it { should be_enabled } if check_enabled
       it { should be_running } if check_running
