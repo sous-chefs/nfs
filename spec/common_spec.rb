@@ -254,4 +254,30 @@ describe 'nfs::_common' do
       end
     end
   end
+
+  context 'on Solaris2 5.10' do
+    let(:chef_run) do
+      ChefSpec::ServerRunner.new(platform: 'solaris2', version: 5.11) do |node|
+        node.automatic['platform_version'] = '5.10'
+      end.converge(described_recipe)
+    end
+
+    it 'creates file /etc/default/nfs with: header text' do
+      expect(chef_run).to render_file('/etc/default/nfs').with_content(/Local modifications/)
+    end
+
+    { portmap: '/network/rpc/bind',
+      client: '/network/nfs/client',
+      lock: '/network/nfs/nlockmgr',
+      quota: '/network/nfs/rquota',
+      statd: '/network/nfs/status' }.each do |svc, service_name|
+      it "starts the #{svc} service" do
+        expect(chef_run).to start_service(svc.to_s).with(service_name: service_name)
+      end
+
+      it "enables the #{svc} service" do
+        expect(chef_run).to enable_service(svc)
+      end
+    end
+  end
 end

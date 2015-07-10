@@ -6,7 +6,7 @@ long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 name 'nfs'
 version '2.2.4'
 
-%w(ubuntu debian redhat centos fedora scientific amazon oracle sles freebsd).each do |os|
+%w(ubuntu debian redhat centos fedora scientific amazon oracle sles freebsd solaris2).each do |os|
   supports os
 end
 

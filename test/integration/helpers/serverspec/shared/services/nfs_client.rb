@@ -4,7 +4,7 @@
 # It also lazy-starts some services at the first mount. I have not yet found a way
 # to reliably test NFS mounts.
 
-shared_examples 'services::nfs-client' do
+shared_examples 'services::nfs_client' do
   context 'nfs-client' do
     name = 'nfs-client.target'
 
