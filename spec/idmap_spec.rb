@@ -27,6 +27,32 @@ describe 'nfs::_idmap' do
     end
   end
 
+  %w(2014.09).each do |release|
+    context "on Amazon Linux #{release}" do
+      let(:chef_run) do
+        ChefSpec::ServerRunner.new(platform: 'amazon', version: release).converge(described_recipe)
+      end
+
+      it 'includes recipe nfs::_common' do
+        expect(chef_run).to include_recipe('nfs::_common')
+      end
+
+      it 'renders file idmapd with /var/lib/nfs/rpc_pipefs' do
+        expect(chef_run).to render_file('/etc/idmapd.conf').with_content(%r{Pipefs-Directory += +/var/lib/nfs/rpc_pipefs})
+      end
+
+      %w(rpcidmapd).each do |svc|
+        it "starts the #{svc} service" do
+          expect(chef_run).to start_service(svc)
+        end
+
+        it "enables the #{svc} service" do
+          expect(chef_run).to enable_service(svc)
+        end
+      end
+    end
+  end
+
   %w(14.04 12.04 10.04).each do |release|
     context "on Ubuntu #{release}" do
       let(:chef_run) do

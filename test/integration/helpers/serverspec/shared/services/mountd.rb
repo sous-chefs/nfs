@@ -17,6 +17,8 @@ shared_examples 'services::mountd' do
     if os[:family] == 'redhat'
       check_enabled = false
       name = 'nfs-mountd' if host_inventory[:platform_version].to_f >= 7.0
+    elsif os[:family] == 'amazon'
+      check_enabled = false
     elsif %w(debian ubuntu).include?(os[:family])
       name = 'nfs-kernel-server'
     end

@@ -69,6 +69,40 @@ describe 'nfs::_common' do
     end
   end
 
+  context 'on Amazon 2014.09' do
+    let(:chef_run) do
+      ChefSpec::ServerRunner.new(platform: 'amazon', version: '2014.09').converge(described_recipe)
+    end
+
+    %w(nfs-utils rpcbind).each do |pkg|
+      it "installs packages #{pkg}" do
+        expect(chef_run).to install_package(pkg)
+      end
+    end
+
+    %w(portmap nfslock).each do |svc|
+      it "starts the #{svc} service" do
+        expect(chef_run).to start_service(svc)
+      end
+
+      it "enables the #{svc} service" do
+        expect(chef_run).to enable_service(svc)
+      end
+    end
+
+    {
+      STATD_PORT: 32_765,
+      STATD_OUTGOING_PORT: 32_766,
+      MOUNTD_PORT: 32_767,
+      LOCKD_UDPPORT: 32_768,
+      RPCNFSDCOUNT: 8
+    }.each do |svc, port|
+      it "creates /etc/sysconfig/nfs with #{svc} defined as #{port}" do
+        expect(chef_run).to render_file('/etc/sysconfig/nfs').with_content(/#{svc}="?#{port}"?/)
+      end
+    end
+  end
+
 =begin
   chef/chef#2383 platform provider mapping changes
   context 'on FreeBSD' do

@@ -25,6 +25,8 @@ shared_examples 'services::lockd' do
           it { should be_running }
         end
       end
+    elsif os[:family] == 'amazon'
+      name = 'nfslock'
     elsif %w(debian ubuntu).include?(os[:family])
       name = 'nfs-common' if os[:family] == 'debian'
       check_running = false

@@ -25,6 +25,8 @@ shared_examples 'services::portmap' do
         end
         check_enabled = false
       end
+    elsif os[:family] == 'amazon'
+      name = 'rpcbind'
     elsif ['debian', 'ubuntu'].include?(os[:family])
     # Ubuntu
       if host_inventory[:platform_version].to_i >= 12 &&
