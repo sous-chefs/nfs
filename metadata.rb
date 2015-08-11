@@ -4,7 +4,7 @@ license 'Apache 2.0'
 description 'Installs and configures NFS, and NFS exports'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 name 'nfs'
-version '2.2.4'
+version '2.2.5'
 
 %w(ubuntu debian redhat centos fedora scientific amazon oracle sles freebsd).each do |os|
   supports os

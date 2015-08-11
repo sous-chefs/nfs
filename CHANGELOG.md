@@ -1,3 +1,9 @@
+v2.2.5
+------
+
+* @yoshiwaan - improved Amazon Linux platform support.
+  - Also added tests, and example .kitchen.yml.aws file.
+
 v2.2.4
 ------
 
