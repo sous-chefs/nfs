@@ -1,3 +1,8 @@
+v2.2.6
+------
+
+* @davidgiesberg - fixed an issue with chef-client 12.5 in #67
+
 v2.2.5
 ------
 
