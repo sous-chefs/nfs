@@ -27,6 +27,7 @@ This cookbook depends on Sean O'Meara's [line cookbook](https://github.com/somea
   - `['idmap']` - the NFSv4 idmap component
 
 * `nfs['service_provider']`
+  - NOTE: This is a hack to set the service provider explicitly to Upstart on Ubuntu platforms.
   - `['portmap']` - provider for portmap service, chosen by platform
   - `['lock']` - provider for lock service, chosen by platform
   - `['server']` - provider for server service, chosen by platform

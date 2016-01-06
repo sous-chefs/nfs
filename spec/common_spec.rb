@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'nfs::_common' do
   context 'on Centos 5.9' do
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'centos', version: 5.9).converge(described_recipe)
+      ChefSpec::ServerRunner.new(platform: 'centos', version: 5.9).converge(described_recipe)
     end
 
     %w(nfs-utils portmap).each do |pkg|
@@ -37,7 +37,7 @@ describe 'nfs::_common' do
 
   context 'on Centos 6.5' do
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'centos', version: 6.5).converge(described_recipe)
+      ChefSpec::ServerRunner.new(platform: 'centos', version: 6.5).converge(described_recipe)
     end
 
     %w(nfs-utils rpcbind).each do |pkg|
@@ -69,9 +69,45 @@ describe 'nfs::_common' do
     end
   end
 
+  context 'on Amazon 2014.09' do
+    let(:chef_run) do
+      ChefSpec::ServerRunner.new(platform: 'amazon', version: '2014.09').converge(described_recipe)
+    end
+
+    %w(nfs-utils rpcbind).each do |pkg|
+      it "installs packages #{pkg}" do
+        expect(chef_run).to install_package(pkg)
+      end
+    end
+
+    %w(portmap nfslock).each do |svc|
+      it "starts the #{svc} service" do
+        expect(chef_run).to start_service(svc)
+      end
+
+      it "enables the #{svc} service" do
+        expect(chef_run).to enable_service(svc)
+      end
+    end
+
+    {
+      STATD_PORT: 32_765,
+      STATD_OUTGOING_PORT: 32_766,
+      MOUNTD_PORT: 32_767,
+      LOCKD_UDPPORT: 32_768,
+      RPCNFSDCOUNT: 8
+    }.each do |svc, port|
+      it "creates /etc/sysconfig/nfs with #{svc} defined as #{port}" do
+        expect(chef_run).to render_file('/etc/sysconfig/nfs').with_content(/#{svc}="?#{port}"?/)
+      end
+    end
+  end
+
+=begin
+  chef/chef#2383 platform provider mapping changes
   context 'on FreeBSD' do
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'freebsd', version: 9.1).converge(described_recipe)
+      ChefSpec::ServerRunner.new(platform: 'freebsd', version: 9.1).converge(described_recipe)
     end
 
     %w(nfs-utils rpcbind).each do |pkg|
@@ -98,11 +134,12 @@ describe 'nfs::_common' do
       expect(chef_run).to render_file('/etc/rc.conf.d/mountd').with_content(/mountd_flags="-r +-p +32767"/)
     end
   end
+=end
 
   # Submit Ubuntu Fauxhai to https://github.com/customink/fauxhai for better Ubuntu coverage
   context 'on Ubuntu 14.04' do
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'ubuntu', version: 14.04).converge(described_recipe)
+      ChefSpec::ServerRunner.new(platform: 'ubuntu', version: 14.04).converge(described_recipe)
     end
 
     %w(nfs-common rpcbind).each do |pkg|
@@ -133,7 +170,7 @@ describe 'nfs::_common' do
   # Submit Ubuntu Fauxhai to https://github.com/customink/fauxhai for better Ubuntu coverage
   context 'on Ubuntu 12.04' do
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'ubuntu', version: 12.04).converge(described_recipe)
+      ChefSpec::ServerRunner.new(platform: 'ubuntu', version: 12.04).converge(described_recipe)
     end
 
     %w(nfs-common rpcbind).each do |pkg|
@@ -164,7 +201,7 @@ describe 'nfs::_common' do
   # Submit Ubuntu Fauxhai to https://github.com/customink/fauxhai for better Ubuntu coverage
   context 'on Ubuntu 10.04' do
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'ubuntu', version: 10.04).converge(described_recipe)
+      ChefSpec::ServerRunner.new(platform: 'ubuntu', version: 10.04).converge(described_recipe)
     end
 
     %w(nfs-common rpcbind).each do |pkg|
@@ -194,7 +231,7 @@ describe 'nfs::_common' do
 
   context 'on Debian 6.0.5' do
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'debian', version: '6.0.5').converge(described_recipe)
+      ChefSpec::ServerRunner.new(platform: 'debian', version: '6.0.5').converge(described_recipe)
     end
 
     %w(nfs-common portmap).each do |pkg|
@@ -224,7 +261,7 @@ describe 'nfs::_common' do
 
   context 'on Debian 7.2' do
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'debian', version: 7.2).converge(described_recipe)
+      ChefSpec::ServerRunner.new(platform: 'debian', version: 7.2).converge(described_recipe)
     end
 
     %w(nfs-common rpcbind).each do |pkg|
@@ -251,5 +288,4 @@ describe 'nfs::_common' do
       end
     end
   end
-
 end

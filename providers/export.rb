@@ -18,7 +18,6 @@
 #
 
 action :create do
-
   sub_run_context = @run_context.dup
   sub_run_context.resource_collection = Chef::ResourceCollection.new
 
@@ -27,14 +26,10 @@ action :create do
 
     ro_rw = new_resource.writeable ? 'rw' : 'ro'
     sync_async = new_resource.sync ? 'sync' : 'async'
-    if new_resource.anonuser
-      new_resource.options << "anonuid=#{find_uid(new_resource.anonuser)}"
-    end
-    if new_resource.anongroup
-      new_resource.options << "anongid=#{find_gid(new_resource.anongroup)}"
-    end
     options = new_resource.options.join(',')
     options = ",#{options}" unless options.empty?
+    options << ",anonuid=#{find_uid(new_resource.anonuser)}" if new_resource.anonuser
+    options << ",anongid=#{find_gid(new_resource.anongroup)}" if new_resource.anongroup
 
     if new_resource.network.is_a?(Array)
       host_permissions = new_resource.network.map { |net| net + "(#{ro_rw},#{sync_async}#{options})" }
@@ -54,10 +49,19 @@ action :create do
         notifies :run, 'execute[exportfs]', :immediately
       end
     else
-      append_if_no_line "export #{new_resource.name}" do
-        path '/etc/exports'
-        line export_line
-        notifies :run, 'execute[exportfs]', :immediately
+      if new_resource.unique
+        replace_or_add "export #{new_resource.name}" do
+          path '/etc/exports'
+          pattern "^#{new_resource.directory} "
+          line export_line
+          notifies :run, 'execute[exportfs]', :immediately
+        end
+      else
+        append_if_no_line "export #{new_resource.name}" do
+          path '/etc/exports'
+          line export_line
+          notifies :run, 'execute[exportfs]', :immediately
+        end
       end
     end
   ensure
@@ -72,7 +76,6 @@ action :create do
       new_resource.updated_by_last_action(true)
     end
   end
-
 end
 
 private

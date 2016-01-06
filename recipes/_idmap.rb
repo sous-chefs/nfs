@@ -19,8 +19,6 @@
 
 include_recipe 'nfs::_common'
 
-package 'nfs-kernel-server' if node['platform_family'] == 'debian'
-
 # Configure idmap template for NFSv4 client/server support
 template node['nfs']['config']['idmap_template'] do
   mode 00644
@@ -30,7 +28,7 @@ end
 # Start idmapd components
 service 'idmap' do
   service_name node['nfs']['service']['idmap']
-  provider node['nfs']['service_provider']['idmap']
+  provider node['nfs']['service_provider']['idmap'] if node['platform'] == 'ubuntu'
   action [:start, :enable]
   supports :status => true
 end

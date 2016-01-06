@@ -1,18 +1,24 @@
 ---
-driver_plugin: vagrant 
+driver:
+  name: vagrant
+
+provisioner:
+  require_chef_omnibus: latest
 
 platforms:
-- name: debian-7.4
-  run_list:
-  - recipe[apt]
 - name: ubuntu-14.04
   run_list:
   - recipe[apt]
-- name: ubuntu-12.04 
+- name: ubuntu-12.04
   run_list:
   - recipe[apt]
-- name: centos-6.5
-- name: centos-5.10
+- name: centos-7.1
+- name: centos-7.0
+- name: centos-6.6
+- name: centos-5.11
+- name: debian-7.4
+  run_list:
+  - recipe[apt]
 
 suites:
 - name: default
@@ -21,4 +27,4 @@ suites:
 - name: server
   run_list:
   - recipe[nfs::server]
-  - recipe[nfs_test::server]
+  - recipe[nfs_test::issue46]

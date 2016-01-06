@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+include_attribute 'sysctl'
+
 # Allowing Version 2, 3 and 4 of NFS to be enabled or disabled.
 # Default behavior, defer to protocol level(s) supported by kernel.
 default['nfs']['v2'] = nil
@@ -41,28 +43,41 @@ default['nfs']['packages'] = %w(nfs-utils rpcbind)
 default['nfs']['service']['portmap'] = 'rpcbind'
 default['nfs']['service']['lock'] = 'nfslock'
 default['nfs']['service']['server'] = 'nfs'
-default['nfs']['service_provider']['lock'] = Chef::Platform.find_provider_for_node node, :service
-default['nfs']['service_provider']['portmap'] = Chef::Platform.find_provider_for_node node, :service
-default['nfs']['service_provider']['server'] = Chef::Platform.find_provider_for_node node, :service
 default['nfs']['config']['client_templates'] = %w(/etc/sysconfig/nfs)
 default['nfs']['config']['server_template'] = '/etc/sysconfig/nfs'
 
 # idmap recipe attributes
 default['nfs']['config']['idmap_template'] = '/etc/idmapd.conf'
 default['nfs']['service']['idmap'] = 'rpcidmapd'
-default['nfs']['service_provider']['idmap'] = Chef::Platform.find_provider_for_node node, :service
 default['nfs']['idmap']['domain'] = node['domain']
 default['nfs']['idmap']['pipefs_directory'] = '/var/lib/nfs/rpc_pipefs'
 default['nfs']['idmap']['user'] = 'nobody'
 default['nfs']['idmap']['group'] = 'nobody'
 
+default['nfs']['client-services'] = %w(portmap lock)
+
 case node['platform_family']
 
 when 'rhel'
-  # RHEL5 edge case package set and portmap name
-  if node['platform_version'].to_i <= 5
-    default['nfs']['packages'] = %w(nfs-utils portmap)
-    default['nfs']['service']['portmap'] = 'portmap'
+  case node['platform']
+  when 'amazon'
+    # For future amazon versions
+  else
+    # RHEL5 edge case package set and portmap name
+    if node['platform_version'].to_i <= 5
+      default['nfs']['packages'] = %w(nfs-utils portmap)
+      default['nfs']['service']['portmap'] = 'portmap'
+    elsif node['platform_version'].to_i >= 7
+      default['nfs']['service']['lock'] = 'nfs-lock'
+      default['nfs']['service']['server'] = 'nfs-server'
+      default['nfs']['service']['idmap'] = 'nfs-idmap'
+
+      if node['platform_version'] == '7.0.1406'
+        default['nfs']['client-services'] = %w(nfs-lock.service)
+      else
+        default['nfs']['client-services'] = %w(nfs-client.target)
+      end
+    end
   end
 
 when 'freebsd'
@@ -95,6 +110,7 @@ when 'debian'
   default['nfs']['service']['server'] = 'nfs-kernel-server'
   default['nfs']['config']['client_templates'] = %w(/etc/default/nfs-common /etc/modprobe.d/lockd.conf)
   default['nfs']['config']['server_template'] = '/etc/default/nfs-kernel-server'
+  default['nfs']['idmap']['group'] = 'nogroup'
 
   # Debian 6.0
   if node['platform_version'].to_i <= 6
@@ -105,19 +121,18 @@ when 'debian'
   case node['platform']
 
   when 'ubuntu'
-    # Start with latest release, and work backwards
     default['nfs']['service']['portmap'] = 'rpcbind-boot'
-    default['nfs']['service']['lock'] = 'statd'
+    default['nfs']['service']['lock'] = 'statd' # There is no lock service on Ubuntu
     default['nfs']['service']['idmap'] = 'idmapd'
     default['nfs']['idmap']['pipefs_directory'] = '/run/rpc_pipefs'
     default['nfs']['service_provider']['idmap'] = Chef::Provider::Service::Upstart
     default['nfs']['service_provider']['portmap'] = Chef::Provider::Service::Upstart
     default['nfs']['service_provider']['lock'] = Chef::Provider::Service::Upstart
 
-    # Ubuntu < 11.04 edge case package set and portmap name
-    if node['platform_version'].to_f <= 11.04
+    # Ubuntu 11.04 and 14.04 service script edge cases
+    if node['platform_version'].to_f <= 11.04 ||
+       node['platform_version'].to_f >= 14.04
       default['nfs']['service']['portmap'] = 'rpcbind'
     end
-
   end
 end
