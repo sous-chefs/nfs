@@ -149,7 +149,7 @@ platform-specific server services for an effective protocol level of NFSv3.
 ## nfs::server4 recipe
 
 This recipe includes the common client components from `nfs::_common`.  It also configures and installs the
-platform-specific server servcies for an effective protocol level of NFSv4.  Effectively the same as running
+platform-specific server services for an effective protocol level of NFSv4.  Effectively the same as running
 `nfs::_common` and `nfs::_idmap` and `nfs::server`.
 
 ## nfs::undo recipe
