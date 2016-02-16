@@ -111,6 +111,16 @@ when 'debian'
   default['nfs']['config']['client_templates'] = %w(/etc/default/nfs-common /etc/modprobe.d/lockd.conf)
   default['nfs']['config']['server_template'] = '/etc/default/nfs-kernel-server'
   default['nfs']['idmap']['group'] = 'nogroup'
+  default['nfs']['service_provider']['idmap'] = Chef::Provider::Service::Init::Debian
+  default['nfs']['service_provider']['portmap'] = Chef::Provider::Service::Init::Debian
+  default['nfs']['service_provider']['lock'] = Chef::Provider::Service::Init::Debian
+
+  # Debian 8.0
+  if node['platform_version'].to_i >= 8
+    default['nfs']['service_provider']['idmap'] = Chef::Provider::Service::Systemd
+    default['nfs']['service_provider']['portmap'] = Chef::Provider::Service::Systemd
+    default['nfs']['service_provider']['lock'] = Chef::Provider::Service::Systemd
+  end
 
   # Debian 6.0
   if node['platform_version'].to_i <= 6
