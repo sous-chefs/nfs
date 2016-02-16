@@ -144,5 +144,14 @@ when 'debian'
        node['platform_version'].to_f >= 14.04
       default['nfs']['service']['portmap'] = 'rpcbind'
     end
+
+    # Ubuntu 15.04
+    if node['platform_version'].to_f >= 15.04
+      default['nfs']['service']['lock'] = 'rpc-statd'
+      default['nfs']['config']['client_templates'] = %w(/run/sysconfig/nfs-utils /etc/modprobe.d/lockd.conf)
+      default['nfs']['service_provider']['idmap'] = Chef::Provider::Service::Systemd
+      default['nfs']['service_provider']['portmap'] = Chef::Provider::Service::Systemd
+      default['nfs']['service_provider']['lock'] = Chef::Provider::Service::Systemd
+    end
   end
 end
