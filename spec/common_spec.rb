@@ -288,4 +288,34 @@ describe 'nfs::_common' do
       end
     end
   end
+
+  context 'on Debian 8.2' do
+    let(:chef_run) do
+      ChefSpec::ServerRunner.new(platform: 'debian', version: 8.2).converge(described_recipe)
+    end
+
+    %w(nfs-common rpcbind).each do |pkg|
+      it "installs package #{pkg}" do
+        expect(chef_run).to install_package(pkg)
+      end
+    end
+
+    it 'creates file /etc/default/nfs-common with: STATDOPTS="--port 32765 --outgoing-port 32766' do
+      expect(chef_run).to render_file('/etc/default/nfs-common').with_content(/STATDOPTS="--port +32765 +--outgoing-port +32766"/)
+    end
+
+    it 'creates file /etc/modprobe.d/lockd.conf with: options lockd nlm_udpport=32768 nlm_tcpport=32768' do
+      expect(chef_run).to render_file('/etc/modprobe.d/lockd.conf').with_content(/options +lockd +nlm_udpport=32768 +nlm_tcpport=32768/)
+    end
+
+    %w(nfs-common rpcbind).each do |svc|
+      it "starts the #{svc} service" do
+        expect(chef_run).to start_service(svc)
+      end
+
+      it "enables the #{svc} service" do
+        expect(chef_run).to enable_service(svc)
+      end
+    end
+  end
 end

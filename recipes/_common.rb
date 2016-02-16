@@ -45,7 +45,7 @@ end
 client_service_list.each do |component|
   service component do
     service_name node['nfs']['service'][component]
-    provider node['nfs']['service_provider'][component] if node['platform'] == 'ubuntu'
+    provider node['nfs']['service_provider'][component] if node['platform_family'] == 'debian'
     # not_if "service #{component} status | grep -q running"
     action [:start, :enable]
     # supports :status => true

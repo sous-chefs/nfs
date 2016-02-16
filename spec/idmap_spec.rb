@@ -83,8 +83,8 @@ describe 'nfs::_idmap' do
     end
   end
 
-  %w(7.2 6.0.5).each do |release|
-    context 'on Debian 6.0.5' do
+  %w(8.2 7.2 6.0.5).each do |release|
+    context "on Debian #{release}" do
       let(:chef_run) do
         ChefSpec::ServerRunner.new(platform: 'debian', version: release).converge(described_recipe)
       end
