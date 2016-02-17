@@ -131,6 +131,7 @@ when 'debian'
 
     # Ubuntu 13.04 and earlier service name = 'portmap'
     if node['platform_version'].to_f <= 13.04
+      default['nfs']['packages'] = %w(nfs-common portmap)
       default['nfs']['service']['portmap'] = 'portmap'
     end
   end
