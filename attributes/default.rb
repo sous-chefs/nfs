@@ -131,7 +131,7 @@ when 'debian'
   case node['platform']
 
   when 'ubuntu'
-    default['nfs']['service']['portmap'] = 'rpcbind-boot'
+    default['nfs']['service']['portmap'] = 'rpcbind'
     default['nfs']['service']['lock'] = 'statd' # There is no lock service on Ubuntu
     default['nfs']['service']['idmap'] = 'idmapd'
     default['nfs']['idmap']['pipefs_directory'] = '/run/rpc_pipefs'
@@ -139,10 +139,10 @@ when 'debian'
     default['nfs']['service_provider']['portmap'] = Chef::Provider::Service::Upstart
     default['nfs']['service_provider']['lock'] = Chef::Provider::Service::Upstart
 
-    # Ubuntu 11.04 and 14.04 service script edge cases
-    if node['platform_version'].to_f <= 11.04 ||
-       node['platform_version'].to_f >= 14.04
-      default['nfs']['service']['portmap'] = 'rpcbind'
+    # Ubuntu 13.04 and earlier service name = 'portmap'
+    if node['platform_version'].to_f <= 13.04
+      default['nfs']['packages'] = %w(nfs-common portmap)
+      default['nfs']['service']['portmap'] = 'portmap'
     end
   end
 end
