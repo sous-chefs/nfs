@@ -35,6 +35,7 @@ shared_examples 'services::statd' do
 
     name = 'nfs-common' if host_inventory[:platform] == 'debian'
     name = 'statd' if host_inventory[:platform] == 'ubuntu'
+    name = 'rpc-statd' if host_inventory[:platform] == 'ubuntu' && host_inventory[:platform_version].to_f >= 15.04
     name = 'nfsserver' if host_inventory[:platform] == 'suse'
 
     describe service(name) do

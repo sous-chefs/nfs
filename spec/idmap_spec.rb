@@ -53,7 +53,7 @@ describe 'nfs::_idmap' do
     end
   end
 
-  %w(14.04 12.04 10.04).each do |release|
+  %w(15.04 14.04 12.04 10.04).each do |release|
     context "on Ubuntu #{release}" do
       let(:chef_run) do
         ChefSpec::ServerRunner.new(platform: 'ubuntu', version: release).converge(described_recipe)
