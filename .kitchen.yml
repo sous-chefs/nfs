@@ -14,9 +14,11 @@ platforms:
   - recipe[apt]
 - name: centos-7.1
 - name: centos-7.0
-- name: centos-6.6
+  driver:
+    box: opscode-centos-7.0
+- name: centos-6.7
 - name: centos-5.11
-- name: debian-7.4
+- name: debian-7.9
   run_list:
   - recipe[apt]
 - name: debian-8.2
