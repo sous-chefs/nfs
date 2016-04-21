@@ -9,30 +9,6 @@ v2.2.7
   - Correct service name for Ubuntu <=13.04 = 'portmap', >=13.10 = 'rpcbind'
         
 
-commit f0a62939a61a6bb4b6637562d22c0fe347be4035
-Author: Hans Rakers <h.rakers@global.leaseweb.com>
-Date:   Wed Feb 17 18:22:24 2016 +0100
-
-    update tests for new Ubuntu service and package names
-
-commit b35f0bdfba164ea3bb35919fc10f3cde280950a8
-Author: Hans Rakers <h.rakers@global.leaseweb.com>
-Date:   Wed Feb 17 18:21:12 2016 +0100
-
-    use package portmap instead of rpcbind on Ubuntu <=13.04
-
-commit 50bfef088e0cee7a016c828418e45dbe3940c137
-Author: Hans Rakers <h.rakers@global.leaseweb.com>
-Date:   Wed Feb 17 17:50:25 2016 +0100
-
-    Correct service name for Ubuntu <=13.04 = 'portmap', >=13.10 = 'rpcbind'
-
-commit 4335ed1122b5b765b333ba856800bb8937f7a03b
-Author: Gavin Reynolds <g.reynolds@src.gla.ac.uk>
-Date:   Tue Feb 16 11:45:10 2016 +0000
-
-    Add explicit service provider attributes for Debian, including Debian 8
-
 v2.2.6
 ------
 
