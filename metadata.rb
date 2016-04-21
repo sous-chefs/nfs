@@ -4,7 +4,7 @@ license 'Apache 2.0'
 description 'Installs and configures NFS, and NFS exports'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 name 'nfs'
-version '2.2.6'
+version '2.2.7'
 source_url 'https://github.com/atomic-penguin/cookbook-nfs'
 issues_url 'https://github.com/atomic-penguin/cookbook-nfs/issues'
 
