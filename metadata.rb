@@ -5,8 +5,8 @@ description 'Installs and configures NFS, and NFS exports'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 name 'nfs'
 version '2.2.7'
-source_url 'https://github.com/atomic-penguin/cookbook-nfs'
-issues_url 'https://github.com/atomic-penguin/cookbook-nfs/issues'
+source_url 'https://github.com/atomic-penguin/cookbook-nfs' if respond_to?(:source_url)
+issues_url 'https://github.com/atomic-penguin/cookbook-nfs/issues' if respond_to?(:issues_url)
 
 %w(ubuntu debian redhat centos fedora scientific amazon oracle sles freebsd).each do |os|
   supports os
