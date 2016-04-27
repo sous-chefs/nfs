@@ -1,3 +1,8 @@
+v2.2.8
+------
+
+* @zivagolee - Chef 11 backwards compatability for issues/source urls.
+
 v2.2.7
 ------
 
