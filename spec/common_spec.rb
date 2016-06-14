@@ -156,7 +156,7 @@ describe 'nfs::_common' do
       expect(chef_run).to render_file('/etc/modprobe.d/lockd.conf').with_content(/options +lockd +nlm_udpport=32768 +nlm_tcpport=32768/)
     end
 
-    %w(rpcbind statd).each do |svc|
+    %w(rpcbind rpc-statd).each do |svc|
       it "starts the #{svc} service" do
         expect(chef_run).to start_service(svc)
       end
