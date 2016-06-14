@@ -92,7 +92,7 @@ describe 'nfs::server' do
   end
 =end
 
-  %w(14.04 12.04 10.04).each do |release|
+  %w(16.04 14.04 12.04 10.04).each do |release|
     # Submit Ubuntu Fauxhai to https://github.com/customink/fauxhai for better Ubuntu coverage
     context "on Ubuntu #{release}" do
       let(:chef_run) do
