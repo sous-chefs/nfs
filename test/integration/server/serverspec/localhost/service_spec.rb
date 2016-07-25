@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Server Tests" do
+describe 'Server Tests' do
   include_examples 'services::portmap'
   include_examples 'services::statd'
   include_examples 'services::mountd'

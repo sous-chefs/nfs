@@ -25,7 +25,7 @@ package 'nfs-kernel-server' if node['platform_family'] == 'debian'
 # Configure nfs-server components
 template node['nfs']['config']['server_template'] do
   source 'nfs.erb'
-  mode 00644
+  mode 0o0644
   notifies :restart, "service[#{node['nfs']['service']['server']}]"
 end
 

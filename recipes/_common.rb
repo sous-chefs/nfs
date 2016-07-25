@@ -24,7 +24,7 @@ end
 
 # On FreeBSD, create the potentially missing configuration directory
 directory ::File.dirname(node['nfs']['config']['server_template']) do
-  mode 00755
+  mode 0o0755
   action :create
   only_if { node['platform_family'] == 'freebsd' }
 end
@@ -34,7 +34,7 @@ client_service_list = node['nfs']['client-services']
 # Configure NFS client components
 node['nfs']['config']['client_templates'].each do |client_template|
   template client_template do
-    mode 00644
+    mode 0o0644
     client_service_list.each do |component|
       notifies :restart, "service[#{component}]", :immediately
     end

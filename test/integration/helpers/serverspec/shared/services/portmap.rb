@@ -10,8 +10,8 @@ end
 shared_examples 'services::portmap' do
   context 'portmap/rpcbind' do
     name = 'rpcbind'
-    check_enabled = true 
-    check_running = true 
+    check_enabled = true
+    check_running = true
 
     # RHEL/CentOS
     if os[:family] == 'redhat'
@@ -27,8 +27,8 @@ shared_examples 'services::portmap' do
       end
     elsif os[:family] == 'amazon'
       name = 'rpcbind'
-    elsif ['debian', 'ubuntu'].include?(os[:family])
-    # Ubuntu
+    elsif %w(debian ubuntu).include?(os[:family])
+      # Ubuntu
       if host_inventory[:platform_version].to_i >= 12 &&
          host_inventory[:platform_version].to_i <= 13
         name = 'rpcbind-boot'
