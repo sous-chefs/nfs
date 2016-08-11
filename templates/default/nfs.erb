@@ -53,6 +53,6 @@ nfs_server_flags="<%= node['nfs']['server_flags'] -%>"
 # Rendered Debian/Ubuntu template variant
 RPCMOUNTDOPTS="-p <%= node['nfs']['port']['mountd'] %>"
   <% unless node['nfs']['threads'] == 0 -%>
-RPCNFSDCOUNT="<%= node['nfs']['threads'] -%>"
+RPCNFSDCOUNT="<%= node['nfs']['threads'] -%><% if node['nfs']['v4'] == 'no' -%> --no-nfs-version 4"<% end -%>
   <% end -%>
 <% end -%>
