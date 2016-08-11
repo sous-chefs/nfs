@@ -1,3 +1,9 @@
+v2.2.10
+------
+
+* Fix #69 - Logical condition error on CentOS 7
+  - reported by @dougalb
+
 v2.2.9
 ------
 
