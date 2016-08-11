@@ -1,3 +1,16 @@
+v2.2.9
+------
+
+* @sspans
+  - prevent resource duplication for shared configs
+  - Rubocop fix-ups
+
+* @hrak
+  - Use systemd provider for Ubuntu >= 15.04
+
+* @rlanore
+  - Add knob to disable nfs v4
+
 v2.2.8
 ------
 
