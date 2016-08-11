@@ -53,7 +53,7 @@ describe 'nfs::_idmap' do
     end
   end
 
-  %w(14.04 12.04 10.04).each do |release|
+  %w(16.04 14.04 12.04 10.04).each do |release|
     context "on Ubuntu #{release}" do
       let(:chef_run) do
         ChefSpec::ServerRunner.new(platform: 'ubuntu', version: release).converge(described_recipe)
@@ -71,14 +71,18 @@ describe 'nfs::_idmap' do
         expect(chef_run).to_not install_package('nfs-kernel-server')
       end
 
-      %w(idmapd).each do |nfs|
-        it "starts the #{nfs} service" do
-          expect(chef_run).to start_service(nfs)
-        end
+      if release == '16.04'
+        idmap_svc = 'nfs-idmapd'
+      else
+        idmap_svc = 'idmapd'
+      end
 
-        it "enables the #{nfs} service" do
-          expect(chef_run).to enable_service(nfs)
-        end
+      it "starts the #{idmap_svc} service" do
+        expect(chef_run).to start_service(idmap_svc)
+      end
+
+      it "enables the #{idmap_svc} service" do
+        expect(chef_run).to enable_service(idmap_svc)
       end
     end
   end
