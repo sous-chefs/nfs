@@ -21,7 +21,7 @@ include_recipe 'nfs::_common'
 
 # Configure idmap template for NFSv4 client/server support
 template node['nfs']['config']['idmap_template'] do
-  mode 00644
+  mode 0o0644
   notifies :restart, 'service[idmap]', :immediately
 end
 

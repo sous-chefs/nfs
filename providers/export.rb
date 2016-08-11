@@ -23,7 +23,8 @@ action :create do
   sub_run_context.resource_collection = Chef::ResourceCollection.new
 
   begin
-    original_run_context, @run_context = @run_context, sub_run_context
+    original_run_context = @run_context
+    @run_context = sub_run_context
 
     ro_rw = new_resource.writeable ? 'rw' : 'ro'
     sync_async = new_resource.sync ? 'sync' : 'async'
@@ -49,20 +50,18 @@ action :create do
         content export_line
         notifies :run, 'execute[exportfs]', :immediately
       end
+    elsif new_resource.unique
+      replace_or_add "export #{new_resource.name}" do
+        path '/etc/exports'
+        pattern "^#{new_resource.directory} "
+        line export_line
+        notifies :run, 'execute[exportfs]', :immediately
+      end
     else
-      if new_resource.unique
-        replace_or_add "export #{new_resource.name}" do
-          path '/etc/exports'
-          pattern "^#{new_resource.directory} "
-          line export_line
-          notifies :run, 'execute[exportfs]', :immediately
-        end
-      else
-        append_if_no_line "export #{new_resource.name}" do
-          path '/etc/exports'
-          line export_line
-          notifies :run, 'execute[exportfs]', :immediately
-        end
+      append_if_no_line "export #{new_resource.name}" do
+        path '/etc/exports'
+        line export_line
+        notifies :run, 'execute[exportfs]', :immediately
       end
     end
   ensure

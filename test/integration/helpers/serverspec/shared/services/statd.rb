@@ -32,7 +32,6 @@ shared_examples 'services::statd' do
       name = 'nfslock'
     end
 
-
     name = 'nfs-common' if host_inventory[:platform] == 'debian'
     name = 'statd' if host_inventory[:platform] == 'ubuntu'
     name = 'nfsserver' if host_inventory[:platform] == 'suse'

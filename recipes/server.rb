@@ -29,7 +29,7 @@ if node['nfs']['config']['client_templates'].include?(node['nfs']['config']['ser
 else
   template node['nfs']['config']['server_template'] do
     source 'nfs.erb'
-    mode 00644
+    mode 0o0644
     notifies :restart, "service[#{node['nfs']['service']['server']}]"
   end
 end

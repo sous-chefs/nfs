@@ -59,25 +59,23 @@ default['nfs']['client-services'] = %w(portmap lock)
 case node['platform_family']
 
 when 'rhel'
-  case node['platform']
-  when 'amazon'
+  if node['platform'] == 'amazon'
     # For future amazon versions
-  else
+  elsif node['platform_version'].to_i <= 5
     # RHEL5 edge case package set and portmap name
-    if node['platform_version'].to_i <= 5
-      default['nfs']['packages'] = %w(nfs-utils portmap)
-      default['nfs']['service']['portmap'] = 'portmap'
-    elsif node['platform_version'].to_i >= 7
-      default['nfs']['service']['lock'] = 'nfs-lock'
-      default['nfs']['service']['server'] = 'nfs-server'
-      default['nfs']['service']['idmap'] = 'nfs-idmap'
+    default['nfs']['packages'] = %w(nfs-utils portmap)
+    default['nfs']['service']['portmap'] = 'portmap'
+  elsif node['platform_version'].to_i >= 7
+    default['nfs']['service']['lock'] = 'nfs-lock'
+    default['nfs']['service']['server'] = 'nfs-server'
+    default['nfs']['service']['idmap'] = 'nfs-idmap'
 
+    default['nfs']['client-services'] = \
       if node['platform_version'] == '7.0.1406'
-        default['nfs']['client-services'] = %w(nfs-lock.service)
+        %w(nfs-lock.service)
       else
-        default['nfs']['client-services'] = %w(nfs-client.target)
+        %w(nfs-client.target)
       end
-    end
   end
 
 when 'freebsd'
@@ -89,11 +87,12 @@ when 'freebsd'
   default['nfs']['service']['server'] = 'nfsd'
   default['nfs']['threads'] = 24
   default['nfs']['mountd_flags'] = '-r'
-  if node['nfs']['threads'] >= 0
-    default['nfs']['server_flags'] = "-u -t -n #{node['nfs']['threads']}"
-  else
-    default['nfs']['server_flags'] = '-u -t'
-  end
+  default['nfs']['server_flags'] = \
+    if node['nfs']['threads'] >= 0
+      "-u -t -n #{node['nfs']['threads']}"
+    else
+      '-u -t'
+    end
 
 when 'suse'
   default['nfs']['packages'] = %w(nfs-client nfs-kernel-server rpcbind)
