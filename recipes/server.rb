@@ -23,10 +23,15 @@ include_recipe 'nfs::_common'
 package 'nfs-kernel-server' if node['platform_family'] == 'debian'
 
 # Configure nfs-server components
-template node['nfs']['config']['server_template'] do
-  source 'nfs.erb'
-  mode 0o0644
-  notifies :restart, "service[#{node['nfs']['service']['server']}]"
+if node['nfs']['config']['client_templates'].include?(node['nfs']['config']['server_template'])
+  r = resources(:template => node['nfs']['config']['server_template'])
+  r.notifies :restart, "service[#{node['nfs']['service']['server']}]"
+else
+  template node['nfs']['config']['server_template'] do
+    source 'nfs.erb'
+    mode 0o0644
+    notifies :restart, "service[#{node['nfs']['service']['server']}]"
+  end
 end
 
 # RHEL7 has some extra requriements per
