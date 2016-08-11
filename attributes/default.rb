@@ -143,5 +143,13 @@ when 'debian'
       default['nfs']['packages'] = %w(nfs-common portmap)
       default['nfs']['service']['portmap'] = 'portmap'
     end
+
+    if Chef::VersionConstraint.new('>= 15.04').include?(node['platform_version'])
+      default['nfs']['service_provider']['idmap'] = Chef::Provider::Service::Systemd
+      default['nfs']['service_provider']['portmap'] = Chef::Provider::Service::Systemd
+      default['nfs']['service_provider']['lock'] = Chef::Provider::Service::Systemd
+      default['nfs']['service']['lock'] = 'rpc-statd'
+      default['nfs']['service']['idmap'] = 'nfs-idmapd'
+    end
   end
 end
