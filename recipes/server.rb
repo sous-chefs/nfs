@@ -46,6 +46,11 @@ if node['platform_family'] == 'rhel' && node['platform_version'].to_f >= 7.0 && 
   sysctl_param 'fs.nfs.nlm_udpport' do
     value node['nfs']['port']['lockd']
   end
+
+  service "rpcbind" do
+    action [:start, :enable]
+    supports status: true
+  end
 end
 
 # Start nfs-server components
