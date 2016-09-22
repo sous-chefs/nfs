@@ -10,10 +10,10 @@ task :foodcritic do
   sh 'foodcritic -f correctness .'
 end
 
-# rubocop rake task
+# chefstyle 
 desc 'Ruby style guide linter'
-task :rubocop do
-  sh 'rubocop --fail-level W'
+task :chefstyle do
+  sh 'chefstyle --fail-level W'
 end
 
 # test-kitchen task
@@ -25,4 +25,4 @@ rescue LoadError
 end
 
 # default tasks are quick, commit tests
-task default: %w(foodcritic rubocop chefspec)
+task default: %w(foodcritic chefstyle chefspec)
