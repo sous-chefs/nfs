@@ -1,3 +1,9 @@
+v2.2.11
+-------
+
+* Ignore sysctl for OpenVZ/Virtuozzo
+* Start rpcbind service in RHEL 7 prior to nfs server 
+
 v2.2.10
 ------
 
