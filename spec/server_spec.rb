@@ -137,7 +137,7 @@ describe 'nfs::server' do
     end
 
     it 'creates file /etc/default/nfs-kernel-server with: RPCNFSDCOUNT="8"' do
-      expect(chef_run).to render_file('/etc/default/nfs-kernel-server').with_content(/RPCNFSDCOUNT="?8"?/)
+      expect(chef_run).to render_file('/etc/default/nfs-kernel-server').with_content(/RPCNFSDCOUNT="8"/)
     end
 
     %w(nfs-kernel-server).each do |nfs|
@@ -169,7 +169,7 @@ describe 'nfs::server' do
     end
 
     it 'creates file /etc/default/nfs-kernel-server with: RPCNFSDCOUNT="8"' do
-      expect(chef_run).to render_file('/etc/default/nfs-kernel-server').with_content(/RPCNFSDCOUNT="?8"?/)
+      expect(chef_run).to render_file('/etc/default/nfs-kernel-server').with_content(/RPCNFSDCOUNT="8"/)
     end
 
     %w(nfs-kernel-server).each do |nfs|
@@ -201,7 +201,7 @@ describe 'nfs::server' do
     end
 
     it 'creates file /etc/default/nfs-kernel-server with: RPCNFSDCOUNT="8"' do
-      expect(chef_run).to render_file('/etc/default/nfs-kernel-server').with_content(/RPCNFSDCOUNT="?8"?/)
+      expect(chef_run).to render_file('/etc/default/nfs-kernel-server').with_content(/RPCNFSDCOUNT="8"/)
     end
 
     %w(nfs-kernel-server).each do |nfs|
