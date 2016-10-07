@@ -1,3 +1,9 @@
+v2.2.12
+-------
+
+* @nunukim
+  - fix invalid /etc/defaults/nfs-kernel-server on Debian
+
 v2.2.11
 -------
 
