@@ -41,10 +41,12 @@ if node['platform_family'] == 'rhel' && node['platform_version'].to_f >= 7.0 && 
 
   sysctl_param 'fs.nfs.nlm_tcpport' do
     value node['nfs']['port']['lockd']
+    only_if { node['kernel']['modules'].include?('nfs') }
   end
 
   sysctl_param 'fs.nfs.nlm_udpport' do
     value node['nfs']['port']['lockd']
+     only_if { node['kernel']['modules'].include?('nfs') }
   end
 
   service "rpcbind" do

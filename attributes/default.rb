@@ -110,16 +110,6 @@ when 'debian'
   default['nfs']['config']['client_templates'] = %w(/etc/default/nfs-common /etc/modprobe.d/lockd.conf)
   default['nfs']['config']['server_template'] = '/etc/default/nfs-kernel-server'
   default['nfs']['idmap']['group'] = 'nogroup'
-  default['nfs']['service_provider']['idmap'] = Chef::Provider::Service::Init::Debian
-  default['nfs']['service_provider']['portmap'] = Chef::Provider::Service::Init::Debian
-  default['nfs']['service_provider']['lock'] = Chef::Provider::Service::Init::Debian
-
-  # Debian 8.0
-  if node['platform_version'].to_i >= 8
-    default['nfs']['service_provider']['idmap'] = Chef::Provider::Service::Systemd
-    default['nfs']['service_provider']['portmap'] = Chef::Provider::Service::Systemd
-    default['nfs']['service_provider']['lock'] = Chef::Provider::Service::Systemd
-  end
 
   # Debian 6.0
   if node['platform_version'].to_i <= 6
@@ -134,9 +124,6 @@ when 'debian'
     default['nfs']['service']['lock'] = 'statd' # There is no lock service on Ubuntu
     default['nfs']['service']['idmap'] = 'idmapd'
     default['nfs']['idmap']['pipefs_directory'] = '/run/rpc_pipefs'
-    default['nfs']['service_provider']['idmap'] = Chef::Provider::Service::Upstart
-    default['nfs']['service_provider']['portmap'] = Chef::Provider::Service::Upstart
-    default['nfs']['service_provider']['lock'] = Chef::Provider::Service::Upstart
 
     # Ubuntu 13.04 and earlier service name = 'portmap'
     if node['platform_version'].to_f <= 13.04
@@ -145,9 +132,6 @@ when 'debian'
     end
 
     if Chef::VersionConstraint.new('>= 15.04').include?(node['platform_version'])
-      default['nfs']['service_provider']['idmap'] = Chef::Provider::Service::Systemd
-      default['nfs']['service_provider']['portmap'] = Chef::Provider::Service::Systemd
-      default['nfs']['service_provider']['lock'] = Chef::Provider::Service::Systemd
       default['nfs']['service']['lock'] = 'rpc-statd'
       default['nfs']['service']['idmap'] = 'nfs-idmapd'
     end

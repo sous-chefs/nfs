@@ -1,3 +1,10 @@
+v2.3.0
+------
+
+* Fix #89 - Set sysctl parameters, only if nfs kernel module is loaded.
+* Closes #76 - Remove service provider mapping, deferring to Chef 12 provider helpers.
+* Fixes #81 - Re-instate status check.
+
 v2.2.12
 -------
 
