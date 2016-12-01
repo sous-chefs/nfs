@@ -74,7 +74,7 @@ when 'rhel'
       if node['platform_version'] == '7.0.1406'
         %w(nfs-lock.service)
       else
-        %w(nfs-client.target)
+        %w(nfs-config.service nfs-client.target)
       end
   end
 
