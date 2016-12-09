@@ -1,3 +1,9 @@
+v2.3.1
+------
+
+* Fixes #91 - nfs-config.service needs managed to apply fixed port configuration on
+  Ubuntu 16.04 and CentOS 7.2
+
 v2.3.0
 ------
 

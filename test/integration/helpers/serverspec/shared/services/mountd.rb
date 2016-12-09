@@ -19,11 +19,18 @@ shared_examples 'services::mountd' do
       name = 'nfs-mountd' if host_inventory[:platform_version].to_f >= 7.0
     elsif os[:family] == 'amazon'
       check_enabled = false
-    elsif %w(debian ubuntu).include?(os[:family])
-      name = 'nfs-kernel-server'
+    elsif os[:family] == 'suse'
+      name = 'nfsserver'
+    else 
+      if host_inventory[:platform] == 'ubuntu' &&
+         host_inventory[:platform_version].to_i >= 15
+         # Static ports on Ubuntu 16.04 do not appear to work
+         check_running = false
+         name = 'nfs-mountd'
+      else
+         name = 'nfs-kernel-server'
+      end
     end
-
-    name = 'nfsserver' if os[:family] == 'suse'
 
     describe service(name) do
       it { should be_enabled } if check_enabled

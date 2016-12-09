@@ -1,6 +1,6 @@
 shared_examples 'ports::statd' do
   context 'statd' do
-    describe port(32765) do
+    describe port(32_765) do
       it { should be_listening.with('tcp') }
     end
   end
@@ -30,11 +30,17 @@ shared_examples 'services::statd' do
       end
     elsif os[:family] == 'amazon'
       name = 'nfslock'
+    elsif os[:family] == 'suse'
+      name = 'nfsserver'
+    elsif os[:family] == 'debian'
+      name = 'nfs-common'
+    elsif os[:family] == 'ubuntu'
+      if host_inventory[:platform_version].to_i >= 15
+        name = 'rpc-statd'
+      else
+        name = 'statd'
+      end
     end
-
-    name = 'nfs-common' if host_inventory[:platform] == 'debian'
-    name = 'statd' if host_inventory[:platform] == 'ubuntu'
-    name = 'nfsserver' if host_inventory[:platform] == 'suse'
 
     describe service(name) do
       it { should be_enabled } if check_enabled

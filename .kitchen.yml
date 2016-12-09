@@ -6,6 +6,9 @@ provisioner:
   require_chef_omnibus: latest
 
 platforms:
+- name: ubuntu-16.04
+  run_list:
+  - recipe[apt]
 - name: ubuntu-14.04
   run_list:
   - recipe[apt]
@@ -14,9 +17,6 @@ platforms:
   - recipe[apt]
 - name: centos-7.2
 - name: centos-7.1
-- name: centos-7.0
-  driver:
-    box: opscode-centos-7.0
 - name: centos-6.7
 - name: centos-5.11
 - name: debian-7.9
