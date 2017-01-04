@@ -78,6 +78,20 @@ action :create do
   end
 end
 
+action :delete do
+
+  execute 'exportfs' do
+    command 'exportfs -ar'
+    action :nothing
+  end
+
+  delete_lines "export #{new_resource.name}" do
+    path '/etc/exports'
+    pattern "^#{new_resource.directory} #{new_resource.network}"
+    notifies :run, 'execute[exportfs]', :immediately
+  end
+end
+
 private
 
 # Finds the UID for the given user name

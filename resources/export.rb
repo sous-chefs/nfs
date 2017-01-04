@@ -22,7 +22,7 @@ def initialize(*args)
   @action = :create
 end
 
-actions :create
+actions :create, :delete
 
 attribute :directory, :name_attribute => true
 attribute :network, :required => true
@@ -32,3 +32,4 @@ attribute :options, :default => ['root_squash'], :kind_of => Array
 attribute :anonuser
 attribute :anongroup
 attribute :unique, :default => false, :kind_of => [TrueClass, FalseClass]
+attribute :action, :default => :create, :kind_of => String
