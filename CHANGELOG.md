@@ -1,3 +1,9 @@
+v2.3.2
+------
+
+* Fixes #93 - nfs-idmap.service unit file depends on nfs-server.service provided
+  by nfs-kernel-server package on Ubuntu 16.04.
+
 v2.3.1
 ------
 
