@@ -4,16 +4,10 @@
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:chefspec)
 
-# foodcritic rake task
-desc 'Foodcritic linter'
-task :foodcritic do
-  sh 'foodcritic -f correctness .'
-end
-
-# chefstyle 
+# cookstyle
 desc 'Ruby style guide linter'
-task :chefstyle do
-  sh 'chefstyle --fail-level W'
+task :cookstyle do
+  sh 'cookstyle --fail-level W'
 end
 
 # test-kitchen task
@@ -25,4 +19,4 @@ rescue LoadError
 end
 
 # default tasks are quick, commit tests
-task default: %w(foodcritic chefstyle chefspec)
+task default: %w(cookstyle chefspec)
