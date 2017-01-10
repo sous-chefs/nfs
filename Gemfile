@@ -4,6 +4,7 @@ gem 'berkshelf'
 gem 'chefspec'
 gem 'rspec', '~> 3.0'
 gem 'cookstyle'
+gem 'rake'
 
 group :integration do
   gem 'test-kitchen'
