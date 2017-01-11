@@ -19,17 +19,6 @@
 
 include_recipe 'nfs::_common'
 
-# Issue #93: nfs-idmapd service appears to depend on nfs-server service for
-# Ubuntu 16.04. Perhaps a systemd unit file bug, or nfs-idmap unneeded for nfs4
-# client services on Ubuntu?
-package 'nfs-kernel-server' do
-  action :install
-  only_if do
-    node['platform'] == 'ubuntu' &&
-      node['platform_version'].to_f >= 15.04
-  end
-end
-
 # Configure idmap template for NFSv4 client/server support
 template node['nfs']['config']['idmap_template'] do
   mode 0o0644
@@ -40,5 +29,5 @@ end
 service 'idmap' do
   service_name node['nfs']['service']['idmap']
   action [:start, :enable]
-  supports status: true
+  supports :status => true
 end
