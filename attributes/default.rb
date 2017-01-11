@@ -77,6 +77,9 @@ when 'rhel'
         %w(nfs-config.service nfs-client.target)
       end
   end
+  if node['platform_version'].to_i == 7
+    default['nfs']['service']['lock'] = 'nfs-lock'
+  end
 
 when 'freebsd'
   # Packages are installed by default
