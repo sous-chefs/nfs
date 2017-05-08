@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'nfs::server' do
   context 'on Centos 5.9' do
-    let(:chef_run) do
+    cached(:chef_run) do
       ChefSpec::ServerRunner.new(platform: 'centos', version: 5.9).converge(described_recipe)
     end
 
@@ -22,7 +22,7 @@ describe 'nfs::server' do
   end
 
   context 'on Centos 6.5' do
-    let(:chef_run) do
+    cached(:chef_run) do
       ChefSpec::ServerRunner.new(platform: 'centos', version: 6.5).converge(described_recipe)
     end
 
@@ -42,7 +42,7 @@ describe 'nfs::server' do
   end
 
   context 'on Amazon 2014.09' do
-    let(:chef_run) do
+    cached(:chef_run) do
       ChefSpec::ServerRunner.new(platform: 'amazon', version: 2014.09).converge(described_recipe)
     end
 
@@ -61,10 +61,8 @@ describe 'nfs::server' do
     end
   end
 
-=begin
-  chef/chef#2383 platform mapping undergoing changes
   context 'on FreeBSD' do
-    let(:chef_run) do
+    cached(:chef_run) do
       ChefSpec::ServerRunner.new(platform: 'freebsd', version: 9.1).converge(described_recipe)
     end
 
@@ -90,12 +88,11 @@ describe 'nfs::server' do
       expect(chef_run).to render_file('/etc/rc.conf.d/nfsd').with_content(/server_flags="?-u +-t +-n +24"?/)
     end
   end
-=end
 
-  %w(16.04 14.04 12.04 10.04).each do |release|
+  %w(16.04 14.04 12.04).each do |release|
     # Submit Ubuntu Fauxhai to https://github.com/customink/fauxhai for better Ubuntu coverage
     context "on Ubuntu #{release}" do
-      let(:chef_run) do
+      cached(:chef_run) do
         ChefSpec::ServerRunner.new(platform: 'ubuntu', version: release).converge(described_recipe)
       end
 
@@ -124,7 +121,7 @@ describe 'nfs::server' do
   end
 
   context 'on Debian 6.0.5' do
-    let(:chef_run) do
+    cached(:chef_run) do
       ChefSpec::ServerRunner.new(platform: 'debian', version: '6.0.5').converge(described_recipe)
     end
 
@@ -156,7 +153,7 @@ describe 'nfs::server' do
   end
 
   context 'on Debian 7.2' do
-    let(:chef_run) do
+    cached(:chef_run) do
       ChefSpec::ServerRunner.new(platform: 'debian', version: 7.2).converge(described_recipe)
     end
 
@@ -188,7 +185,7 @@ describe 'nfs::server' do
   end
 
   context 'on Debian 8.2' do
-    let(:chef_run) do
+    cached(:chef_run) do
       ChefSpec::ServerRunner.new(platform: 'debian', version: 8.2).converge(described_recipe)
     end
 

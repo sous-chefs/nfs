@@ -1,3 +1,9 @@
+v2.3.3
+------
+
+* gziskind
+ - remove trailing newline from export line. Closes #95
+
 v2.3.2
 ------
 
@@ -27,7 +33,7 @@ v2.2.11
 -------
 
 * Ignore sysctl for OpenVZ/Virtuozzo
-* Start rpcbind service in RHEL 7 prior to nfs server 
+* Start rpcbind service in RHEL 7 prior to nfs server
 
 v2.2.10
 ------

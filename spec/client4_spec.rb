@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'nfs::client4' do
-  let(:chef_run) do
+  cached(:chef_run) do
     ChefSpec::ServerRunner.new(platform: 'centos', version: 6.5).converge(described_recipe)
   end
 

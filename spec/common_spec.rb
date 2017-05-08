@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'nfs::_common' do
   context 'on Centos 5.9' do
-    let(:chef_run) do
+    cached(:chef_run) do
       ChefSpec::ServerRunner.new(platform: 'centos', version: 5.9).converge(described_recipe)
     end
 
@@ -36,7 +36,7 @@ describe 'nfs::_common' do
   end
 
   context 'on Centos 6.5' do
-    let(:chef_run) do
+    cached(:chef_run) do
       ChefSpec::ServerRunner.new(platform: 'centos', version: 6.5).converge(described_recipe)
     end
 
@@ -70,7 +70,7 @@ describe 'nfs::_common' do
   end
 
   context 'on Amazon 2014.09' do
-    let(:chef_run) do
+    cached(:chef_run) do
       ChefSpec::ServerRunner.new(platform: 'amazon', version: '2014.09').converge(described_recipe)
     end
 
@@ -103,10 +103,8 @@ describe 'nfs::_common' do
     end
   end
 
-=begin
-  chef/chef#2383 platform provider mapping changes
   context 'on FreeBSD' do
-    let(:chef_run) do
+    cached(:chef_run) do
       ChefSpec::ServerRunner.new(platform: 'freebsd', version: 9.1).converge(described_recipe)
     end
 
@@ -134,11 +132,10 @@ describe 'nfs::_common' do
       expect(chef_run).to render_file('/etc/rc.conf.d/mountd').with_content(/mountd_flags="-r +-p +32767"/)
     end
   end
-=end
 
   # Submit Ubuntu Fauxhai to https://github.com/customink/fauxhai for better Ubuntu coverage
   context 'on Ubuntu 16.04' do
-    let(:chef_run) do
+    cached(:chef_run) do
       ChefSpec::ServerRunner.new(platform: 'ubuntu', version: 16.04).converge(described_recipe)
     end
 
@@ -169,7 +166,7 @@ describe 'nfs::_common' do
 
   # Submit Ubuntu Fauxhai to https://github.com/customink/fauxhai for better Ubuntu coverage
   context 'on Ubuntu 14.04' do
-    let(:chef_run) do
+    cached(:chef_run) do
       ChefSpec::ServerRunner.new(platform: 'ubuntu', version: 14.04).converge(described_recipe)
     end
 
@@ -200,7 +197,7 @@ describe 'nfs::_common' do
 
   # Submit Ubuntu Fauxhai to https://github.com/customink/fauxhai for better Ubuntu coverage
   context 'on Ubuntu 12.04' do
-    let(:chef_run) do
+    cached(:chef_run) do
       ChefSpec::ServerRunner.new(platform: 'ubuntu', version: 12.04).converge(described_recipe)
     end
 
@@ -229,39 +226,8 @@ describe 'nfs::_common' do
     end
   end
 
-  # Submit Ubuntu Fauxhai to https://github.com/customink/fauxhai for better Ubuntu coverage
-  context 'on Ubuntu 10.04' do
-    let(:chef_run) do
-      ChefSpec::ServerRunner.new(platform: 'ubuntu', version: 10.04).converge(described_recipe)
-    end
-
-    %w(nfs-common portmap).each do |pkg|
-      it "installs package #{pkg}" do
-        expect(chef_run).to install_package(pkg)
-      end
-    end
-
-    it 'creates file /etc/default/nfs-common with: STATDOPTS="--port 32765 --outgoing-port 32766' do
-      expect(chef_run).to render_file('/etc/default/nfs-common').with_content(/STATDOPTS="--port +32765 +--outgoing-port +32766"/)
-    end
-
-    it 'creates file /etc/modprobe.d/lockd.conf with: options lockd nlm_udpport=32768 nlm_tcpport=32768' do
-      expect(chef_run).to render_file('/etc/modprobe.d/lockd.conf').with_content(/options +lockd +nlm_udpport=32768 +nlm_tcpport=32768/)
-    end
-
-    %w(portmap statd).each do |svc|
-      it "starts the #{svc} service" do
-        expect(chef_run).to start_service(svc)
-      end
-
-      it "enables the #{svc} service" do
-        expect(chef_run).to enable_service(svc)
-      end
-    end
-  end
-
   context 'on Debian 6.0.5' do
-    let(:chef_run) do
+    cached(:chef_run) do
       ChefSpec::ServerRunner.new(platform: 'debian', version: '6.0.5').converge(described_recipe)
     end
 
@@ -291,7 +257,7 @@ describe 'nfs::_common' do
   end
 
   context 'on Debian 7.2' do
-    let(:chef_run) do
+    cached(:chef_run) do
       ChefSpec::ServerRunner.new(platform: 'debian', version: 7.2).converge(described_recipe)
     end
 
@@ -321,7 +287,7 @@ describe 'nfs::_common' do
   end
 
   context 'on Debian 8.2' do
-    let(:chef_run) do
+    cached(:chef_run) do
       ChefSpec::ServerRunner.new(platform: 'debian', version: 8.2).converge(described_recipe)
     end
 
