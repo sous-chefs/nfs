@@ -35,9 +35,9 @@ action :create do
 
     if new_resource.network.is_a?(Array)
       host_permissions = new_resource.network.map { |net| net + "(#{ro_rw},#{sync_async}#{options})" }
-      export_line = "#{new_resource.directory} #{host_permissions.join(' ')}\n"
+      export_line = "#{new_resource.directory} #{host_permissions.join(' ')}"
     else
-      export_line = "#{new_resource.directory} #{new_resource.network}(#{ro_rw},#{sync_async}#{options})\n"
+      export_line = "#{new_resource.directory} #{new_resource.network}(#{ro_rw},#{sync_async}#{options})"
     end
 
     execute 'exportfs' do
