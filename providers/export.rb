@@ -39,6 +39,8 @@ action :create do
     else
       export_line = "#{new_resource.directory} #{new_resource.network}(#{ro_rw},#{sync_async}#{options})"
     end
+    
+    export_line = "#{export_line}#{new_resorce.suffix}"
 
     execute 'exportfs' do
       command 'exportfs -ar'
