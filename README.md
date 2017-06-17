@@ -130,6 +130,9 @@ The default parameters for the `nfs_export` LWRP are as follows
   - additional export options as an array, excluding the parameterized sync/async, ro/rw options, and anoymous mappings
   - defaults to `root_squash`
 
+* suffix
+  - custom parameters added to the end of line.
+
 ## nfs::default recipe
 
 The default recipe installs and configures the common components for an NFS client, at an effective protocol level of
