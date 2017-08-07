@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe 'nfs::_common' do
-  context 'on Centos 5.9' do
+  context 'on Centos 5.11' do
     cached(:chef_run) do
-      ChefSpec::ServerRunner.new(platform: 'centos', version: 5.9).converge(described_recipe)
+      ChefSpec::ServerRunner.new(platform: 'centos', version: 5.11).converge(described_recipe)
     end
 
     %w(nfs-utils portmap).each do |pkg|
@@ -35,9 +35,9 @@ describe 'nfs::_common' do
     end
   end
 
-  context 'on Centos 6.5' do
+  context 'on Centos 6.9' do
     cached(:chef_run) do
-      ChefSpec::ServerRunner.new(platform: 'centos', version: 6.5).converge(described_recipe)
+      ChefSpec::ServerRunner.new(platform: 'centos', version: 6.9).converge(described_recipe)
     end
 
     %w(nfs-utils rpcbind).each do |pkg|

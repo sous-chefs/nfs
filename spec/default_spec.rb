@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'nfs::default' do
   cached(:chef_run) do
-    ChefSpec::ServerRunner.new(platform: 'centos', version: 6.5).converge(described_recipe)
+    ChefSpec::ServerRunner.new(platform: 'centos', version: 6.9).converge(described_recipe)
   end
 
   it 'should include nfs::_common' do
