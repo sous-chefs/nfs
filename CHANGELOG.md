@@ -1,8 +1,8 @@
-v2.3.3
+v2.4.0
 ------
 
-* gziskind
- - remove trailing newline from export line. Closes #95
+* Fixes #99 - Remove include_attribute 'sysctl' to maintain compatibility with
+  sysctl cookbook changes.
 
 v2.3.2
 ------
