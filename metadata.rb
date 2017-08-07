@@ -13,4 +13,4 @@ issues_url 'https://github.com/atomic-penguin/cookbook-nfs/issues' if respond_to
 end
 
 depends 'line'
-depends 'sysctl'
+depends 'sysctl', '= 0.9.0'
