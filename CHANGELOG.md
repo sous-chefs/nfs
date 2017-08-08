@@ -1,3 +1,8 @@
+v2.4.1
+------
+
+* Correct #95 regression on v2.4.0
+
 v2.4.0
 ------
 
