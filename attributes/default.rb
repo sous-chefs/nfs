@@ -109,13 +109,20 @@ when 'debian'
   default['nfs']['config']['server_template'] = '/etc/default/nfs-kernel-server'
   default['nfs']['idmap']['group'] = 'nogroup'
 
-  # Debian 6.0
-  if node['platform_version'].to_i <= 6
-    default['nfs']['packages'] = %w(nfs-common portmap)
-    default['nfs']['service']['portmap'] = 'portmap'
-  end
-
   case node['platform']
+  when 'debian'
+
+    case node['platform_version'].to_i
+        # Debian 6.0
+        when 6 # (1..6)
+          default['nfs']['packages'] = %w(nfs-common portmap)
+          default['nfs']['service']['portmap'] = 'portmap'
+        when 9 # (9..99)
+          # identical to Ubuntu > 15.04?!
+          default['nfs']['service']['lock'] = 'rpc-statd'
+          default['nfs']['service']['idmap'] = 'nfs-idmapd'
+          default['nfs']['client-services'] = %w(portmap lock nfs-config.service)
+    end
 
   when 'ubuntu'
     default['nfs']['service']['portmap'] = 'rpcbind'
