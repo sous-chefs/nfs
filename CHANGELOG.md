@@ -1,3 +1,9 @@
+v2.5.0
+------
+
+* @chuhn - Add Debian Stretch support
+* Updates to raise Supermarket metrics
+
 v2.4.1
 ------
 

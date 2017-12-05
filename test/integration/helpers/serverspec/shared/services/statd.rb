@@ -33,7 +33,11 @@ shared_examples 'services::statd' do
     elsif os[:family] == 'suse'
       name = 'nfsserver'
     elsif os[:family] == 'debian'
-      name = 'nfs-common'
+      if host_inventory[:platform_version].to_i >= 9
+        name = 'rpc-statd'
+      else
+        name = 'nfs-common'
+      end
     elsif os[:family] == 'ubuntu'
       if host_inventory[:platform_version].to_i >= 15
         name = 'rpc-statd'

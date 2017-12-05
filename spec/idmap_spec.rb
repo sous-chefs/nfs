@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'nfs::_idmap' do
-  %w(6.9 5.11).each do |release|
+  %w(6.8 5.11).each do |release|
     context "on Centos #{release}" do
       cached(:chef_run) do
         ChefSpec::ServerRunner.new(platform: 'centos', version: release).converge(described_recipe)

@@ -21,9 +21,9 @@ describe 'nfs::server' do
     end
   end
 
-  context 'on Centos 6.9' do
+  context 'on Centos 6.8' do
     cached(:chef_run) do
-      ChefSpec::ServerRunner.new(platform: 'centos', version: 6.9).converge(described_recipe)
+      ChefSpec::ServerRunner.new(platform: 'centos', version: 6.8).converge(described_recipe)
     end
 
     it 'includes recipe nfs::_common' do
