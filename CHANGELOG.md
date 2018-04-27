@@ -1,3 +1,10 @@
+v2.5.1
+------
+
+* Set minimum supported Chef to 13.2.20
+* Bump line and sysctl dependency versions
+
+
 v2.5.0
 ------
 
