@@ -71,11 +71,11 @@ describe 'nfs::_idmap' do
         expect(chef_run).to_not install_package('nfs-kernel-server')
       end
 
-      if release == '16.04'
-        idmap_svc = 'nfs-idmapd'
-      else
-        idmap_svc = 'idmapd'
-      end
+      idmap_svc = if release == '16.04'
+                    'nfs-idmapd'
+                  else
+                    'idmapd'
+                  end
 
       it "starts the #{idmap_svc} service" do
         expect(chef_run).to start_service(idmap_svc)
