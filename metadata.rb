@@ -19,4 +19,4 @@ supports 'oracle', '>= 6.8'
 supports 'sles', '>= 11.1'
 supports 'freebsd', '>= 9.3'
 
-depends 'line', '~> 1.0.6'
+depends 'line', '>= 1.0.6'
