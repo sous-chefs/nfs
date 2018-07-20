@@ -1,5 +1,6 @@
 language: ruby
 rvm:
-  - 2.3.1
+  - 2.5.1
 install: bundle install --without integration
 script: bundle exec rake
+script: gem update --system 2.7.5
