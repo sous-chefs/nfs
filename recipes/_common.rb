@@ -46,6 +46,6 @@ client_service_list.each do |component|
   service component do
     service_name node['nfs']['service'][component]
     action [:start, :enable]
-    supports :status => true
+    supports status: true
   end
 end

@@ -39,11 +39,11 @@ shared_examples 'services::statd' do
         name = 'nfs-common'
       end
     elsif os[:family] == 'ubuntu'
-      if host_inventory[:platform_version].to_i >= 15
-        name = 'rpc-statd'
-      else
-        name = 'statd'
-      end
+      name = if host_inventory[:platform_version].to_i >= 15
+               'rpc-statd'
+             else
+               'statd'
+             end
     end
 
     describe service(name) do

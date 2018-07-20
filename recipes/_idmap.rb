@@ -29,5 +29,5 @@ end
 service 'idmap' do
   service_name node['nfs']['service']['idmap']
   action [:start, :enable]
-  supports :status => true
+  supports status: true
 end

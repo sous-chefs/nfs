@@ -21,15 +21,12 @@ shared_examples 'services::mountd' do
       check_enabled = false
     elsif os[:family] == 'suse'
       name = 'nfsserver'
-    else 
-      if host_inventory[:platform] == 'ubuntu' &&
-         host_inventory[:platform_version].to_i >= 15
-         # Static ports on Ubuntu 16.04 do not appear to work
-         check_running = false
-         name = 'nfs-mountd'
-      else
-         name = 'nfs-kernel-server'
-      end
+    elsif host_inventory[:platform] == 'ubuntu' && host_inventory[:platform_version].to_i >= 15
+      # Static ports on Ubuntu 16.04 do not appear to work
+       check_running = false
+       name = 'nfs-mountd'
+    else
+      name = 'nfs-kernel-server'
     end
 
     describe service(name) do
