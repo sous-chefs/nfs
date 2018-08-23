@@ -55,7 +55,6 @@ default['nfs']['idmap']['group'] = 'nobody'
 default['nfs']['client-services'] = %w(portmap lock)
 
 case node['platform_family']
-
 when 'rhel'
   if node['platform'] == 'amazon'
     # For future amazon versions
@@ -68,14 +67,12 @@ when 'rhel'
     default['nfs']['service']['server'] = 'nfs-server'
     default['nfs']['service']['idmap'] = 'nfs-idmap'
 
-    default['nfs']['client-services'] = \
-      if node['platform_version'] == '7.0.1406'
-        %w(nfs-lock.service)
-      else
-        %w(nfs-config.service nfs-client.target)
-      end
+    default['nfs']['client-services'] = if node['platform_version'] == '7.0.1406'
+                                          %w(nfs-lock.service)
+                                        else
+                                          %w(nfs-config.service nfs-client.target)
+                                        end
   end
-
 when 'freebsd'
   # Packages are installed by default
   default['nfs']['packages'] = []
@@ -85,19 +82,16 @@ when 'freebsd'
   default['nfs']['service']['server'] = 'nfsd'
   default['nfs']['threads'] = 24
   default['nfs']['mountd_flags'] = '-r'
-  default['nfs']['server_flags'] = \
-    if node['nfs']['threads'] >= 0
-      "-u -t -n #{node['nfs']['threads']}"
-    else
-      '-u -t'
-    end
-
+  default['nfs']['server_flags'] = if node['nfs']['threads'] >= 0
+                                     "-u -t -n #{node['nfs']['threads']}"
+                                   else
+                                     '-u -t'
+                                   end
 when 'suse'
   default['nfs']['packages'] = %w(nfs-client nfs-kernel-server rpcbind)
   default['nfs']['service']['lock'] = 'nfsserver'
   default['nfs']['service']['server'] = 'nfsserver'
   default['nfs']['config']['client_templates'] = %w(/etc/sysconfig/nfs)
-
 when 'debian'
   # Use Debian 7 as default case
   default['nfs']['packages'] = %w(nfs-common rpcbind)
@@ -108,10 +102,8 @@ when 'debian'
   default['nfs']['config']['client_templates'] = %w(/etc/default/nfs-common /etc/modprobe.d/lockd.conf)
   default['nfs']['config']['server_template'] = '/etc/default/nfs-kernel-server'
   default['nfs']['idmap']['group'] = 'nogroup'
-
   case node['platform']
   when 'debian'
-
     case node['platform_version'].to_i
     # Debian 6.0
     when 6 # (1..6)
@@ -123,19 +115,16 @@ when 'debian'
       default['nfs']['service']['idmap'] = 'nfs-idmapd'
       default['nfs']['client-services'] = %w(portmap lock nfs-config.service)
     end
-
   when 'ubuntu'
     default['nfs']['service']['portmap'] = 'rpcbind'
     default['nfs']['service']['lock'] = 'statd' # There is no lock service on Ubuntu
     default['nfs']['service']['idmap'] = 'idmapd'
     default['nfs']['idmap']['pipefs_directory'] = '/run/rpc_pipefs'
-
     # Ubuntu 13.04 and earlier service name = 'portmap'
     if node['platform_version'].to_f <= 13.04
       default['nfs']['packages'] = %w(nfs-common portmap)
       default['nfs']['service']['portmap'] = 'portmap'
     end
-
     if Chef::VersionConstraint.new('>= 15.04').include?(node['platform_version'])
       default['nfs']['service']['lock'] = 'rpc-statd'
       default['nfs']['service']['idmap'] = 'nfs-idmapd'

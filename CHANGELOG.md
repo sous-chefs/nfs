@@ -1,3 +1,8 @@
+v3.0.0
+------
+
+* Updated to support Chef 14+ with builtin sysctl resource
+
 v2.6.0
 ------
 
