@@ -3,6 +3,11 @@ v3.0.0
 
 * Updated to support Chef 14+ with builtin sysctl resource
 
+v2.6.0
+------
+
+* #107 - Bump line dependency version to 2.x
+
 v2.5.1
 ------
 
@@ -91,7 +96,7 @@ v2.2.7
 * @hrak
   - Use package portmap instead of rpcbind on Ubuntu <=13.04
   - Correct service name for Ubuntu <=13.04 = 'portmap', >=13.10 = 'rpcbind'
-        
+
 
 v2.2.6
 ------
@@ -131,7 +136,7 @@ v2.2.2
 v2.2.1
 ------
 
-* Partial revert of service_provider Ubuntu hacks. 
+* Partial revert of service_provider Ubuntu hacks.
 
 v2.2.0
 ------
