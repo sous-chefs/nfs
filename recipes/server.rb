@@ -24,7 +24,7 @@ package 'nfs-kernel-server' if node['platform_family'] == 'debian'
 
 # Configure nfs-server components
 if node['nfs']['config']['client_templates'].include?(node['nfs']['config']['server_template'])
-  r = resources(:template => node['nfs']['config']['server_template'])
+  r = resources(template: node['nfs']['config']['server_template'])
   r.notifies :restart, "service[#{node['nfs']['service']['server']}]"
 else
   template node['nfs']['config']['server_template'] do
@@ -46,10 +46,10 @@ if node['platform_family'] == 'rhel' && node['platform_version'].to_f >= 7.0 && 
 
   sysctl_param 'fs.nfs.nlm_udpport' do
     value node['nfs']['port']['lockd']
-     only_if { node['kernel']['modules'].include?('nfs') }
+    only_if { node['kernel']['modules'].include?('nfs') }
   end
 
-  service "rpcbind" do
+  service 'rpcbind' do
     action [:start, :enable]
     supports status: true
   end

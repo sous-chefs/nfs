@@ -4,7 +4,7 @@ license 'Apache-2.0'
 description 'Installs and configures NFS, and NFS exports'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 name 'nfs'
-version '2.5.1'
+version '2.5.2'
 source_url 'https://github.com/atomic-penguin/cookbook-nfs' if respond_to?(:source_url)
 issues_url 'https://github.com/atomic-penguin/cookbook-nfs/issues' if respond_to?(:issues_url)
 chef_version '>= 12.5' if respond_to?(:chef_version)
@@ -19,5 +19,5 @@ supports 'oracle', '>= 6.8'
 supports 'sles', '>= 11.1'
 supports 'freebsd', '>= 9.3'
 
-depends 'line', '~> 1.0.6'
+depends 'line', '~> 1.1'
 depends 'sysctl', '~> 1.0.5'

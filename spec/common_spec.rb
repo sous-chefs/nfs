@@ -27,7 +27,7 @@ describe 'nfs::_common' do
       STATD_OUTGOING_PORT: 32_766,
       MOUNTD_PORT: 32_767,
       LOCKD_UDPPORT: 32_768,
-      RPCNFSDCOUNT: 8
+      RPCNFSDCOUNT: 8,
     }.each do |svc, port|
       it "creates /etc/sysconfig/nfs with #{svc} defined as #{port}" do
         expect(chef_run).to render_file('/etc/sysconfig/nfs').with_content(/#{svc}="#{port}"/)
@@ -61,7 +61,7 @@ describe 'nfs::_common' do
       STATD_OUTGOING_PORT: 32_766,
       MOUNTD_PORT: 32_767,
       LOCKD_UDPPORT: 32_768,
-      RPCNFSDCOUNT: 8
+      RPCNFSDCOUNT: 8,
     }.each do |svc, port|
       it "creates /etc/sysconfig/nfs with #{svc} defined as #{port}" do
         expect(chef_run).to render_file('/etc/sysconfig/nfs').with_content(/#{svc}="#{port}"/)
@@ -95,7 +95,7 @@ describe 'nfs::_common' do
       STATD_OUTGOING_PORT: 32_766,
       MOUNTD_PORT: 32_767,
       LOCKD_UDPPORT: 32_768,
-      RPCNFSDCOUNT: 8
+      RPCNFSDCOUNT: 8,
     }.each do |svc, port|
       it "creates /etc/sysconfig/nfs with #{svc} defined as #{port}" do
         expect(chef_run).to render_file('/etc/sysconfig/nfs').with_content(/#{svc}="#{port}"/)
