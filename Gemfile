@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 
-gem 'berkshelf', '~> 5.6.0'
-gem 'chefspec', '~> 5.3.0'
-gem 'rspec', '~> 3.0'
-gem 'fauxhai', '~> 3.10.0'
-gem 'cookstyle', '~> 1.2.0'
+gem 'berkshelf', '~> 6.3.4'
+gem 'chefspec', '~> 7.2.1'
+gem 'rspec', '~> 3.7'
+gem 'fauxhai', '~> 5.6.0'
+gem 'cookstyle', '~> 2.1.0'
 gem 'rake'
 
 group :integration do

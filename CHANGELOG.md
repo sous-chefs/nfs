@@ -1,7 +1,7 @@
-v2.5.2
+v2.6.0
 ------
 
-* Bump line dependency version
+* #107 - Bump line dependency version to 2.x
 
 v2.5.1
 ------
