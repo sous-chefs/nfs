@@ -34,26 +34,9 @@ else
   end
 end
 
-# RHEL7 has some extra requriements per
+# RHEL7 has some extra requirements per
 # https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Storage_Administration_Guide/nfs-serverconfig.html#s2-nfs-nfs-firewall-config
-if node['platform_family'] == 'rhel' && node['platform_version'].to_f >= 7.0 && node['platform'] != 'amazon' && node['virtualization']['system'] != 'openvz'
-  include_recipe 'sysctl::default'
-
-  sysctl 'fs.nfs.nlm_tcpport' do
-    value node['nfs']['port']['lockd']
-    only_if { node['kernel']['modules'].include?('nfs') }
-  end
-
-  sysctl 'fs.nfs.nlm_udpport' do
-    value node['nfs']['port']['lockd']
-    only_if { node['kernel']['modules'].include?('nfs') }
-  end
-
-  service 'rpcbind' do
-    action [:start, :enable]
-    supports status: true
-  end
-end
+include_recipe 'nfs::_sysctl'
 
 # Start nfs-server components
 service node['nfs']['service']['server'] do

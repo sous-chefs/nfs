@@ -1,7 +1,9 @@
-v3.0.0
+v2.6.1
 ------
 
 * Updated to support Chef 14+ with builtin sysctl resource
+* Dropped sysctl cookbook dependency, but maintained backwards
+  compatibility by using file/execute resources for Chef 13
 
 v2.6.0
 ------

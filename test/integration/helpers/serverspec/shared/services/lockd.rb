@@ -12,6 +12,7 @@ shared_examples 'services::lockd' do
     name = 'lockd'
     check_enabled = true
     check_running = true
+    check_listening = true
 
     # RHEL/CentOS
     if os[:family] == 'redhat'
@@ -40,6 +41,6 @@ shared_examples 'services::lockd' do
       it { should be_running } if check_running
     end unless name == ''
 
-    include_examples 'ports::lockd' if check_running
+    include_examples 'ports::lockd' if check_listening
   end
 end
