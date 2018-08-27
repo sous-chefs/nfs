@@ -1,3 +1,9 @@
+v2.6.2
+------
+
+* Set lockd ports on Debian 8 and Ubuntu 14.04 via
+  sysctl settings.
+
 v2.6.1
 ------
 

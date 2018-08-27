@@ -18,8 +18,11 @@
 #
 
 # Related to https://bugzilla.redhat.com/show_bug.cgi?id=1413272
-return unless node['platform_family'] == 'rhel' && node['platform_version'].to_f >= 7.0 &&
-              node['platform'] != 'amazon' && node['virtualization']['system'] != 'openvz'
+# Seems like this is also a bug on Debian 8, and Ubuntu 14.04
+return unless (node['platform_family'] == 'rhel' && node['platform_version'].to_f >= 7.0 &&
+              node['platform'] != 'amazon' && node['virtualization']['system'] != 'openvz') ||
+              (node['platform_family'] == 'debian' && node['platform_version'].to_i == 8 ||
+              node['platform_version'].to_i == 14)
 
 sysctl_keys = %w(fs.nfs.nlm_tcpport fs.nfs.nlm_udpport)
 
@@ -39,7 +42,7 @@ else
 
     execute "sysctl -p /etc/sysctl.d/99-chef-#{key}.conf" do
       action :run
-      #subscribes :run, "file[/etc/sysctl.d/chef-99-#{key}.conf]", :immediately
+      # subscribes :run, "file[/etc/sysctl.d/chef-99-#{key}.conf]", :immediately
     end
   end
 end
