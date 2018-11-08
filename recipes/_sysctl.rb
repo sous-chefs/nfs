@@ -35,14 +35,22 @@ if Chef::VERSION.to_f >= 14.0
   end
 else
   sysctl_keys.each do |key|
+    # Rendering sysctl key/value content here, to avoid
+    # using the sysctl cookbook on Chef 13
     file "/etc/sysctl.d/99-chef-#{key}.conf" do
       content "#{key} = #{node['nfs']['port']['lockd']}"
-      only_if { node['kernel']['modules'].include?('lockd') }
+      notifies :run, "execute[sysctl -p /etc/sysctl.d/99-chef-#{key}.conf]", :delayed
     end
 
+    # Run the sysctl execute after the file has been rendered
     execute "sysctl -p /etc/sysctl.d/99-chef-#{key}.conf" do
-      action :run
-      # subscribes :run, "file[/etc/sysctl.d/chef-99-#{key}.conf]", :immediately
+      action :nothing
+    end
+
+    # Need to restart server service for static ports to activate
+    service node['nfs']['service']['server'] do
+      action :nothing
+      subscribes :restart, "execute[sysctl -p /etc/sysctl.d/99-chef-#{key}.conf]", :delayed
     end
   end
 end

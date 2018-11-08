@@ -1,3 +1,8 @@
+v2.6.3
+------
+
+* Small tweak to Chef 13 compatible sysctl resources
+
 v2.6.2
 ------
 
