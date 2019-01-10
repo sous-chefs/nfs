@@ -1,3 +1,8 @@
+v2.6.4
+------
+
+* Set default_env so exportfs can be found under Chef 14.2+
+
 v2.6.3
 ------
 
