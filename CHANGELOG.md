@@ -2,6 +2,7 @@ v2.7.0
 ------
 
 * @rexcsn - corrected nfs-idmap service name
+* Set default_env so exportfs can be found under Chef 14.2+
 
 v2.6.4
 ------
