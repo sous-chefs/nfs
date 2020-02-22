@@ -69,6 +69,8 @@ when 'rhel'
     default['nfs']['config']['client_templates'] = %w(/etc/sysconfig/nfs /etc/modprobe.d/lockd.conf)
     default['nfs']['client-services'] = if node['platform_version'] == '7.0.1406'
                                           %w(nfs-lock.service)
+                                        else if node['platform_version'].to_i > 7
+                                          %w(nfs-client.target)
                                         else
                                           %w(nfs-config.service nfs-client.target)
                                         end
