@@ -1,3 +1,8 @@
+v2.6.4
+------
+
+* @Vancelot11 - added CentOS 8 support
+
 v2.6.3
 ------
 
