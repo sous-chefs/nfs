@@ -43,3 +43,5 @@ service node['nfs']['service']['server'] do
   action [:start, :enable]
   supports status: true
 end
+
+include_recipe 'nfs::_exports'

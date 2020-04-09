@@ -61,6 +61,17 @@ This cookbook depends on Sean O'Meara's [line cookbook](https://github.com/somea
    - `['user']` - effective user for idmap service, default `nobody`.
    - `['group']` - effective group for idmap service, default `nogroup`.
 
+* `nfs['exports']`
+   - A hash which maps exported directories to either:
+      * An array or a string for the networks. This will use default options
+      * A hash containing values for `network`, `writeable`, `sync`, `anonuser`, `anongroup` and/or `options`
+      * Instead of `network` the hash can contain network entries (keys) and options (values)
+      * `nil` to create a default export to all networks
+
+* `nfs['unexports']`
+   - A hash with regular expressions for directories (keys) and networks (values)
+   - Exports which are matching any combination of directory and network are removed
+
 ## Usage
 
 To install the NFS components for a client system, simply add nfs to the run\_list.

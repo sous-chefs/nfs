@@ -24,6 +24,11 @@ suites:
       - recipe[nfs::default]
   - name: server
     run_list:
-    - recipe[nfs::server]
-    - recipe[nfs_test::issue46]
+      - recipe[nfs::server]
+      - recipe[nfs_test::issue46]
     attributes:
+      nfs:
+        exports:
+          /media:
+            network: 127.0.0.1
+            options: no_root_squash

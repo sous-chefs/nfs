@@ -1,6 +1,16 @@
 require 'spec_helper'
 
 describe 'nfs::server' do
+  shared_examples 'all operating systems' do
+    it 'includes recipes nfs::_common and nfs::_exports' do
+      expect(chef_run).to include_recipe('nfs::_common')
+    end
+
+    it 'includes recipe nfs::_exports' do
+      expect(chef_run).to include_recipe('nfs::_exports')
+    end
+  end
+
   shared_examples 'debian family' do
     %w(nfs-kernel-server).each do |nfs|
       it "installs package #{nfs}" do
@@ -22,6 +32,8 @@ describe 'nfs::server' do
       cached(:chef_run) do
         ChefSpec::ServerRunner.new(platform: 'centos', version: release).converge(described_recipe)
       end
+
+      include_examples 'all operating systems'
 
       case release
       when '5.11', '6.10'
@@ -53,6 +65,8 @@ describe 'nfs::server' do
       ChefSpec::ServerRunner.new(platform: 'freebsd', version: '11.2').converge(described_recipe)
     end
 
+    include_examples 'all operating systems'
+
     %w(nfsd).each do |svc|
       it "starts the #{svc} service" do
         expect(chef_run).to start_service(svc)
@@ -78,6 +92,8 @@ describe 'nfs::server' do
       cached(:chef_run) do
         ChefSpec::ServerRunner.new(platform: 'ubuntu', version: release).converge(described_recipe)
       end
+
+      include_examples 'all operating systems'
 
       it 'creates file /etc/default/nfs-kernel-server with: RPCMOUNTDOPTS="-p 32767"' do
         expect(chef_run).to render_file('/etc/default/nfs-kernel-server').with_content(/RPCMOUNTDOPTS="-p +32767"/)
@@ -106,6 +122,8 @@ describe 'nfs::server' do
       cached(:chef_run) do
         ChefSpec::ServerRunner.new(platform: 'debian', version: release).converge(described_recipe)
       end
+
+      include_examples 'all operating systems'
 
       it 'creates file /etc/default/nfs-kernel-server with: RPCMOUNTDOPTS="-p 32767"' do
         expect(chef_run).to render_file('/etc/default/nfs-kernel-server').with_content(/RPCMOUNTDOPTS="-p +32767"/)

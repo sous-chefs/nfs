@@ -12,4 +12,15 @@ describe 'Server Tests' do
   end
 
   include_examples 'issues::server'
+
+  context 'Export from attributes' do
+    describe command("grep -Ec '^\"?/media\"? ' /etc/exports") do
+      its(:exit_status) { should eq 0 }
+      its(:stdout) { should match(/1\n/) }
+    end
+    describe command("exportfs | grep -c '^/media\\s'") do
+      its(:exit_status) { should eq 0 }
+      its(:stdout) { should match(/1\n/) }
+    end
+  end
 end

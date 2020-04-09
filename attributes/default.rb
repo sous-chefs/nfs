@@ -54,6 +54,10 @@ default['nfs']['idmap']['group'] = 'nobody'
 
 default['nfs']['client-services'] = %w(portmap lock)
 
+# Exports defined as attributes
+default['nfs']['exports'] = {}
+default['nfs']['unexports'] = {}
+
 case node['platform_family']
 when 'rhel'
   if platform? 'amazon'
