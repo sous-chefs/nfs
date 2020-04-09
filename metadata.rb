@@ -6,7 +6,7 @@ name 'nfs'
 version '2.6.4'
 source_url 'https://github.com/atomic-penguin/cookbook-nfs'
 issues_url 'https://github.com/atomic-penguin/cookbook-nfs/issues'
-chef_version '>= 13.0'
+chef_version '>= 12.14.60'
 
 supports 'ubuntu', '>= 16.04'
 supports 'debian', '>= 8.0'
