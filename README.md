@@ -107,6 +107,7 @@ The default parameters for the `nfs_export` LWRP are as follows
   - a CIDR, IP address, or wildcard (\*)
   - requires an option
   - can be a string for a single address or an array of networks
+  - can be a hash, which maps addresses to options (string or array, merged with `nfs_export.options`)
 
 * writeable
   - ro/rw export option

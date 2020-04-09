@@ -15,5 +15,3 @@ supports 'redhat', '>= 6.8'
 supports 'scientific', '>= 6.8'
 supports 'oracle', '>= 6.8'
 supports 'suse', '>= 11.1'
-
-depends 'line', '>= 2.0'
