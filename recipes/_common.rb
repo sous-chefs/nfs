@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: nfs
+# Cookbook:: nfs
 # Recipe:: _common
 #
-# Copyright 2011-2014, Eric G. Wolfe
+# Copyright:: 2011-2014, Eric G. Wolfe
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,9 +24,9 @@ end
 
 # On FreeBSD, create the potentially missing configuration directory
 directory ::File.dirname(node['nfs']['config']['server_template']) do
-  mode 0o0755
+  mode '0755'
   action :create
-  only_if { node['platform_family'] == 'freebsd' }
+  only_if { platform_family? 'freebsd' }
 end
 
 client_service_list = node['nfs']['client-services']
@@ -34,7 +34,7 @@ client_service_list = node['nfs']['client-services']
 # Configure NFS client components
 node['nfs']['config']['client_templates'].each do |client_template|
   template client_template do
-    mode 0o0644
+    mode '0644'
     client_service_list.each do |component|
       notifies :restart, "service[#{component}]", :immediately
     end

@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: nfs
+# Cookbook:: nfs
 # Recipe:: _idmap
 #
-# Copyright 2014, Eric G. Wolfe
+# Copyright:: 2014, Eric G. Wolfe
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ include_recipe 'nfs::_common'
 
 # Configure idmap template for NFSv4 client/server support
 template node['nfs']['config']['idmap_template'] do
-  mode 0o0644
+  mode '0644'
   notifies :restart, 'service[idmap]', :immediately
 end
 

@@ -3,7 +3,7 @@
 end
 
 %w(user1 user2 user3).each do |u|
-  group u if node['platform_family'] == 'suse'
+  group u if platform_family? 'suse'
   user u
 end
 

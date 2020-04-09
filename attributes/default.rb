@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: nfs
+# Cookbook:: nfs
 # Attributes:: default
 #
-# Copyright 2011, Eric G. Wolfe
+# Copyright:: 2011, Eric G. Wolfe
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -56,7 +56,7 @@ default['nfs']['client-services'] = %w(portmap lock)
 
 case node['platform_family']
 when 'rhel'
-  if node['platform'] == 'amazon'
+  if platform? 'amazon'
     # For future amazon versions
   elsif node['platform_version'].to_i <= 5
     # RHEL5 edge case package set and portmap name

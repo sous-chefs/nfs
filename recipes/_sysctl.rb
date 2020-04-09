@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: nfs
+# Cookbook:: nfs
 # Recipe:: _sysctl
 #
-# Copyright 2011-2018, Eric G. Wolfe
+# Copyright:: 2011-2018, Eric G. Wolfe
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,9 +19,9 @@
 
 # Related to https://bugzilla.redhat.com/show_bug.cgi?id=1413272
 # Seems like this is also a bug on Debian 8, and Ubuntu 14.04
-return unless (node['platform_family'] == 'rhel' && node['platform_version'].to_f >= 7.0 &&
-              node['platform'] != 'amazon' && node['virtualization']['system'] != 'openvz') ||
-              (node['platform_family'] == 'debian' && node['platform_version'].to_i == 8 ||
+return unless (platform_family?('rhel') && node['platform_version'].to_f >= 7.0 &&
+              !platform?('amazon') && node['virtualization']['system'] != 'openvz') ||
+              (platform_family?('debian') && node['platform_version'].to_i == 8 ||
               node['platform_version'].to_i == 14)
 
 sysctl_keys = %w(fs.nfs.nlm_tcpport fs.nfs.nlm_udpport)
