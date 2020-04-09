@@ -1,18 +1,30 @@
 require 'spec_helper'
 
 describe 'nfs::server' do
-  %w(5.11 6.8 8).each do |release|
+  shared_examples 'debian family' do
+    %w(nfs-kernel-server).each do |nfs|
+      it "installs package #{nfs}" do
+        expect(chef_run).to install_package(nfs)
+      end
+
+      it "starts the #{nfs} service" do
+        expect(chef_run).to start_service(nfs)
+      end
+
+      it "enables the #{nfs} service" do
+        expect(chef_run).to enable_service(nfs)
+      end
+    end
+  end
+
+  %w(5.11 6.10 8).each do |release|
     context "on Centos #{release}" do
       cached(:chef_run) do
         ChefSpec::ServerRunner.new(platform: 'centos', version: release).converge(described_recipe)
       end
 
-      it 'includes recipe nfs::_common' do
-        expect(chef_run).to include_recipe('nfs::_common')
-      end
-
       case release
-      when '5.11', '6.8'
+      when '5.11', '6.10'
         %w(nfs).each do |svc|
           it "starts the #{svc} service" do
             expect(chef_run).to start_service(svc)
@@ -36,33 +48,9 @@ describe 'nfs::server' do
     end
   end
 
-  context 'on Amazon 2014.09' do
+  context 'on FreeBSD 11.2' do
     cached(:chef_run) do
-      ChefSpec::ServerRunner.new(platform: 'amazon', version: '2015.03').converge(described_recipe)
-    end
-
-    it 'includes recipe nfs::_common' do
-      expect(chef_run).to include_recipe('nfs::_common')
-    end
-
-    %w(nfs).each do |svc|
-      it "starts the #{svc} service" do
-        expect(chef_run).to start_service(svc)
-      end
-
-      it "enables the #{svc} service" do
-        expect(chef_run).to enable_service(svc)
-      end
-    end
-  end
-
-  context 'on FreeBSD' do
-    cached(:chef_run) do
-      ChefSpec::ServerRunner.new(platform: 'freebsd', version: '11.1').converge(described_recipe)
-    end
-
-    it 'includes recipe nfs::_common' do
-      expect(chef_run).to include_recipe('nfs::_common')
+      ChefSpec::ServerRunner.new(platform: 'freebsd', version: '11.2').converge(described_recipe)
     end
 
     %w(nfsd).each do |svc|
@@ -84,20 +72,18 @@ describe 'nfs::server' do
     end
   end
 
-  %w(18.04 16.04).each do |release|
+  %w(16.04 18.04).each do |release|
     # Submit Ubuntu Fauxhai to https://github.com/customink/fauxhai for better Ubuntu coverage
     context "on Ubuntu #{release}" do
       cached(:chef_run) do
         ChefSpec::ServerRunner.new(platform: 'ubuntu', version: release).converge(described_recipe)
       end
 
-      it 'includes recipe nfs::_common' do
-        expect(chef_run).to include_recipe('nfs::_common')
-      end
-
       it 'creates file /etc/default/nfs-kernel-server with: RPCMOUNTDOPTS="-p 32767"' do
         expect(chef_run).to render_file('/etc/default/nfs-kernel-server').with_content(/RPCMOUNTDOPTS="-p +32767"/)
       end
+
+      include_examples 'debian family'
 
       %w(nfs-kernel-server).each do |nfs|
         it "installs package #{nfs}" do
@@ -115,35 +101,21 @@ describe 'nfs::server' do
     end
   end
 
-  context 'on Debian 8.9' do
-    cached(:chef_run) do
-      ChefSpec::ServerRunner.new(platform: 'debian', version: '8.9').converge(described_recipe)
-    end
-
-    it 'includes recipe nfs::_common' do
-      expect(chef_run).to include_recipe('nfs::_common')
-    end
-
-    it 'creates file /etc/default/nfs-kernel-server with: RPCMOUNTDOPTS="-p 32767"' do
-      expect(chef_run).to render_file('/etc/default/nfs-kernel-server').with_content(/RPCMOUNTDOPTS="-p +32767"/)
-    end
-
-    it 'creates file /etc/default/nfs-kernel-server with: RPCNFSDCOUNT="8"' do
-      expect(chef_run).to render_file('/etc/default/nfs-kernel-server').with_content(/RPCNFSDCOUNT="8"/)
-    end
-
-    %w(nfs-kernel-server).each do |nfs|
-      it "installs package #{nfs}" do
-        expect(chef_run).to install_package(nfs)
+  %w(8.11 9.11 10).each do |release|
+    context "on Debian #{release}" do
+      cached(:chef_run) do
+        ChefSpec::ServerRunner.new(platform: 'debian', version: release).converge(described_recipe)
       end
 
-      it "starts the #{nfs} service" do
-        expect(chef_run).to start_service(nfs)
+      it 'creates file /etc/default/nfs-kernel-server with: RPCMOUNTDOPTS="-p 32767"' do
+        expect(chef_run).to render_file('/etc/default/nfs-kernel-server').with_content(/RPCMOUNTDOPTS="-p +32767"/)
       end
 
-      it "enables the #{nfs} service" do
-        expect(chef_run).to enable_service(nfs)
+      it 'creates file /etc/default/nfs-kernel-server with: RPCNFSDCOUNT="8"' do
+        expect(chef_run).to render_file('/etc/default/nfs-kernel-server').with_content(/RPCNFSDCOUNT="8"/)
       end
+
+      include_examples 'debian family'
     end
   end
 end
