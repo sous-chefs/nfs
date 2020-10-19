@@ -65,7 +65,10 @@ when 'rhel'
   elsif node['platform_version'].to_i >= 7
     default['nfs']['service']['lock'] = 'nfs-lock'
     default['nfs']['service']['server'] = 'nfs-server'
-    default['nfs']['service']['idmap'] = 'nfs-idmap'
+    default['nfs']['service']['idmap'] = value_for_platform(
+      'centos' => { '~>8' => 'nfs-idmapd' },
+      'default' => 'nfs-idmap'
+    )
     default['nfs']['config']['client_templates'] = %w(/etc/sysconfig/nfs /etc/modprobe.d/lockd.conf)
     default['nfs']['client-services'] = if node['platform_version'] == '7.0.1406'
                                           %w(nfs-lock.service)
