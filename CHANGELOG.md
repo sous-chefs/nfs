@@ -1,3 +1,8 @@
+v2.7.0
+------
+
+* @rexcsn - corrected nfs-idmap service name
+
 v2.6.4
 ------
 
