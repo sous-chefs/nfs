@@ -56,16 +56,21 @@ default['nfs']['client-services'] = %w(portmap lock)
 
 case node['platform_family']
 when 'rhel'
-  if node['platform'] == 'amazon'
-    # For future amazon versions
-  elsif node['platform_version'].to_i <= 5
+  if node['platform_version'].to_i <= 5
     # RHEL5 edge case package set and portmap name
     default['nfs']['packages'] = %w(nfs-utils portmap)
     default['nfs']['service']['portmap'] = 'portmap'
   elsif node['platform_version'].to_i >= 7
-    default['nfs']['service']['lock'] = 'nfs-lock'
     default['nfs']['service']['server'] = 'nfs-server'
-    default['nfs']['service']['idmap'] = 'nfs-idmap'
+    # If EL 8
+    if node['platform_version'].to_i >= 8
+      default['nfs']['service']['lock'] = 'nfs-client.target'
+      default['nfs']['service']['idmap'] = 'nfs-idmapd'
+    else # EL 7
+      default['nfs']['service']['lock'] = 'nfs-lock'
+      default['nfs']['service']['idmap'] = 'nfs-idmap'
+    end
+
     default['nfs']['config']['client_templates'] = %w(/etc/sysconfig/nfs /etc/modprobe.d/lockd.conf)
     default['nfs']['client-services'] = if node['platform_version'] == '7.0.1406'
                                           %w(nfs-lock.service)
