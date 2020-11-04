@@ -1,7 +1,12 @@
+v2.7.0
+------
+
+* @rexcsn - corrected nfs-idmap service name
+
 v2.6.4
 ------
 
-* Set default_env so exportfs can be found under Chef 14.2+
+* @Vancelot11 - added CentOS 8 support
 
 v2.6.3
 ------
