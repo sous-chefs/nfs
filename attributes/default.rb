@@ -36,50 +36,83 @@ default['nfs']['port']['rquotad'] = 32_769
 # Number of rpc.nfsd threads to start (default 8)
 default['nfs']['threads'] = 8
 
-# Default options are based on RHEL6
-default['nfs']['packages'] = %w(nfs-utils rpcbind)
-default['nfs']['service']['portmap'] = 'rpcbind'
-default['nfs']['service']['lock'] = 'nfslock'
-default['nfs']['service']['server'] = 'nfs'
-default['nfs']['config']['client_templates'] = %w(/etc/sysconfig/nfs)
-default['nfs']['config']['server_template'] = '/etc/sysconfig/nfs'
+# Default options are based on RHEL8
+default['nfs']['packages'] = if node['platform_family'] == 'debian'
+                               %w(nfs-common rpcbind)
+                             else
+                               %w(nfs-utils rpcbind)
+                             end
+
+# rpc-statd doesn't start unless you call nfs-config on Ubuntu
+default['nfs']['service']['config'] = if (node['platform'] == 'debian' && node['platform_version'].to_i >= 10) ||
+                                         (node['platform'] == 'ubuntu' && node['platform_version'].to_i >= 15)
+                                        'nfs-config.service'
+                                      end
+
+# Let systemd demand rpcbind
+default['nfs']['service']['portmap'] = 'nfs-client.target'
+
+# Ubuntu seems to require nfs-config for rpc-statd to start
+default['nfs']['service']['lock'] = if node['platform_family'] == 'debian'
+                                      'rpc-statd.service' # force rpc-statd.service on ubuntu, bad unit file?
+                                    else
+                                      'nfs-client.target' # Let systemd demand rpc-statd on-demand for Enterprise Linux
+                                    end
+
+default['nfs']['service']['server'] = if node['platform_family'] == 'debian'
+                                        'nfs-kernel-server.service'
+                                      else
+                                        'nfs-server.service'
+                                      end
+
+# Client config defaults
+default['nfs']['config']['client_templates'] = if node['platform_family'] == 'debian'
+                                                 %w(/etc/default/nfs-common /etc/modprobe.d/lockd.conf)
+                                               else
+                                                 %w(/etc/sysconfig/nfs /etc/modprobe.d/lockd.conf)
+                                               end
+
+# Sever config defaults
+default['nfs']['config']['server_template'] = if node['platform_family'] == 'debian'
+                                                '/etc/default/nfs-kernel-server'
+                                              else
+                                                '/etc/sysconfig/nfs'
+                                              end
 
 # idmap recipe attributes
 default['nfs']['config']['idmap_template'] = '/etc/idmapd.conf'
-default['nfs']['service']['idmap'] = 'rpcidmapd'
+
+# I don't think this gets pulled in as a unit file dependency on nfs-client.target
+default['nfs']['service']['idmap'] = 'nfs-idmapd.service'
+
 default['nfs']['idmap']['domain'] = node['domain']
-default['nfs']['idmap']['pipefs_directory'] = '/var/lib/nfs/rpc_pipefs'
+
+# I'm assuming both Debian and Ubuntu use this FHS tree for var data
+default['nfs']['idmap']['pipefs_directory'] = if node['platform_family'] == 'debian'
+                                                '/run/rpc_pipefs'
+                                              else
+                                                '/var/lib/nfs/rpc_pipefs'
+                                              end
+
+# The nobody service user, and nogroup edge-case
 default['nfs']['idmap']['user'] = 'nobody'
-default['nfs']['idmap']['group'] = 'nobody'
+default['nfs']['idmap']['group'] = if node['platform_family'] == 'debian'
+                                     'nogroup'
+                                   else
+                                     'nobody'
+                                   end
 
-default['nfs']['client-services'] = %w(portmap lock)
+# These are object refs to the default services, used as an iteration key in recipe.
+# These are not the literal service names passed to the service resource.
+# i.e. nfs.service.config, nfs.service.portmap, nfs.service.lock above
+default['nfs']['client-services'] = if node['platform_family'] == 'debian'
+                                      %w(config portmap lock)
+                                    else
+                                      %w(portmap lock)
+                                    end
 
+# Platforms that may no longer work?
 case node['platform_family']
-when 'rhel'
-  if node['platform_version'].to_i <= 5
-    # RHEL5 edge case package set and portmap name
-    default['nfs']['packages'] = %w(nfs-utils portmap)
-    default['nfs']['service']['portmap'] = 'portmap'
-  elsif node['platform_version'].to_i >= 7
-    default['nfs']['service']['server'] = 'nfs-server'
-    # If EL 8
-    if node['platform_version'].to_i >= 8
-      default['nfs']['service']['lock'] = 'nfs-client.target'
-      default['nfs']['service']['idmap'] = 'nfs-idmapd'
-    else # EL 7
-      default['nfs']['service']['lock'] = 'nfs-lock'
-      default['nfs']['service']['idmap'] = 'nfs-idmap'
-    end
-
-    default['nfs']['config']['client_templates'] = %w(/etc/sysconfig/nfs /etc/modprobe.d/lockd.conf)
-    default['nfs']['client-services'] = if node['platform_version'] == '7.0.1406'
-                                          %w(nfs-lock.service)
-                                        elsif node['platform_version'].to_i > 7
-                                          %w(nfs-client.target)
-                                        else
-                                          %w(nfs-config.service nfs-client.target)
-                                        end
-  end
 when 'freebsd'
   # Packages are installed by default
   default['nfs']['packages'] = []
@@ -99,43 +132,4 @@ when 'suse'
   default['nfs']['service']['lock'] = 'nfsserver'
   default['nfs']['service']['server'] = 'nfsserver'
   default['nfs']['config']['client_templates'] = %w(/etc/sysconfig/nfs)
-when 'debian'
-  # Use Debian 7 as default case
-  default['nfs']['packages'] = %w(nfs-common rpcbind)
-  default['nfs']['service']['portmap'] = 'rpcbind'
-  default['nfs']['service']['lock'] = 'nfs-common'
-  default['nfs']['service']['idmap'] = 'nfs-common'
-  default['nfs']['service']['server'] = 'nfs-kernel-server'
-  default['nfs']['config']['client_templates'] = %w(/etc/default/nfs-common /etc/modprobe.d/lockd.conf)
-  default['nfs']['config']['server_template'] = '/etc/default/nfs-kernel-server'
-  default['nfs']['idmap']['group'] = 'nogroup'
-  case node['platform']
-  when 'debian'
-    case node['platform_version'].to_i
-    # Debian 6.0
-    when 6 # (1..6)
-      default['nfs']['packages'] = %w(nfs-common portmap)
-      default['nfs']['service']['portmap'] = 'portmap'
-    when 9 # (9..99)
-      # identical to Ubuntu > 15.04?!
-      default['nfs']['service']['lock'] = 'rpc-statd'
-      default['nfs']['service']['idmap'] = 'nfs-idmapd'
-      default['nfs']['client-services'] = %w(portmap lock nfs-config.service)
-    end
-  when 'ubuntu'
-    default['nfs']['service']['portmap'] = 'rpcbind'
-    default['nfs']['service']['lock'] = 'statd' # There is no lock service on Ubuntu
-    default['nfs']['service']['idmap'] = 'idmapd'
-    default['nfs']['idmap']['pipefs_directory'] = '/run/rpc_pipefs'
-    # Ubuntu 13.04 and earlier service name = 'portmap'
-    if node['platform_version'].to_f <= 13.04
-      default['nfs']['packages'] = %w(nfs-common portmap)
-      default['nfs']['service']['portmap'] = 'portmap'
-    end
-    if Chef::VersionConstraint.new('>= 15.04').include?(node['platform_version'])
-      default['nfs']['service']['lock'] = 'rpc-statd'
-      default['nfs']['service']['idmap'] = 'nfs-idmapd'
-      default['nfs']['client-services'] = %w(portmap lock nfs-config.service)
-    end
-  end
 end
