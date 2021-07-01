@@ -11,10 +11,10 @@ shared_examples '_idmap on Generic Linux' do |platform, version|
     end
 
     pipefs_tree = if platform == 'debian' || platform == 'ubuntu'
-                  '/run/rpc_pipefs'
-                else
-                  '/var/lib/nfs/rpc_pipefs'
-                end
+                    '/run/rpc_pipefs'
+                  else
+                    '/var/lib/nfs/rpc_pipefs'
+                  end
     it "renders file idmapd with #{pipefs_tree}" do
       expect(chef_run).to render_file('/etc/idmapd.conf').with_content(/Pipefs-Directory += +#{pipefs_tree}/)
     end
@@ -35,7 +35,7 @@ describe 'nfs::_idmap' do
   platforms = {
     'centos' => ['7.7.1908', '8'],
     'ubuntu' => ['16.04', '18.04', '20.04'],
-    'debian' => ['10']
+    'debian' => ['10'],
   }
 
   platforms.each do |platform, versions|

@@ -1,1 +1,1 @@
-require_relative 'services/definitions.rb'
+require_relative 'services/definitions'

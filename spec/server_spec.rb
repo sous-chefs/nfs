@@ -15,7 +15,7 @@ shared_examples 'server on Generic Linux' do |platform, version|
           else
             'nfs-server.service'
           end
-  
+
     it "starts the #{svc} service" do
       expect(chef_run).to start_service(svc)
     end
@@ -24,13 +24,13 @@ shared_examples 'server on Generic Linux' do |platform, version|
       expect(chef_run).to enable_service(svc)
     end
 
-    if platform == 'debian' or platform == 'ubuntu'
+    if (platform == 'debian') || (platform == 'ubuntu')
       it 'creates file /etc/default/nfs-kernel-server with: RPCMOUNTDOPTS="-p 32767"' do
         expect(chef_run).to render_file('/etc/default/nfs-kernel-server').with_content(/RPCMOUNTDOPTS="-p +32767"/)
       end
 
       it 'creates file /etc/default/nfs-kernel-server with: RPCNFSDCOUNT="8"' do
-          expect(chef_run).to render_file('/etc/default/nfs-kernel-server').with_content(/RPCNFSDCOUNT="8"/)
+        expect(chef_run).to render_file('/etc/default/nfs-kernel-server').with_content(/RPCNFSDCOUNT="8"/)
       end
     end
   end
@@ -40,7 +40,7 @@ describe 'nfs::server' do
   platforms = {
     'centos' => ['7.7.1908', '8'],
     'ubuntu' => ['16.04', '18.04', '20.04'],
-    'debian' => ['10']
+    'debian' => ['10'],
   }
 
   platforms.each do |platform, versions|

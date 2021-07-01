@@ -1,3 +1,15 @@
+
+Unreleased
+----------
+
+- Chef 17 compatibility
+  - Enable unified_mode for custom resources
+  - Bumps required Chef version to 15.3+
+- Cookbook Cleanup
+  - Cookstyle fixes
+  - LWRP -> custom resource conversion
+
+
 v3.0.0
 ------
 

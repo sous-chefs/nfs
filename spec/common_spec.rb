@@ -40,7 +40,7 @@ shared_examples '_common on Generic Linux' do |platform, version|
       MOUNTD_PORT: 32_767,
       LOCKD_UDPPORT: 32_768,
       RPCNFSDCOUNT: 8,
-    }           
+    }
     if platform == 'rhel' || platform == 'centos'
       ports.each do |svc, port|
         it "creates #{config} with #{svc} defined as #{port}" do
@@ -59,7 +59,7 @@ describe 'nfs::_common' do
   platforms = {
     'centos' => ['7.7.1908', '8'],
     'ubuntu' => ['16.04', '18.04', '20.04'],
-    'debian' => ['10']
+    'debian' => ['10'],
   }
 
   platforms.each do |platform, versions|

@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: nfs
+# Cookbook:: nfs
 # Attributes:: default
 #
-# Copyright 2011, Eric G. Wolfe
+# Copyright:: 2011, Eric G. Wolfe
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -37,15 +37,15 @@ default['nfs']['port']['rquotad'] = 32_769
 default['nfs']['threads'] = 8
 
 # Default options are based on RHEL8
-default['nfs']['packages'] = if node['platform_family'] == 'debian'
+default['nfs']['packages'] = if platform_family?('debian')
                                %w(nfs-common rpcbind)
                              else
                                %w(nfs-utils rpcbind)
                              end
 
 # rpc-statd doesn't start unless you call nfs-config on Ubuntu
-default['nfs']['service']['config'] = if (node['platform'] == 'debian' && node['platform_version'].to_i >= 10) ||
-                                         (node['platform'] == 'ubuntu' && node['platform_version'].to_i >= 15)
+default['nfs']['service']['config'] = if (platform?('debian') && node['platform_version'].to_i >= 10) ||
+                                         (platform?('ubuntu') && node['platform_version'].to_i >= 15)
                                         'nfs-config.service'
                                       end
 
@@ -53,27 +53,27 @@ default['nfs']['service']['config'] = if (node['platform'] == 'debian' && node['
 default['nfs']['service']['portmap'] = 'nfs-client.target'
 
 # Ubuntu seems to require nfs-config for rpc-statd to start
-default['nfs']['service']['lock'] = if node['platform_family'] == 'debian'
+default['nfs']['service']['lock'] = if platform_family?('debian')
                                       'rpc-statd.service' # force rpc-statd.service on ubuntu, bad unit file?
                                     else
                                       'nfs-client.target' # Let systemd demand rpc-statd on-demand for Enterprise Linux
                                     end
 
-default['nfs']['service']['server'] = if node['platform_family'] == 'debian'
+default['nfs']['service']['server'] = if platform_family?('debian')
                                         'nfs-kernel-server.service'
                                       else
                                         'nfs-server.service'
                                       end
 
 # Client config defaults
-default['nfs']['config']['client_templates'] = if node['platform_family'] == 'debian'
+default['nfs']['config']['client_templates'] = if platform_family?('debian')
                                                  %w(/etc/default/nfs-common /etc/modprobe.d/lockd.conf)
                                                else
                                                  %w(/etc/sysconfig/nfs /etc/modprobe.d/lockd.conf)
                                                end
 
 # Sever config defaults
-default['nfs']['config']['server_template'] = if node['platform_family'] == 'debian'
+default['nfs']['config']['server_template'] = if platform_family?('debian')
                                                 '/etc/default/nfs-kernel-server'
                                               else
                                                 '/etc/sysconfig/nfs'
@@ -88,7 +88,7 @@ default['nfs']['service']['idmap'] = 'nfs-idmapd.service'
 default['nfs']['idmap']['domain'] = node['domain']
 
 # I'm assuming both Debian and Ubuntu use this FHS tree for var data
-default['nfs']['idmap']['pipefs_directory'] = if node['platform_family'] == 'debian'
+default['nfs']['idmap']['pipefs_directory'] = if platform_family?('debian')
                                                 '/run/rpc_pipefs'
                                               else
                                                 '/var/lib/nfs/rpc_pipefs'
@@ -96,7 +96,7 @@ default['nfs']['idmap']['pipefs_directory'] = if node['platform_family'] == 'deb
 
 # The nobody service user, and nogroup edge-case
 default['nfs']['idmap']['user'] = 'nobody'
-default['nfs']['idmap']['group'] = if node['platform_family'] == 'debian'
+default['nfs']['idmap']['group'] = if platform_family?('debian')
                                      'nogroup'
                                    else
                                      'nobody'
@@ -105,7 +105,7 @@ default['nfs']['idmap']['group'] = if node['platform_family'] == 'debian'
 # These are object refs to the default services, used as an iteration key in recipe.
 # These are not the literal service names passed to the service resource.
 # i.e. nfs.service.config, nfs.service.portmap, nfs.service.lock above
-default['nfs']['client-services'] = if node['platform_family'] == 'debian'
+default['nfs']['client-services'] = if platform_family?('debian')
                                       %w(config portmap lock)
                                     else
                                       %w(portmap lock)
