@@ -8,7 +8,8 @@ Unreleased
 - Cookbook Cleanup
   - Cookstyle fixes
   - LWRP -> custom resource conversion
-
+  - Update to new spec test format
+  - Move test cookbook to standard location
 
 v3.0.0
 ------
