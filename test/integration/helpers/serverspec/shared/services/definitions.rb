@@ -1,6 +1,0 @@
-require_relative 'portmap'
-require_relative 'statd'
-require_relative 'mountd'
-require_relative 'lockd'
-require_relative 'nfs-client'
-require_relative 'nfs-server'

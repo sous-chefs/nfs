@@ -44,10 +44,7 @@ default['nfs']['packages'] = if platform_family?('debian')
                              end
 
 # rpc-statd doesn't start unless you call nfs-config on Ubuntu
-default['nfs']['service']['config'] = if (platform?('debian') && node['platform_version'].to_i >= 10) ||
-                                         (platform?('ubuntu') && node['platform_version'].to_i >= 15)
-                                        'nfs-config.service'
-                                      end
+default['nfs']['service']['config'] = 'nfs-config.service' if platform?('debian', 'ubuntu')
 
 # Let systemd demand rpcbind
 default['nfs']['service']['portmap'] = 'nfs-client.target'
