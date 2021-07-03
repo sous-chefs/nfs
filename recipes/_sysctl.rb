@@ -17,12 +17,6 @@
 # limitations under the License.
 #
 
-# Related to https://bugzilla.redhat.com/show_bug.cgi?id=1413272
-# Seems like this is also a bug on Debian 8, and Ubuntu 14.04
-return unless (platform_family?('rhel') && node['platform_version'].to_f >= 7.0 &&
-              !platform?('amazon') && node['virtualization']['system'] != 'openvz') ||
-              (platform_family?('debian') && node['platform_version'].to_i == 8)
-
 sysctl_keys = %w(fs.nfs.nlm_tcpport fs.nfs.nlm_udpport)
 sysctl_keys.each do |key|
   sysctl key do
