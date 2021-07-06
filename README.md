@@ -4,12 +4,12 @@ NFS
 Description
 -----------
 
-Installs and configures NFS client, or server components 
+Installs and configures NFS client, or server components
 
 Requirements
 ------------
 
-Should work on any RHEL 7+, Debian 10+, Ubuntu 15.04+ distributions.
+Should work on any RHEL 7+, Debian 10+, Ubuntu 18.04+ distributions.
 
 This cookbook depends on Sean O'Meara's [line cookbook](https://github.com/someara/line-cookbook)
 
@@ -41,7 +41,7 @@ This cookbook depends on Sean O'Meara's [line cookbook](https://github.com/somea
 
 * `nfs['v2']`, `nfs['v3']`, `nfs['v4']`
   - Set to `yes` or `no` to turn on/off NFS protocol level v2, or v3.
-  - Defaults to nil, deferring to the default behavior provided by running kernel. 
+  - Defaults to nil, deferring to the default behavior provided by running kernel.
 
 * `nfs['mountd_flags']` - BSD launch options for mountd.
 * `nfs['server_flags']` - BSD launch options for nfsd.
@@ -84,14 +84,14 @@ Applications or other cookbooks can use the nfs\_export LWRP to add exports:
 
     nfs_export "/exports" do
       network '10.0.0.0/8'
-      writeable false 
+      writeable false
       sync true
       options ['no_root_squash']
     end
 
 The default parameters for the `nfs_export` LWRP are as follows
 
-* directory 
+* directory
   - directory you wish to export
   - defaults to resource name
 
