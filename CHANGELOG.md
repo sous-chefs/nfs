@@ -1,3 +1,21 @@
+
+v4.0.0
+------
+
+This release adds support for Chef 17 and modernizes syntax and tooling.
+
+- **BREAKING**
+  - Drop support for Chef version < 15.3
+- Chef 17 compatibility
+  - Enable unified_mode for custom resources
+- Cookbook Cleanup
+  - Cookstyle fixes
+  - LWRP -> custom resource conversion
+  - Update to new spec test format
+  - Move test cookbook to standard location
+  - Move kitchen files to standard location
+  - Convert integration testing to InSpec
+
 v3.0.0
 ------
 

@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: nfs
+# Cookbook:: nfs
 # Recipe:: server4
 #
-# Copyright 2011-2014, Eric G. Wolfe
+# Copyright:: 2011-2014, Eric G. Wolfe
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,6 +17,6 @@
 # limitations under the License.
 #
 
-%w(nfs::_common nfs::_idmap nfs::server).each do |component|
-  include_recipe component
-end
+include_recipe 'nfs::_common'
+include_recipe 'nfs::_idmap'
+include_recipe 'nfs::server'

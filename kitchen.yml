@@ -1,0 +1,31 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+  product_name: chef
+  # idempotency issues with nfs-config service / sysconfig
+  # multiple_converge: 2
+  # enforce_idempotency: true
+  deprecations_as_errors: true
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: centos-7
+  - name: centos-8
+  - name: debian-10
+  - name: ubuntu-18.04
+  - name: ubuntu-20.04
+
+suites:
+  - name: default
+    run_list:
+      - recipe[nfs::default]
+      - recipe[nfs_test::default]
+  - name: server
+    run_list:
+      - recipe[nfs::server]
+      - recipe[nfs_test::issue46]

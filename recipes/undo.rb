@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: nfs
+# Cookbook:: nfs
 # Recipe:: undo
 #
-# Copyright 2012, Eric G. Wolfe
+# Copyright:: 2012, Eric G. Wolfe
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ end
 # Remove server components for Debian
 package 'nfs-kernel-server' do
   action :remove
-  only_if { node['platform_family'] == 'debian' }
+  only_if { platform_family?('debian') }
 end
 
 unless Chef::Config[:solo]
