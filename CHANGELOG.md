@@ -4,6 +4,8 @@ This file is used to list changes made in each version of the nfs cookbook.
 
 ## Unreleased
 
+- Sous Chefs adoption
+
 ## 4.0.0 - *2021-09-11*
 
 This release adds support for Chef 17 and modernizes syntax and tooling.
