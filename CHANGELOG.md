@@ -5,6 +5,7 @@ This file is used to list changes made in each version of the nfs cookbook.
 ## Unreleased
 
 - Sous Chefs adoption
+- Loosen version pin on line cookbook
 
 ## 4.0.0 - *2021-09-11*
 

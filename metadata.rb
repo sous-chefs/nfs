@@ -15,4 +15,4 @@ supports 'redhat'
 supports 'scientific'
 supports 'ubuntu'
 
-depends 'line', '~> 4.0.1'
+depends 'line'
