@@ -3,12 +3,14 @@ driver:
   name: vagrant
 
 provisioner:
-  name: chef_zero
-  product_name: chef
-  # idempotency issues with nfs-config service / sysconfig
-  # multiple_converge: 2
-  # enforce_idempotency: true
+  name: chef_infra
+  product_name: <%= ENV['CHEF_PRODUCT_NAME'] || 'chef' %>
+  product_version: <%= ENV['CHEF_VERSION'] || 'latest' %>
+  log_level: <%= ENV['CHEF_LOG_LEVEL'] || 'auto' %>
+  multiple_converge: 2
+  enforce_idempotency: true
   deprecations_as_errors: true
+  chef_license: accept-no-persist
 
 verifier:
   name: inspec
@@ -16,7 +18,11 @@ verifier:
 platforms:
   - name: centos-7
   - name: centos-8
+  - name: centos-stream-8
+  - name: debian-9
   - name: debian-10
+  - name: debian-11
+  - name: fedora-latest
   - name: ubuntu-18.04
   - name: ubuntu-20.04
 
