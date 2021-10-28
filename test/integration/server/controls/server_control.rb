@@ -25,7 +25,7 @@ end
 control 'share-ids' do
   title 'Verify correct user/group ids are used'
 
-  describe command("egrep -c '/tmp/share[0-9] 127.0.0.1\\(ro,sync,root_squash,anonuid=[0-9]+,anongid=[0-9]+\\)' /etc/exports") do
+  describe command("egrep -c '/tmp/share[0-9] 127.0.0.1\\(ro,sync,root_squash,anonuid=[0-9]+,anongid=[0-9]+(,fsid=root)?\\)' /etc/exports") do
     its('stdout') { should match(/3\n/) }
   end
 
