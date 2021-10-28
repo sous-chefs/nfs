@@ -1,8 +1,8 @@
 require_relative '../../spec_helper'
 
 describe 'nfs::_common' do
-  context 'on centos' do
-    platform 'centos'
+  context 'on centos 7' do
+    platform 'centos', '7'
 
     it { is_expected.to install_package('nfs-utils') }
     it { is_expected.to install_package('rpcbind') }
@@ -17,6 +17,24 @@ describe 'nfs::_common' do
         .with_content(/MOUNTD_PORT="32767"/)
         .with_content(/LOCKD_UDPPORT="32768"/)
         .with_content(/RPCNFSDCOUNT="8"/)
+    end
+  end
+
+  context 'on centos 8' do
+    platform 'centos', '8'
+
+    it { is_expected.to install_package('nfs-utils') }
+    it { is_expected.to install_package('rpcbind') }
+
+    it { is_expected.to start_service('nfs-client.target') }
+    it { is_expected.to enable_service('nfs-client.target') }
+
+    it do
+      is_expected.to render_file('/etc/nfs.conf')
+        .with_content(/\[statd\]\nport=32765\noutgoing-port=32766/)
+        .with_content(/\[mountd\]\nport=32767/)
+        .with_content(/\[lockd\]\nport=32768\nudp-port=32768/)
+        .with_content(/\[nfsd\]\nthreads=8/)
     end
   end
 
