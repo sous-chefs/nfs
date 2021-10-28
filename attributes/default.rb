@@ -63,18 +63,28 @@ default['nfs']['service']['server'] = if platform_family?('debian')
                                       end
 
 # Client config defaults
-default['nfs']['config']['client_templates'] = if platform_family?('debian')
-                                                 %w(/etc/default/nfs-common /etc/modprobe.d/lockd.conf)
-                                               else
-                                                 %w(/etc/sysconfig/nfs /etc/modprobe.d/lockd.conf)
-                                               end
+default['nfs']['config']['client_templates'] =
+  if platform_family?('debian')
+    %w(/etc/default/nfs-common /etc/modprobe.d/lockd.conf)
+  elsif platform_family?('rhel') && node['platform_version'].to_i >= 8
+    %w(/etc/nfs.conf /etc/modprobe.d/lockd.conf)
+  elsif platform_family?('fedora')
+    %w(/etc/nfs.conf /etc/modprobe.d/lockd.conf)
+  else
+    %w(/etc/sysconfig/nfs /etc/modprobe.d/lockd.conf)
+  end
 
 # Sever config defaults
-default['nfs']['config']['server_template'] = if platform_family?('debian')
-                                                '/etc/default/nfs-kernel-server'
-                                              else
-                                                '/etc/sysconfig/nfs'
-                                              end
+default['nfs']['config']['server_template'] =
+  if platform_family?('debian')
+    '/etc/default/nfs-kernel-server'
+  elsif platform_family?('rhel') && node['platform_version'].to_i >= 8
+    '/etc/nfs.conf'
+  elsif platform_family?('fedora')
+    '/etc/nfs.conf'
+  else
+    '/etc/sysconfig/nfs'
+  end
 
 # idmap recipe attributes
 default['nfs']['config']['idmap_template'] = '/etc/idmapd.conf'
