@@ -9,6 +9,7 @@ This file is used to list changes made in each version of the nfs cookbook.
 - Fix CentOS 8+ and Fedora and properly manage /etc/nfs.conf
 - Add `fsid` property to the `nfs_export` resource
 - Fix services that are loaded
+- Switch to using `kernel_module` resource for lockd module
 
 ## 4.0.0 - *2021-09-11*
 

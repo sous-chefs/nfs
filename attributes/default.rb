@@ -57,13 +57,13 @@ default['nfs']['service']['server'] = if platform_family?('debian')
 # Client config defaults
 default['nfs']['config']['client_templates'] =
   if platform_family?('debian')
-    %w(/etc/default/nfs-common /etc/modprobe.d/lockd.conf)
+    %w(/etc/default/nfs-common)
   elsif platform_family?('rhel') && node['platform_version'].to_i >= 8
-    %w(/etc/nfs.conf /etc/modprobe.d/lockd.conf)
+    %w(/etc/nfs.conf)
   elsif platform_family?('fedora')
-    %w(/etc/nfs.conf /etc/modprobe.d/lockd.conf)
+    %w(/etc/nfs.conf)
   else
-    %w(/etc/sysconfig/nfs /etc/modprobe.d/lockd.conf)
+    %w(/etc/sysconfig/nfs)
   end
 
 # Sever config defaults

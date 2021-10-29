@@ -41,6 +41,16 @@ node['nfs']['config']['client_templates'].each do |client_template|
   end
 end
 
+kernel_module 'lockd' do
+  options [
+    "nlm_udpport=#{node['nfs']['port']['lockd']}",
+    "nlm_tcpport=#{node['nfs']['port']['lockd']}",
+  ]
+  client_service_list.each do |component|
+    notifies :restart, "service[#{component}]", :delayed
+  end
+end unless docker?
+
 # Start NFS client components
 client_service_list.each do |component|
   service component do
