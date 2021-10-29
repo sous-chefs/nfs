@@ -43,18 +43,10 @@ default['nfs']['packages'] = if platform_family?('debian')
                                %w(nfs-utils rpcbind)
                              end
 
-# rpc-statd doesn't start unless you call nfs-config on Ubuntu
-default['nfs']['service']['config'] = 'nfs-config.service' if platform?('debian', 'ubuntu')
-
 # Let systemd demand rpcbind
 default['nfs']['service']['portmap'] = 'nfs-client.target'
-
-# Ubuntu seems to require nfs-config for rpc-statd to start
-default['nfs']['service']['lock'] = if platform_family?('debian')
-                                      'rpc-statd.service' # force rpc-statd.service on ubuntu, bad unit file?
-                                    else
-                                      'nfs-client.target' # Let systemd demand rpc-statd on-demand for Enterprise Linux
-                                    end
+default['nfs']['service']['statd'] = 'rpc-statd.service'
+default['nfs']['service']['lock'] = 'nfs-client.target'
 
 default['nfs']['service']['server'] = if platform_family?('debian')
                                         'nfs-kernel-server.service'
@@ -111,12 +103,8 @@ default['nfs']['idmap']['group'] = if platform_family?('debian')
 
 # These are object refs to the default services, used as an iteration key in recipe.
 # These are not the literal service names passed to the service resource.
-# i.e. nfs.service.config, nfs.service.portmap, nfs.service.lock above
-default['nfs']['client-services'] = if platform_family?('debian')
-                                      %w(config portmap lock)
-                                    else
-                                      %w(portmap lock)
-                                    end
+# i.e. nfs.service.portmap, nfs.service.lock above
+default['nfs']['client-services'] = %w(portmap statd lock)
 
 # Platforms that may no longer work?
 case node['platform_family']

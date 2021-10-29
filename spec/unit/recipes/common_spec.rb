@@ -7,8 +7,13 @@ describe 'nfs::_common' do
     it { is_expected.to install_package('nfs-utils') }
     it { is_expected.to install_package('rpcbind') }
 
-    it { is_expected.to start_service('nfs-client.target') }
-    it { is_expected.to enable_service('nfs-client.target') }
+    %w(
+      nfs-client.target
+      rpc-statd.service
+    ).each do |service|
+      it { is_expected.to start_service(service) }
+      it { is_expected.to enable_service(service) }
+    end
 
     it do
       is_expected.to render_file('/etc/sysconfig/nfs')
@@ -26,8 +31,13 @@ describe 'nfs::_common' do
     it { is_expected.to install_package('nfs-utils') }
     it { is_expected.to install_package('rpcbind') }
 
-    it { is_expected.to start_service('nfs-client.target') }
-    it { is_expected.to enable_service('nfs-client.target') }
+    %w(
+      nfs-client.target
+      rpc-statd.service
+    ).each do |service|
+      it { is_expected.to start_service(service) }
+      it { is_expected.to enable_service(service) }
+    end
 
     it do
       is_expected.to render_file('/etc/nfs.conf')
@@ -44,8 +54,13 @@ describe 'nfs::_common' do
     it { is_expected.to install_package('nfs-common') }
     it { is_expected.to install_package('rpcbind') }
 
-    it { is_expected.to start_service('nfs-client.target') }
-    it { is_expected.to enable_service('nfs-client.target') }
+    %w(
+      nfs-client.target
+      rpc-statd.service
+    ).each do |service|
+      it { is_expected.to start_service(service) }
+      it { is_expected.to enable_service(service) }
+    end
 
     it do
       is_expected.to render_file('/etc/default/nfs-common')
