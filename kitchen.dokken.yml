@@ -77,4 +77,3 @@ platforms:
       volumes:
         - /sys/fs/cgroup:/sys/fs/cgroup:ro
       pid_one_command: /bin/systemd
-
