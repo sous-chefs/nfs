@@ -10,6 +10,7 @@ This file is used to list changes made in each version of the nfs cookbook.
 - Add `fsid` property to the `nfs_export` resource
 - Fix services that are loaded
 - Switch to using `kernel_module` resource for lockd module
+- Fix idempotency with sysctl resource usage
 
 ## 4.0.0 - *2021-09-11*
 
