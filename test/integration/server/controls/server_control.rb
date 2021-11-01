@@ -25,7 +25,7 @@ end
 control 'share-ids' do
   title 'Verify correct user/group ids are used'
 
-  describe command("egrep -c '/tmp/share[0-9] 127.0.0.1\\(ro,sync,root_squash,anonuid=[0-9]+,anongid=[0-9]+\\)' /etc/exports") do
+  describe command("egrep -c '/tmp/share[0-9] 127.0.0.1\\(ro,sync,root_squash,anonuid=[0-9]+,anongid=[0-9]+(,fsid=root)?\\)' /etc/exports") do
     its('stdout') { should match(/3\n/) }
   end
 
@@ -35,5 +35,21 @@ control 'share-ids' do
     its('stdout') { should_not match(%r{^\/tmp\/share2[.]*anongid=1001}) }
     its('stdout') { should_not match(%r{^\/tmp\/share3[.]*anonuid=1002}) }
     its('stdout') { should_not match(%r{^\/tmp\/share3[.]*anongid=1002}) }
+  end
+end
+
+control 'lockd kernel module' do
+  title 'Verify kernel module is setup correctly'
+
+  describe kernel_module 'lockd' do
+    it { should be_loaded }
+    it { should_not be_disabled }
+    it { should_not be_blacklisted }
+  end
+
+  %w(fs.nfs.nlm_tcpport fs.nfs.nlm_udpport).each do |param|
+    describe kernel_parameter param do
+      its('value') { should eq 32768 }
+    end
   end
 end

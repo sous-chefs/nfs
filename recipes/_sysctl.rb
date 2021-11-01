@@ -21,8 +21,7 @@ sysctl_keys = %w(fs.nfs.nlm_tcpport fs.nfs.nlm_udpport)
 sysctl_keys.each do |key|
   sysctl key do
     value node['nfs']['port']['lockd']
-    only_if { node['kernel']['modules'].include?('lockd') }
-  end
+  end unless docker?
 end
 
 service 'rpcbind' do

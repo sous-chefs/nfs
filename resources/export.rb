@@ -27,6 +27,7 @@ property :options, Array, default: ['root_squash']
 property :anonuser, String
 property :anongroup, String
 property :unique, [true, false], default: false
+property :fsid, String, default: 'root'
 
 action :create do
   extend Nfs::Cookbook::Helpers
@@ -37,6 +38,7 @@ action :create do
   options = ",#{options}" unless options.empty?
   options << ",anonuid=#{find_uid(new_resource.anonuser)}" if new_resource.anonuser
   options << ",anongid=#{find_gid(new_resource.anongroup)}" if new_resource.anongroup
+  options << ",fsid=#{new_resource.fsid}" if platform_family?('fedora')
 
   if new_resource.network.is_a?(Array)
     host_permissions = new_resource.network.map { |net| net + "(#{ro_rw},#{sync_async}#{options})" }
