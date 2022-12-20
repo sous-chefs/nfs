@@ -12,6 +12,12 @@ provisioner:
   deprecations_as_errors: true
   chef_license: accept-no-persist
 
+# TODO(ramereth): Remove on the next release of chef-workstation - 12/20/2022
+transport:
+  name: ssh
+  username: vagrant
+  password: vagrant
+
 verifier:
   name: inspec
 
