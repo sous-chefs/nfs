@@ -8,6 +8,7 @@ This file is used to list changes made in each version of the nfs cookbook.
 - Remove EOL platforms: CentOS 8, Debian 9
 - Convert from delivery to newer CI workflow
 - MDL fixes
+- Switch to using MacOS 12 runners for VM CI tests
 
 ## 5.0.0 - *2021-11-01*
 
