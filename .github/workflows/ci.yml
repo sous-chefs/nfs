@@ -69,7 +69,8 @@ jobs:
           - fedora-latest
           - ubuntu-1804
           - ubuntu-2004
-          - ubuntu-2204
+          # Disabled due to ssh key issues with vagrant
+          # - ubuntu-2204
         suite:
           - server
       fail-fast: false
