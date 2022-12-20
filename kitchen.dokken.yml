@@ -22,26 +22,12 @@ platforms:
         - /sys/fs/cgroup:/sys/fs/cgroup:ro
       pid_one_command: /usr/lib/systemd/systemd
 
-  - name: centos-8
-    driver:
-      image: dokken/centos-8
-      volumes:
-        - /sys/fs/cgroup:/sys/fs/cgroup:ro
-      pid_one_command: /usr/lib/systemd/systemd
-
   - name: centos-stream-8
     driver:
       image: dokken/centos-stream-8
       volumes:
         - /sys/fs/cgroup:/sys/fs/cgroup:ro
       pid_one_command: /usr/lib/systemd/systemd
-
-  - name: debian-9
-    driver:
-      image: dokken/debian-9
-      volumes:
-        - /sys/fs/cgroup:/sys/fs/cgroup:ro
-      pid_one_command: /bin/systemd
 
   - name: debian-10
     driver:
@@ -74,6 +60,13 @@ platforms:
   - name: ubuntu-20.04
     driver:
       image: dokken/ubuntu-20.04
+      volumes:
+        - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      pid_one_command: /bin/systemd
+
+  - name: ubuntu-22.04
+    driver:
+      image: dokken/ubuntu-22.04
       volumes:
         - /sys/fs/cgroup:/sys/fs/cgroup:ro
       pid_one_command: /bin/systemd
