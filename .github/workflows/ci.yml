@@ -90,7 +90,7 @@ jobs:
         if: failure()
         run: |
             set -x
-            KITCHEN_LOCAL_YAML=kitchen.platforms.yml /usr/bin/kitchen exec ${{ matrix.suite }}-${{ matrix.os }} -c "journalctl -l"
+            /usr/bin/kitchen exec ${{ matrix.suite }}-${{ matrix.os }} -c "journalctl -l"
 
   final:
     runs-on: ubuntu-latest
