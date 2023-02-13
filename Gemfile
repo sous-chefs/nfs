@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'berkshelf', '~> 6.3.4'
-gem 'chefspec', '~> 7.2.1'
+gem 'chefspec', '~> 7.4.0'
 gem 'rspec', '~> 3.7'
 gem 'fauxhai', '~> 5.6.0'
 gem 'cookstyle', '~> 2.1.0'
