@@ -4,9 +4,15 @@ This file is used to list changes made in each version of the nfs cookbook.
 
 ## Unreleased
 
+- Standardise files with files in sous-chefs/repo-management
+
 ## 5.0.4 - *2023-02-14*
 
+- Standardise files with files in sous-chefs/repo-management
+
 ## 5.0.3 - *2023-02-13*
+
+- Standardise files with files in sous-chefs/repo-management
 
 ## 5.0.2 - *2022-12-20*
 
@@ -288,7 +294,7 @@ Support for some versions of Ubuntu support unverified.  Please help cookbook ma
 - refactored provider to execute in new run_context
 - update notification timings on exports resources
 - add service status to recipes
-- dependency and integration with [line](http://ckbk.it/line) editing cookbook
+- dependency and integration with [line](https://github.com/sous-chefs/line) cookbook
 
 ## 0.2.8 - *2012-11-28*
 
