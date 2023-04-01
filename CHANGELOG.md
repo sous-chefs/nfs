@@ -2,7 +2,7 @@
 
 This file is used to list changes made in each version of the nfs cookbook.
 
-## Unreleased
+## 5.0.5 - *2023-04-01*
 
 - Standardise files with files in sous-chefs/repo-management
 
