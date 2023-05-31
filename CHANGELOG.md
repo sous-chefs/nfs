@@ -2,6 +2,18 @@
 
 This file is used to list changes made in each version of the nfs cookbook.
 
+## Unreleased
+
+- Fix changelog and issue a proper release
+
+## 5.0.7 - *2023-05-17*
+
+- Update sous-chefs/.github action to v2.0.4 (#137)
+
+## 5.0.6 - *2023-05-03*
+
+- Update sous-chefs/.github action to v2.0.2 (#136)
+
 ## 5.0.5 - *2023-04-01*
 
 - Standardise files with files in sous-chefs/repo-management
