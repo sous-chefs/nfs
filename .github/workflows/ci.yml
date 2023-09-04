@@ -18,7 +18,7 @@ jobs:
 
   integration:
     needs: lint-unit
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         os:
@@ -35,7 +35,7 @@ jobs:
       fail-fast: false
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install Chef
         uses: actionshub/chef-install@2.0.4
       - name: Dokken
@@ -58,7 +58,7 @@ jobs:
   # Server suite needs to run on VMs not docker
   integration-vagrant:
     needs: lint-unit
-    runs-on: macos-12
+    runs-on: macos-13
     strategy:
       matrix:
         os:
@@ -75,7 +75,7 @@ jobs:
       fail-fast: false
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install Chef
         uses: actionshub/chef-install@2.0.4
       - name: Dokken
