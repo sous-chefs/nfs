@@ -2,7 +2,7 @@
 
 This file is used to list changes made in each version of the nfs cookbook.
 
-## Unreleased
+## 5.0.10 - *2023-09-04*
 
 ## 5.0.9 - *2023-07-10*
 
