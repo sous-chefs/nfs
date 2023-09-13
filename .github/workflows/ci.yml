@@ -32,6 +32,7 @@ jobs:
           - ubuntu-2204
         suite:
           - default
+          - server
       fail-fast: false
     steps:
       - name: Check out code
