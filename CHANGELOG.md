@@ -4,13 +4,24 @@ This file is used to list changes made in each version of the nfs cookbook.
 
 ## Unreleased
 
+- Remove custom Dokken configuration
+  Fixes CI failures
+
 ## 5.1.1 - *2023-09-13*
+
+- Standardise files with files in sous-chefs/repo-management
 
 ## 5.1.0 - *2023-09-13*
 
+- Standardise files with files in sous-chefs/repo-management
+
 ## 5.0.10 - *2023-09-04*
 
+- Standardise files with files in sous-chefs/repo-management
+
 ## 5.0.9 - *2023-07-10*
+
+- Standardise files with files in sous-chefs/repo-management
 
 ## 5.0.8 - *2023-05-31*
 

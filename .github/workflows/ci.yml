@@ -30,8 +30,7 @@ jobs:
           - ubuntu-1804
           - ubuntu-2004
           - ubuntu-2204
-        suite:
-          - default
+        suite: [default]
       fail-fast: false
     steps:
       - name: Check out code
@@ -58,7 +57,7 @@ jobs:
   # Server suite needs to run on VMs not docker
   integration-vagrant:
     needs: lint-unit
-    runs-on: macos-13
+    runs-on: macos-12 # Vagrant is not installed on MacOS 13
     strategy:
       matrix:
         os:
@@ -70,8 +69,7 @@ jobs:
           - ubuntu-1804
           - ubuntu-2004
           - ubuntu-2204
-        suite:
-          - server
+        suite: [server]
       fail-fast: false
     steps:
       - name: Check out code
