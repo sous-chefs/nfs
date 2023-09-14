@@ -57,7 +57,7 @@ jobs:
   # Server suite needs to run on VMs not docker
   integration-vagrant:
     needs: lint-unit
-    runs-on: macos-12 # Vagrant is not installed on MacOS 13
+    runs-on: macos-13 # Vagrant is not installed on MacOS 13
     strategy:
       matrix:
         os:
