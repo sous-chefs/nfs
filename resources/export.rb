@@ -53,7 +53,7 @@ action :create do
     action :nothing
   end
 
-  if ::File.zero?('/etc/exports') || !::File.exist?('/etc/exports')
+  if ::File.empty?('/etc/exports') || !::File.exist?('/etc/exports')
     file '/etc/exports' do
       content export_line
       notifies :run, 'execute[exportfs]', :immediately
