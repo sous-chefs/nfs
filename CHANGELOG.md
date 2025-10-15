@@ -2,6 +2,13 @@
 
 This file is used to list changes made in each version of the nfs cookbook.
 
+## [5.1.7](https://github.com/sous-chefs/nfs/compare/5.1.6...v5.1.7) (2025-10-15)
+
+
+### Bug Fixes
+
+* **ci:** Update workflows to use release pipeline ([#158](https://github.com/sous-chefs/nfs/issues/158)) ([f84494a](https://github.com/sous-chefs/nfs/commit/f84494aeee47f801246db65246840dabdffb3e12))
+
 ## 5.1.2 - *2023-09-14*
 
 * Remove custom Dokken configuration
