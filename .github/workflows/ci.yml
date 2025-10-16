@@ -8,7 +8,7 @@ name: "Lint & Unit Test"
 
 jobs:
   lint-unit:
-    uses: sous-chefs/.github/.github/workflows/lint-unit.yml@4.0.0
+    uses: sous-chefs/.github/.github/workflows/lint-unit.yml@5.0.4
     permissions:
       actions: write
       checks: write
@@ -57,7 +57,7 @@ jobs:
   # Server suite needs to run on VMs not docker
   integration-vagrant:
     needs: lint-unit
-    runs-on: macos-14 # Vagrant is not installed on MacOS 13
+    runs-on: macos-15 # Vagrant is not installed on MacOS 13
     strategy:
       matrix:
         os:
