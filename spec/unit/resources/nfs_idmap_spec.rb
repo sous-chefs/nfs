@@ -25,6 +25,19 @@ describe 'nfs_idmap' do
     end
   end
 
+  context 'with no node domain' do
+    recipe do
+      node.automatic['domain'] = nil
+
+      nfs_idmap 'default'
+    end
+
+    it do
+      is_expected.to render_file('/etc/idmapd.conf')
+        .with_content(/Domain = localdomain/)
+    end
+  end
+
   context 'action :delete' do
     recipe do
       nfs_idmap 'default' do

@@ -8,7 +8,7 @@ include Nfs::Cookbook::Helpers
 use '_partial/_common'
 
 property :config_path, String, default: '/etc/idmapd.conf'
-property :domain, String, default: lazy { node['domain'] }
+property :domain, String, default: lazy { node['domain'] || 'localdomain' }
 property :pipefs_directory, String, default: lazy { nfs_pipefs_directory }
 property :user, String, default: 'nobody'
 property :group, String, default: lazy { nfs_idmap_group }

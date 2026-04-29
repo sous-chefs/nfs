@@ -37,6 +37,7 @@ action :create do
     command 'exportfs -ar'
     default_env true
     action :nothing
+    not_if { docker? }
   end
 
   if new_resource.unique
@@ -60,6 +61,7 @@ action :delete do
     command 'exportfs -ar'
     default_env true
     action :nothing
+    not_if { docker? }
   end
 
   delete_lines "export #{new_resource.name}" do
