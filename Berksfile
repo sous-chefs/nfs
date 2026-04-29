@@ -1,5 +1,9 @@
+# frozen_string_literal: true
+
 source 'https://supermarket.chef.io'
 
 metadata
 
-cookbook 'nfs_test', path: 'test/cookbooks/nfs_test'
+group :integration do
+  cookbook 'test', path: 'test/cookbooks/test'
+end
