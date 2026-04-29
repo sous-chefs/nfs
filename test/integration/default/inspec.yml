@@ -1,3 +1,7 @@
 ---
 name: default
-title: Integration tests for the nfs cookbook
+title: Default NFS client integration tests
+maintainer: Sous Chefs
+license: Apache-2.0
+summary: Verifies the nfs_client resource
+version: 1.0.0

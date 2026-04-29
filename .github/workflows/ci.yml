@@ -8,7 +8,7 @@ name: "Lint & Unit Test"
 
 jobs:
   lint-unit:
-    uses: sous-chefs/.github/.github/workflows/lint-unit.yml@5.0.8
+    uses: sous-chefs/.github/.github/workflows/lint-unit.yml@6.0.0
     permissions:
       actions: write
       checks: write
@@ -22,21 +22,29 @@ jobs:
     strategy:
       matrix:
         os:
-          - centos-7
-          - centos-stream-8
-          - debian-10
-          - debian-11
+          - almalinux-8
+          - almalinux-9
+          - amazonlinux-2023
+          - centos-stream-9
+          - debian-12
           - fedora-latest
-          - ubuntu-1804
-          - ubuntu-2004
+          - oraclelinux-8
+          - oraclelinux-9
+          - rockylinux-8
+          - rockylinux-9
           - ubuntu-2204
-        suite: [default]
+          - ubuntu-2404
+        suite:
+          - default
+          - server
       fail-fast: false
     steps:
       - name: Check out code
         uses: actions/checkout@v6
-      - name: Install Chef
-        uses: actionshub/chef-install@6.0.0
+
+      - name: Install Cinc Workstation
+        uses: sous-chefs/.github/.github/actions/install-workstation@6.0.0
+
       - name: Dokken
         uses: actionshub/test-kitchen@3.0.0
         env:
@@ -45,54 +53,17 @@ jobs:
         with:
           suite: ${{ matrix.suite }}
           os: ${{ matrix.os }}
+
       - name: Print debug output on failure
         if: failure()
         run: |
-          set -x
           sudo journalctl -l --since today
           sudo docker version
           sudo docker info
           KITCHEN_LOCAL_YAML=kitchen.dokken.yml /usr/bin/kitchen exec ${{ matrix.suite }}-${{ matrix.os }} -c "journalctl -l"
 
-  # Server suite needs to run on VMs not docker
-  integration-vagrant:
-    needs: lint-unit
-    runs-on: macos-15 # Vagrant is not installed on MacOS 13
-    strategy:
-      matrix:
-        os:
-          - centos-7
-          - centos-stream-8
-          - debian-10
-          - debian-11
-          - fedora-latest
-          - ubuntu-1804
-          - ubuntu-2004
-          - ubuntu-2204
-        suite: [server]
-      fail-fast: false
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v6
-      - name: Install Chef
-        uses: actionshub/chef-install@6.0.0
-      - name: Dokken
-        uses: actionshub/test-kitchen@3.0.0
-        env:
-          CHEF_LICENSE: accept-no-persist
-          KITCHEN_LOCAL_YAML: kitchen.platforms.yml
-        with:
-          suite: ${{ matrix.suite }}
-          os: ${{ matrix.os }}
-      - name: Print debug output on failure
-        if: failure()
-        run: |
-          set -x
-          /usr/bin/kitchen exec ${{ matrix.suite }}-${{ matrix.os }} -c "journalctl -l"
-
   final:
     runs-on: ubuntu-latest
-    needs: [integration, integration-vagrant]
+    needs: [integration]
     steps:
-      - run: echo ${{needs.integration.outputs}}
-      - run: echo ${{needs.integration-vagrant.outputs}}
+      - run: echo ${{ needs.integration.result }}

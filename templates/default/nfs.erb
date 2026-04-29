@@ -4,38 +4,38 @@
 <%# RHEL -%>
 <% when 'rhel' -%>
 # Rendered RHEL template variant
-STATD_PORT="<%= node['nfs']['port']['statd'] -%>"
-STATD_OUTGOING_PORT="<%= node['nfs']['port']['statd_out'] -%>"
-STATDARG="-p <%= node['nfs']['port']['statd'] -%> -o <%= node['nfs']['port']['statd_out'] -%>"
-MOUNTD_PORT="<%= node['nfs']['port']['mountd'] -%>"
-RPCMOUNTDOPTS="-p <%= node['nfs']['port']['mountd'] -%>"
-LOCKD_UDPPORT="<%= node['nfs']['port']['lockd'] -%>"
-LOCKD_TCPPORT="<%= node['nfs']['port']['lockd'] -%>"
-RQUOTAD_PORT="<%= node['nfs']['port']['rquotad'] -%>"
-  <% unless node['nfs']['v2'].nil? -%>
-MOUNTD_NFS_V2="<%= node['nfs']['v2'] -%>"
+STATD_PORT="<%= @statd_port -%>"
+STATD_OUTGOING_PORT="<%= @statd_out_port -%>"
+STATDARG="-p <%= @statd_port -%> -o <%= @statd_out_port -%>"
+MOUNTD_PORT="<%= @mountd_port -%>"
+RPCMOUNTDOPTS="-p <%= @mountd_port -%>"
+LOCKD_UDPPORT="<%= @lockd_port -%>"
+LOCKD_TCPPORT="<%= @lockd_port -%>"
+RQUOTAD_PORT="<%= @rquotad_port -%>"
+  <% unless @nfs_v2.nil? -%>
+MOUNTD_NFS_V2="<%= @nfs_v2 -%>"
   <% end -%>
-  <% unless node['nfs']['v3'].nil? -%>
-MOUNTD_NFS_V3="<%= node['nfs']['v3'] -%>"
+  <% unless @nfs_v3.nil? -%>
+MOUNTD_NFS_V3="<%= @nfs_v3 -%>"
   <% end -%>
-RQUOTAD="<%= node['nfs']['rquotad'] -%>"
-  <% unless node['nfs']['threads'] == 0 -%>
-RPCNFSDCOUNT="<%= node['nfs']['threads'] -%>"
+RQUOTAD="<%= @rquotad -%>"
+  <% unless @threads == 0 -%>
+RPCNFSDCOUNT="<%= @threads -%>"
   <% end -%>
 
 <%# SUSE -%>
 <% when 'suse' -%>
 # Rendered SUSE template variant
-  <% unless node['nfs']['threads'] == 0 -%>
-USE_KERNEL_NFSD_NUMBER="<%= node['nfs']['threads'] -%>"
+  <% unless @threads == 0 -%>
+USE_KERNEL_NFSD_NUMBER="<%= @threads -%>"
   <% end -%>
-MOUNTD_PORT="<%= node['nfs']['port']['mountd'] -%>"
-STATD_PORT="<%= node['nfs']['port']['statd'] -%>"
-LOCKD_TCPPORT="<%= node['nfs']['port']['lockd'] -%>"
-LOCKD_UDPPORT="<%= node['nfs']['port']['lockd'] -%>"
+MOUNTD_PORT="<%= @mountd_port -%>"
+STATD_PORT="<%= @statd_port -%>"
+LOCKD_TCPPORT="<%= @lockd_port -%>"
+LOCKD_UDPPORT="<%= @lockd_port -%>"
 NFS_START_SERVICES="yes"
-  <% unless node['nfs']['v4'].nil? -%>
-NFS4_SUPPORT="<%= node['nfs']['v4'] -%>"
+  <% unless @nfs_v4.nil? -%>
+NFS4_SUPPORT="<%= @nfs_v4 -%>"
   <% end -%>
 
 <%# FreeBSD -%>
@@ -43,16 +43,16 @@ NFS4_SUPPORT="<%= node['nfs']['v4'] -%>"
 # Rendered FreeBSD template variant
 portmap_enabled="YES"
 nfs_server_enable="YES"
-  <% unless node['nfs']['v4'].nil? -%>
-nfsv4_server_enable="<%= node['nfs']['v4'] -%>"
+  <% unless @nfs_v4.nil? -%>
+nfsv4_server_enable="<%= @nfs_v4 -%>"
   <% end -%>
-nfs_server_flags="<%= node['nfs']['server_flags'] -%>"
+nfs_server_flags="-u -t -n <%= @threads -%>"
 
 <%# Debian/Ubuntu -%>
 <% when 'debian' -%>
 # Rendered Debian/Ubuntu template variant
-RPCMOUNTDOPTS="-p <%= node['nfs']['port']['mountd'] %>"
-  <% unless node['nfs']['threads'] == 0 -%>
-RPCNFSDCOUNT="<%= node['nfs']['threads'] -%><% if node['nfs']['v4'] == 'no' -%> --no-nfs-version 4<% end -%>"
+RPCMOUNTDOPTS="-p <%= @mountd_port %>"
+  <% unless @threads == 0 -%>
+RPCNFSDCOUNT="<%= @threads -%><% if @nfs_v4 == 'no' -%> --no-nfs-version 4<% end -%>"
   <% end -%>
 <% end -%>
