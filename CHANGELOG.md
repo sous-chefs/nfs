@@ -2,6 +2,23 @@
 
 This file is used to list changes made in each version of the nfs cookbook.
 
+## [6.0.0](https://github.com/sous-chefs/nfs/compare/v5.1.7...v6.0.0) (2026-05-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* migrate nfs to custom resources ([#163](https://github.com/sous-chefs/nfs/issues/163))
+
+### Features
+
+* migrate nfs to custom resources ([#163](https://github.com/sous-chefs/nfs/issues/163)) ([ebefbca](https://github.com/sous-chefs/nfs/commit/ebefbca7bc0603d1b6e7c1165643c1ed0d628b7d))
+
+
+### Bug Fixes
+
+* 21 ([4c8766b](https://github.com/sous-chefs/nfs/commit/4c8766b4a0aab7339f9059ebd7cf7eea1aec2a25))
+* **ci:** Update workflows to use release pipeline ([#158](https://github.com/sous-chefs/nfs/issues/158)) ([f84494a](https://github.com/sous-chefs/nfs/commit/f84494aeee47f801246db65246840dabdffb3e12))
+
 ## [5.1.7](https://github.com/sous-chefs/nfs/compare/5.1.6...v5.1.7) (2025-10-15)
 
 
