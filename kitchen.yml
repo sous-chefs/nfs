@@ -2,6 +2,11 @@
 driver:
   name: vagrant
 
+transport:
+  max_wait_until_ready: 600
+  connection_retries: 10
+  connection_retry_sleep: 10
+
 provisioner:
   name: chef_infra
   product_name: <%= ENV['CHEF_PRODUCT_NAME'] || 'chef' %>
@@ -12,31 +17,43 @@ provisioner:
   deprecations_as_errors: true
   chef_license: accept-no-persist
 
-# TODO(ramereth): Remove on the next release of chef-workstation - 12/20/2022
-transport:
-  name: ssh
-  username: vagrant
-  password: vagrant
-
 verifier:
   name: inspec
+  sudo: true
 
 platforms:
-  - name: centos-7
-  - name: centos-stream-8
-  - name: debian-10
-  - name: debian-11
+  - name: almalinux-8
+  - name: almalinux-9
+  - name: amazonlinux-2023
+  - name: centos-stream-9
+  - name: debian-12
   - name: fedora-latest
-  - name: ubuntu-18.04
-  - name: ubuntu-20.04
+  - name: oraclelinux-8
+  - name: oraclelinux-9
+  - name: rockylinux-8
+  - name: rockylinux-9
   - name: ubuntu-22.04
+  - name: ubuntu-24.04
+
+x-run_lists:
+  default: &default_run_list
+    - recipe[test::default]
+  server: &server_run_list
+    - recipe[test::server]
+
+x-verifiers:
+  default: &default_verifier
+    inspec_tests:
+      - path: test/integration/default
+  server: &server_verifier
+    inspec_tests:
+      - path: test/integration/server
 
 suites:
   - name: default
-    run_list:
-      - recipe[nfs::default]
-      - recipe[nfs_test::default]
+    run_list: *default_run_list
+    verifier: *default_verifier
+
   - name: server
-    run_list:
-      - recipe[nfs::server]
-      - recipe[nfs_test::issue46]
+    run_list: *server_run_list
+    verifier: *server_verifier

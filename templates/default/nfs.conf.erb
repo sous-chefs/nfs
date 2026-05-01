@@ -4,21 +4,21 @@
 # This is a general configuration for the
 # NFS daemons and tools
 [general]
-pipefs-directory=<%= node['nfs']['idmap']['pipefs_directory'] %>
+pipefs-directory=<%= @pipefs_directory %>
 
 [gssd]
 use-gss-proxy=1
 
 [lockd]
-port=<%= node['nfs']['port']['lockd'] %>
-udp-port=<%= node['nfs']['port']['lockd'] %>
+port=<%= @lockd_port %>
+udp-port=<%= @lockd_port %>
 
 [mountd]
-port=<%= node['nfs']['port']['mountd'] %>
+port=<%= @mountd_port %>
 
 [nfsd]
-threads=<%= node['nfs']['threads'] %>
+threads=<%= @threads %>
 
 [statd]
-port=<%= node['nfs']['port']['statd'] %>
-outgoing-port=<%= node['nfs']['port']['statd_out'] %>
+port=<%= @statd_port %>
+outgoing-port=<%= @statd_out_port %>

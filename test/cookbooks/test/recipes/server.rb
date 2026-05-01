@@ -1,10 +1,17 @@
+# frozen_string_literal: true
+
 %w(share1 share2 share3).each do |share|
   directory "/tmp/#{share}"
 end
 
-%w(user1 user2 user3).each do |u|
-  group u if platform_family?('suse')
-  user u
+%w(user1 user2 user3).each do |user_name|
+  group user_name if platform_family?('suse')
+  user user_name
+end
+
+nfs_server 'default' do
+  manage_idmap true
+  manage_lockd false
 end
 
 nfs_export '/tmp/share1' do

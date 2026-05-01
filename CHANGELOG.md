@@ -80,40 +80,40 @@ This file is used to list changes made in each version of the nfs cookbook.
 
 This release adds support for Chef 17 and modernizes syntax and tooling.
 
-**BREAKING**
+### BREAKING
 
-   * Drop support for Chef version < 15.3
+* Drop support for Chef version < 15.3
 
 * Chef 17 compatibility
-   * Enable unified_mode for custom resources
+  * Enable unified_mode for custom resources
 * Cookbook Cleanup
-   * Cookstyle fixes
-   * LWRP -> custom resource conversion
-   * Update to new spec test format
-   * Move test cookbook to standard location
-   * Move kitchen files to standard location
-   * Convert integration testing to InSpec
+  * Cookstyle fixes
+  * LWRP -> custom resource conversion
+  * Update to new spec test format
+  * Move test cookbook to standard location
+  * Move kitchen files to standard location
+  * Convert integration testing to InSpec
 
 ## 3.0.0 - *2020-11-04*
 
 This release unifies systemd based NFS systems. Much of the platform branching has been removed dropping support for System V initialized NFS servers.
 
-**BREAKING**
+### BREAKING
 
-   * Added
-      * Debian 10
-      * Ubuntu 18.04
-      * Ubuntu 20.04
-      * CentOS/RHEL 8
-   * Dropped
-      * Debian 8
-      * Debian 9
-      * CentOS/RHEL 5
-      * CentOS/RHEL 6
-      * Ubuntu 14.04
-   * Iffy (not supported)
-      * SUSE
-      * FreeBSD
+* Added
+  * Debian 10
+  * Ubuntu 18.04
+  * Ubuntu 20.04
+  * CentOS/RHEL 8
+* Dropped
+  * Debian 8
+  * Debian 9
+  * CentOS/RHEL 5
+  * CentOS/RHEL 6
+  * Ubuntu 14.04
+* Iffy (not supported)
+  * SUSE
+  * FreeBSD
 
 * @rexcsn - corrected nfs-idmap service name
 * Set default_env so exportfs can be found under Chef 14.2+
@@ -331,10 +331,10 @@ Support for some versions of Ubuntu support unverified.  Please help cookbook ma
 
 @someara exports LWRP refactor
 
-**Breaking changes**
+### Breaking changes
 
-   * Deprecated ~nfs['exports']~ attribute
-   * remove exports recipe hack
+* Deprecated ~nfs['exports']~ attribute
+* remove exports recipe hack
 
 * refactored provider to execute in new run_context
 * update notification timings on exports resources
