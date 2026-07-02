@@ -16,6 +16,7 @@ provisioner:
   enforce_idempotency: true
   deprecations_as_errors: true
   chef_license: accept-no-persist
+  policyfile: Policyfile.rb
 
 verifier:
   name: inspec
@@ -35,12 +36,6 @@ platforms:
   - name: ubuntu-22.04
   - name: ubuntu-24.04
 
-x-run_lists:
-  default: &default_run_list
-    - recipe[test::default]
-  server: &server_run_list
-    - recipe[test::server]
-
 x-verifiers:
   default: &default_verifier
     inspec_tests:
@@ -51,9 +46,11 @@ x-verifiers:
 
 suites:
   - name: default
-    run_list: *default_run_list
+    provisioner:
+      named_run_list: default
     verifier: *default_verifier
 
   - name: server
-    run_list: *server_run_list
+    provisioner:
+      named_run_list: server
     verifier: *server_verifier

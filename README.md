@@ -16,7 +16,7 @@ This cookbook is maintained by the Sous Chefs. The Sous Chefs are a community of
 
 ## Requirements
 
-See [LIMITATIONS.md](LIMITATIONS.md) for package availability and platform constraints.
+See [AGENTS.md](AGENTS.md) for package availability and platform constraints.
 
 This cookbook depends on the [`line` cookbook](https://github.com/sous-chefs/line).
 
