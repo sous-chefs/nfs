@@ -9,6 +9,7 @@ transport:
 
 provisioner:
   name: dokken
+  policyfile: Policyfile.rb
 
 platforms:
   - name: almalinux-8
